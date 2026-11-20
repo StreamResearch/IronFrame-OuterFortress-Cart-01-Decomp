@@ -73,7 +73,10 @@ class TestCliCommonAndScripts(unittest.TestCase):
             self.assertEqual(p_rx_s.returncode, 0, p_rx_s.stderr)
             self.assertTrue(json.loads(p_rx_s.stdout)["isPassed"])
 
-            for script in ("gen_d4_globals_and_lifts.py", "build_and_verify_d5.py", "build_and_verify_d4.py", "reexport_stage3.py", "verify_track_d5.py"):
+            for script in (
+                "gen_d4_globals_and_lifts.py", "build_and_verify_d5.py", "build_and_verify_d4.py",
+                "reexport_stage3.py", "verify_track_d5.py", "coalesce_d4_modules.py", "materialize_decomp_tiers.py",
+            ):
                 res = _run_py(script, "--data-dir", str(empty_data))
                 self.assertEqual(res.returncode, 2, f"{script} expected rc=2, got {res.returncode}: {res.stdout} {res.stderr}")
                 self.assertEqual(json.loads(res.stdout)["errorCode"], "MISSING_CORPUS_MEDIA")
@@ -121,6 +124,14 @@ class TestSchemasAndSlocLimits(unittest.TestCase):
         self.assertEqual(len(funcs), 499)
         cat_low = json.dumps(cat).lower()
         self.assertFalse(any(t in cat_low for t in _TRADEMARK_WORDS))
+
+        d3m = json.loads((SCHEMAS_DIR / "d3_module_map.json").read_text(encoding="utf-8"))
+        self.assertEqual((d3m["schemaVersion"], d3m["moduleCount"], d3m["functionCount"]), (2, 26, 499))
+        self.assertEqual(len({fn for m in d3m["modules"] for fn in m["functions"]}), 499)
+        self.assertFalse(any(t in json.dumps(d3m).lower() for t in _TRADEMARK_WORDS))
+        d3o = json.loads((SCHEMAS_DIR / "d3_symbol_overrides.json").read_text(encoding="utf-8"))
+        self.assertEqual(d3o["schemaVersion"], 2)
+        self.assertFalse(any(t in json.dumps(d3o).lower() for t in _TRADEMARK_WORDS))
 
     def test_script_and_harness_sloc_caps(self) -> None:
         for fp in sorted(SCRIPTS_DIR.rglob("*.py")):

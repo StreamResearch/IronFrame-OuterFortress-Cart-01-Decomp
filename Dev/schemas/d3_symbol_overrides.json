@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "updatedAtUtc": "2026-11-20T08:39:46.042Z",
+  "localRenames": {
+    "BYTE_ARRAY_8000_6486_": "lbl_demo_input_loop"
+  },
+  "syntheticGlobals": [
+    {
+      "rawSymbol": "UNK_c05e",
+      "mappedName": "g_fixed_rom_c05e",
+      "cType": "uint8_t",
+      "addressHex": "0xc05e",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "UNK_ef97",
+      "mappedName": "g_fixed_rom_ef97",
+      "cType": "uint8_t",
+      "addressHex": "0xef97",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "_DAT_00db",
+      "mappedName": "g_audio_seq_ptr_00db",
+      "cType": "uint16_t",
+      "addressHex": "0x00db",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "_g_oam_cycle_flag",
+      "mappedName": "g_oam_cycle_ptr16",
+      "cType": "uint16_t",
+      "addressHex": "0x008c",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "_g_zp_loop_counter",
+      "mappedName": "g_zp_loop_ptr16",
+      "cType": "uint16_t",
+      "addressHex": "0x0090",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "_g_zp_scratch_82",
+      "mappedName": "g_zp_scratch_ptr82",
+      "cType": "uint16_t",
+      "addressHex": "0x0082",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "_g_zp_scratch_91",
+      "mappedName": "g_zp_scratch_ptr91",
+      "cType": "uint8_t *",
+      "addressHex": "0x0091",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "register0x22",
+      "mappedName": "g_cpu_stack_ptr_reg",
+      "cType": "uintptr_t",
+      "addressHex": "0x0100",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "bRAM0096",
+      "mappedName": "g_zp_var_0096",
+      "cType": "uint8_t",
+      "addressHex": "0x0096",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "bRAM07e1",
+      "mappedName": "g_wram_07e1",
+      "cType": "uint8_t",
+      "addressHex": "0x07e1",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "uRAM07e1",
+      "mappedName": "g_wram_07e1",
+      "cType": "uint8_t",
+      "addressHex": "0x07e1",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "bRAM07e2",
+      "mappedName": "g_wram_07e2",
+      "cType": "uint8_t",
+      "addressHex": "0x07e2",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "cRAM07e2",
+      "mappedName": "g_wram_07e2",
+      "cType": "uint8_t",
+      "addressHex": "0x07e2",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "bRAM07e3",
+      "mappedName": "g_wram_07e3",
+      "cType": "uint8_t",
+      "addressHex": "0x07e3",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "cRAM07e4",
+      "mappedName": "g_wram_07e4",
+      "cType": "uint8_t",
+      "addressHex": "0x07e4",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "cRAM07e5",
+      "mappedName": "g_wram_07e5",
+      "cType": "uint8_t",
+      "addressHex": "0x07e5",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "uRAM07e6",
+      "mappedName": "g_wram_07e6",
+      "cType": "uint8_t",
+      "addressHex": "0x07e6",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "cRAM07e7",
+      "mappedName": "g_wram_07e7",
+      "cType": "uint8_t",
+      "addressHex": "0x07e7",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "BYTE_ARRAY_bf00",
+      "mappedName": "g_b03_rom_tbl_bf00",
+      "cType": "uint8_t[256]",
+      "addressHex": "0xbf00",
+      "programScope": "BANK_03.prg"
+    },
+    {
+      "rawSymbol": "FUN_b622",
+      "mappedName": "g_b01_rom_tbl_b622",
+      "cType": "uint8_t[256]",
+      "addressHex": "0xb622",
+      "programScope": "BANK_01.prg"
+    }
+  ],
+  "functionCallOverrides": {
+    "FUN_99a8": "audio_play_sound_or_bgm",
+    "FUN_a765": "mg_b034_try_spawn_alert_guard_default",
+    "FUN_a771": "mg_b034_spawn_alert_guard_in_room",
+    "FUN_aa0c": "mg_b034_hud_refresh_equip_and_ammo",
+    "FUN_b3fc": "mg_b034_update_screen_shake_effect",
+    "FUN_b465": "mg_b034_update_hazard_and_restore_bank6",
+    "FUN_b523": "mg_b034_update_boss_hover_and_restore_bank6",
+    "FUN_b57e": "mg_b034_update_explosions_and_bank6",
+    "FUN_b658": "mg_b56_transceiver_state_dispatch",
+    "FUN_b7c1": "mg_b034_update_pattern_hazards_and_bank6",
+    "FUN_b7c7": "mg_b034_update_random_hazards_and_bank6",
+    "FUN_b914": "mg_b034_update_bridge_and_restore_bank6",
+    "FUN_b99b": "mg_b034_update_hazard_palette_and_bank6",
+    "FUN_bb28": "mg_b034_upload_bank00_ppu_stream_bb3a_ret",
+    "FUN_bf3a": "mg_b034_tick_countdown_and_restore_bank6",
+    "FUN_bf67": "mg_b034_ppu_flush_vram_queue",
+    "FUN_f5ac": "switch_bank6_play_sound_and_restore_bank2",
+    "func_0x2020": "stub_unmapped_call_2020",
+    "func_0x4420": "stub_player_step_call_4420",
+    "func_0x801c": "mg_b034_spawn_room_actors_from_table",
+    "func_0x8043": "stub_player_step_call_8043",
+    "func_0x8120": "mg_b034_resolve_room_transition",
+    "func_0x8237": "mg_b034_tick_ending_ascent_cutscene",
+    "func_0x933c": "audio_engine_frame_tick",
+    "func_0x9956": "mg_b56_audio_silence_all_channels",
+    "func_0x99a8": "audio_play_sound_or_bgm",
+    "func_0xb7ea": "mg_b12_b1_upload_ppu_stream_batch",
+    "func_0xb83a": "mg_b034_bank03_dispatch_actor_default",
+    "func_0xb8f9": "mg_b56_transceiver_init_screen",
+    "func_0xb999": "mg_b034_pw_dispatch_submode",
+    "func_0xbb91": "mg_b034_tick_binoculars_room_peek",
+    "func_0xbbe1": "mg_b034_bank04_dispatch_actor_default",
+    "func_0xbc7f": "mg_b034_pw_display_generated_password",
+    "func_0xbcb8": "mg_b034_dialog_dispatch_phase",
+    "func_0xbe6a": "mg_b56_ending_sequence_dispatch",
+    "func_0xbe73": "mg_b034_bank03_check_room_radio_triggers",
+    "func_0xc68b": "mul_u8_u16_from_zp83",
+    "func_0xc7f9": "load_dialog_ptr_07e1_to_zp80",
+    "func_0xc804": "init_fixed_table_c804",
+    "func_0xc885": "dispatch_unrom_c885_jump_tbl",
+    "func_0xca2c": "binary_to_bcd_zp80",
+    "func_0xd59c": "ppu_set_vram_inc_32_direct",
+    "func_0xee2a": "trampoline_bank4_resolve_room_transition",
+    "func_0xfbf5": "switch_bank6_and_queue_ppu_stream"
+  },
+  "trampolineDeclarations": [
+    {
+      "name": "switch_bank6_play_sound_and_restore_bank2",
+      "addressHex": "0x0000f5ac",
+      "returnType": "byte",
+      "params": [
+        {
+          "name": "sound_id",
+          "type": "byte"
+        }
+      ],
+      "targetModule": "src/core/core_unrom_and_math.c",
+      "selectBankCall": "unrom_select_bank_6",
+      "targetCall": "audio_trigger_sound_or_bgm",
+      "targetArgs": [
+        "sound_id",
+        "0"
+      ],
+      "restoreBankCall": "unrom_select_bank_2",
+      "returnsTargetResult": true
+    },
+    {
+      "name": "switch_bank6_and_queue_ppu_stream",
+      "addressHex": "0x0000fbf5",
+      "returnType": "void",
+      "params": [
+        {
+          "name": "stream_id",
+          "type": "byte"
+        }
+      ],
+      "targetModule": "src/core/core_unrom_and_math.c",
+      "selectBankCall": "unrom_select_bank_6",
+      "targetCall": "queue_ppu_tile_stream",
+      "targetArgs": [
+        "(sbyte)stream_id"
+      ],
+      "restoreBankCall": "unrom_restore_active_bank",
+      "returnsTargetResult": false
+    },
+    {
+      "name": "trampoline_bank4_resolve_room_transition",
+      "addressHex": "0x0000ee2a",
+      "returnType": "void",
+      "params": [],
+      "targetModule": "src/core/core_unrom_and_math.c",
+      "selectBankCall": "unrom_select_bank_4",
+      "targetCall": "mg_b034_resolve_room_transition",
+      "targetArgs": [],
+      "restoreBankCall": "unrom_select_bank_6",
+      "returnsTargetResult": false
+    },
+    {
+      "name": "audio_play_sound_or_bgm",
+      "addressHex": "0x000099a8",
+      "returnType": "void",
+      "params": [
+        {
+          "name": "sound_id",
+          "type": "byte"
+        }
+      ],
+      "targetModule": "src/core/core_unrom_and_math.c",
+      "selectBankCall": null,
+      "targetCall": "audio_trigger_sound_or_bgm",
+      "targetArgs": [
+        "sound_id",
+        "0"
+      ],
+      "restoreBankCall": null,
+      "returnsTargetResult": false
+    },
+    {
+      "name": "mg_b034_try_spawn_alert_guard_default",
+      "addressHex": "0x0000a765",
+      "returnType": "void",
+      "params": [],
+      "targetModule": "src/core/core_unrom_and_math.c",
+      "selectBankCall": null,
+      "targetCall": "mg_b034_try_spawn_alert_guard_checked",
+      "targetArgs": [
+        "0"
+      ],
+      "restoreBankCall": null,
+      "returnsTargetResult": false
+    },
+    {
+      "name": "mg_b034_upload_bank00_ppu_stream_bb3a_ret",
+      "addressHex": "0x0000bb28",
+      "returnType": "byte",
+      "params": [],
+      "targetModule": "src/core/core_unrom_and_math.c",
+      "selectBankCall": null,
+      "targetCall": "mg_b034_upload_bank00_ppu_stream_bb3a",
+      "targetArgs": [],
+      "restoreBankCall": null,
+      "returnsTargetResult": false,
+      "defaultReturnExpr": "0"
+    },
+    {
+      "name": "mg_b034_bank03_dispatch_actor_default",
+      "addressHex": "0x0000b83a",
+      "returnType": "void",
+      "params": [],
+      "targetModule": "src/core/core_unrom_and_math.c",
+      "selectBankCall": null,
+      "targetCall": "mg_b034_bank03_dispatch_actor_state",
+      "targetArgs": [
+        "0"
+      ],
+      "restoreBankCall": null,
+      "returnsTargetResult": false
+    },
+    {
+      "name": "mg_b034_bank04_dispatch_actor_default",
+      "addressHex": "0x0000bbe1",
+      "returnType": "void",
+      "params": [],
+      "targetModule": "src/core/core_unrom_and_math.c",
+      "selectBankCall": null,
+      "targetCall": "mg_b034_bank04_dispatch_actor_state",
+      "targetArgs": [
+        "0"
+      ],
+      "restoreBankCall": null,
+      "returnsTargetResult": false
+    }
+  ],
+  "subEntryDeclarations": [
+    {
+      "name": "mul_u8_u16_from_zp83",
+      "addressHex": "0x0000c68b",
+      "returnType": "void",
+      "params": [
+        {
+          "name": "arg0",
+          "type": "byte"
+        }
+      ]
+    },
+    {
+      "name": "load_dialog_ptr_07e1_to_zp80",
+      "addressHex": "0x0000c7f9",
+      "returnType": "void",
+      "params": []
+    },
+    {
+      "name": "init_fixed_table_c804",
+      "addressHex": "0x0000c804",
+      "returnType": "void",
+      "params": []
+    },
+    {
+      "name": "dispatch_unrom_c885_jump_tbl",
+      "addressHex": "0x0000c885",
+      "returnType": "void",
+      "params": [
+        {
+          "name": "arg0",
+          "type": "byte"
+        }
+      ]
+    },
+    {
+      "name": "binary_to_bcd_zp80",
+      "addressHex": "0x0000ca2c",
+      "returnType": "void",
+      "params": []
+    },
+    {
+      "name": "ppu_set_vram_inc_32_direct",
+      "addressHex": "0x0000d59c",
+      "returnType": "void",
+      "params": []
+    },
+    {
+      "name": "stub_unmapped_call_2020",
+      "addressHex": "0x00002020",
+      "returnType": "void",
+      "params": []
+    },
+    {
+      "name": "stub_player_step_call_4420",
+      "addressHex": "0x00004420",
+      "returnType": "void",
+      "params": []
+    },
+    {
+      "name": "stub_player_step_call_8043",
+      "addressHex": "0x00008043",
+      "returnType": "void",
+      "params": []
+    }
+  ]
+}

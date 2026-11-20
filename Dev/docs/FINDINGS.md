@@ -1,8 +1,8 @@
 # Findings — IronFrame OuterFortress (Cart) 01 Decomp (`NES-ME-USA`)
 
-> **Verification Ledger:** `0` Static Decompiler Failures (`499/499` indexed) · `8/8` PRG Banks `1:1` 6502 Assembly Match (`131,088` B, `CRC32=25BA3D04`) · `10/10` Modular Host Parity Assertions
+> **Verification Ledger:** `0` Static Decompiler Failures (`499/499` indexed) · `26/26` Cohesive `D3_Mapped` Modules (`0` Raw Tokens) · `8/8` PRG Banks `1:1` 6502 Assembly Match (`131,088` B, `CRC32=25BA3D04`) · `10/10` Mapped Modular Host Parity Assertions
 
-This document records empirical reverse-engineering discoveries, UNROM bus-conflict mechanics, `BANK_06` sound-sequencer recovery, C11 compilation baseline notes, and `1:1` 6502 byte-matching verification.
+This document records empirical reverse-engineering discoveries, UNROM bus-conflict mechanics, `BANK_06` sound-sequencer recovery, `D3_Mapped` cohesive coalescing and symbol resolution, C11 compilation baseline notes, and `1:1` 6502 byte-matching verification.
 
 ---
 
@@ -11,7 +11,7 @@ This document records empirical reverse-engineering discoveries, UNROM bus-confl
 - **Hardware Constraint:** Discrete `iNES Mapper 2` (`UNROM`) cartridges lack bus-conflict suppression circuitry (`74HC161` latch + `74HC32` OR gate). Writing a bank index to `$8000-$FFFF` corrupts the latch unless the PRG ROM byte at that exact write address equals the written bank number.
 - **NES-ME-USA Implementation:** Fixed bank `PRG_FIXED_07` places an `8`-byte identity lookup table `{0, 1, 2, 3, 4, 5, 6, 7}` at `$FFD0-$FFD7` (verified against `PRG_FIXED_07` at offset `0x7FD0 + i == i` by `test_01_vectors_and_unrom` in [parity_rom_and_mapper_tests.c](../scripts/d4_harness/parity_rom_and_mapper_tests.c)), paired with the `$C932..$C958` trampolines and `$C959` adjacent switch table/helper:
   - Fixed per-bank stubs at `$C932..$C94A` (`unrom_select_bank_0`..`6`, `4`-byte stride).
-  - Indexed trampoline `$C94C` (`unrom_select_bank_y` / `unrom_select_bank_index`), emitting at `$C94F`: `85 27 B9 D0 FF 99 D0 FF 60` (`STA $27; LDA $FFD0,Y; STA $FFD0,Y; RTS`). Note: static analysis over `PRG_FIXED_07` with `BANK_00` mounted at `$8000` constant-folded `LDA $8000` (`$C94C`) to `0` in early generated C; `test_03_unrom_bank_switch` in [parity_rom_and_mapper_tests.c](../scripts/d4_harness/parity_rom_and_mapper_tests.c) checks exact `$C94C`/`$C958` opcode sequences and live `unrom_select_bank_0`/`6` transitions pending the explicit `v0.2.0`–`v0.3.0` UNROM bus model.
+  - Indexed trampoline `$C94C` (`unrom_select_bank_y` / `unrom_select_bank_index`), emitting at `$C94F`: `85 27 B9 D0 FF 99 D0 FF 60` (`STA $27; LDA $FFD0,Y; STA $FFD0,Y; RTS`). Note: static analysis over `PRG_FIXED_07` with `BANK_00` mounted at `$8000` constant-folded `LDA $8000` (`$C94C`) to `0` in early generated C; `test_03_unrom_bank_switch` in [parity_rom_and_mapper_tests.c](../scripts/d4_harness/parity_rom_and_mapper_tests.c) checks exact `$C94C`/`$C958` opcode sequences and live `unrom_select_bank_0`/`6` transitions (`v0.2.0` synthesized `3` cross-bank trampolines + `5` signature adapters, while the full bus-aware model awaits `v0.3.0` `D4_CleanSource`).
   - Restore stub `$C958` (`unrom_restore_active_bank`), reloading the bank shadowed in Zero Page `$27`.
 - **Inline Jump-Table Control Flow (`$C6B7`):**
   - `inline_jump_table_dispatch` (`16+` call sites) reads an inline `.word[]` target immediately following `JSR $C6B7` off the 6502 hardware stack (`$0100+S`), scales accumulator `A * 2`, and executes `jmp ($0080)` (`$C6D2: 6C 80 00`).
@@ -34,14 +34,17 @@ Initial automated decompilation left `4` failed functions concentrated in `BANK_
 
 ---
 
-## 3. Initial C11 Normalization Baseline (`Corpus/readable/`) & Modular Harness
+## 3. Cohesive `D3_Mapped` Normalization (`Corpus/readable/`) & Modular Harness
 
-Early normalization resolved syntax blockers across the initial `68` line-split `.c` fragments without modifying read-only `Corpus/standalone/`:
+Early `D2_Structured` normalization resolved initial syntax blockers across the `68` line-split `.c` fragments without modifying read-only `Corpus/standalone/` (synthesizing `44` missing forward declarations, fixing call-site arity in `core_15.c` and `bank_02_06.c`, normalizing indirect function-pointer casts across `11` `.c` files, label syntax in `bank_05_02.c`, and return emission in `core_32.c`).
 
-- Synthesized `44` missing forward declarations and corrected call-site arity in `core_15.c` and `bank_02_06.c`.
-- Normalized indirect function-pointer casting, explicit unsigned/signed casts across `11` `.c` files, label syntax in `bank_05_02.c`, and return value emission in `core_32.c`.
-- **Modular Host Parity Suite (`10/10` Passing):** Split the host C parity runner into four `<= 200`-line files under `Dev/scripts/d4_harness/` — [parity_harness.h](../scripts/d4_harness/parity_harness.h), [parity_runner_main.c](../scripts/d4_harness/parity_runner_main.c), [parity_rom_and_mapper_tests.c](../scripts/d4_harness/parity_rom_and_mapper_tests.c), and [parity_gameplay_and_audio_tests.c](../scripts/d4_harness/parity_gameplay_and_audio_tests.c) — fixing `test_03` (`$C94C`/`$C958`) and `test_09` (`mg_b56_audio_sync_pause_mute` and `mg_b56_audio_ramp_dmc_dac`).
-- **Current Limitation & Next Refactoring:** The `68` C fragments in `Corpus/readable/` still contain `2,866` legacy decompiler idioms (`craftsmanshipTellCount: 2866`) and await modular domain coalescing (`v0.2.0`) and full human-authored C11 rewriting under `-Wall -Wextra -Wno-unused-parameter` (`v0.3.0`).
+In `v0.2.0` (`D3_Mapped`), [coalesce_d4_modules.py](../scripts/coalesce_d4_modules.py) and [materialize_decomp_tiers.py](../scripts/materialize_decomp_tiers.py) consolidated that intermediate baseline into **`26` cohesive domain C modules** (`0` `_01.._NN.c` fragments, `0` remaining raw tokens across `.c` and headers) while preserving `D1_Raw` and `D2_Structured` snapshots:
+
+- **Full Raw Symbol & Call Resolution (`0` Remaining Raw Tokens):** Applied [d3_symbol_overrides.json](../schemas/d3_symbol_overrides.json) and [globals_map.json](../schemas/globals_map.json) to eliminate all `299` raw extern aliases and `44` raw `FUN_*`/`func_0x*` call references, including `1` local label rename (`BYTE_ARRAY_8000_6486_ -> lbl_demo_input_loop`) and `20` synthetic/bank-scoped overrides deduplicated into `18` `g_*` declarations (`2,342` total `extern`s in `metalgear_globals.h`).
+- **Bank-Scoped Table & Bitwise `&` Precision:** Disambiguated address collisions by explicitly mapping `BYTE_ARRAY_bf00` to `BANK_03.prg` (`g_b03_rom_tbl_bf00`) and `FUN_b622` to `BANK_01.prg` (`g_b01_rom_tbl_b622`), separating indexed `(&DAT_0740)[i]` writes (`g_vram_transfer_queue[i]`) from scalar `DAT_0740` reads (`g_vram_transfer_queue[0]`), and gating address-of `&` stripping to assignment/argument/return boundaries so bitwise `&` expressions (`g_frame_counter & g_b00_rom_tbl_b995[0]`) remain intact.
+- **Synthesized `8` Bank/Signature Adapters & `9` Sub-Entry Prototypes:** Emitted `3` cross-bank trampolines (`$F5AC`, `$FBF5`, `$EE2A`) and `5` signature-adapting wrappers (`$99A8`, `$A765`, `$BB28`, `$B83A`, `$BBE1`) declaratively into `src/core/core_unrom_and_math.c`, plus `9` `subEntryDeclarations` prototypes in `metalgear_functions.h`.
+- **Mapped Modular Host Parity Suite (`10/10` Passing):** Updated the four `<= 200`-line files under `Dev/scripts/d4_harness/` — [parity_harness.h](../scripts/d4_harness/parity_harness.h), [parity_runner_main.c](../scripts/d4_harness/parity_runner_main.c), [parity_rom_and_mapper_tests.c](../scripts/d4_harness/parity_rom_and_mapper_tests.c), and [parity_gameplay_and_audio_tests.c](../scripts/d4_harness/parity_gameplay_and_audio_tests.c) — to bind directly against mapped `g_*` scalar and array globals (`g_fixed_tbl_ff99`, `g_vram_transfer_queue`, `g_wram_0741`, `g_snd_pause_backup`, `g_snd_ram_*`, `g_zp_var_*`).
+- **Current Limitation & `v0.3.0` Refactoring:** All `26` cohesive `D3_Mapped` modules compile cleanly (`0` errors, `0` warnings under `zig cc` `gnu11` freestanding), and `0` `_01.._NN.c` fragments or raw Ghidra tokens remain. However, `Corpus/readable/` still contains `2,874` structural decompiler idioms (`craftsmanshipTellCount: 2874` in [d4_build_report.json](../schemas/d4_build_report.json), reflecting the `26` coalesced files + `8` adapter headers) awaiting full human-authored C11 rewriting under `-Wall -Wextra -Wno-unused-parameter` in `v0.3.0` (`D4_CleanSource`).
 
 ---
 
@@ -56,6 +59,6 @@ Early normalization resolved syntax blockers across the initial `68` line-split 
 
 ## 5. Related Manuals & Evidence Anchors
 
-- [ARCHITECTURE.md](ARCHITECTURE.md) — UNROM bank topology, `$C6B7` dispatcher, and `499 / 499` function split.
-- [SPECIFICATIONS.md](SPECIFICATIONS.md) — `22` structs, `22` enums, `2,324 / 2,324` globals, and Standard 18 v2 verification JSON contracts.
-- [OPERATIONS.md](OPERATIONS.md) — Clean-room BYO-ROM layout, CLI overrides, `.decomp` packaging, and local verification commands.
+- [ARCHITECTURE.md](ARCHITECTURE.md) — UNROM bank topology, `$C6B7` dispatcher, `26` cohesive `D3_Mapped` modules, and `8` synthesized adapters.
+- [SPECIFICATIONS.md](SPECIFICATIONS.md) — `22` structs, `22` enums, `2,324` globals (`2,342` externs), `D3` mapping schemas, and Standard 18 v2 verification JSON contracts.
+- [OPERATIONS.md](OPERATIONS.md) — Clean-room BYO-ROM layout, CLI overrides, tier materialization, `.decomp` packaging, and local verification commands.

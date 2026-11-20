@@ -1,6 +1,6 @@
 # Specifications — IronFrame OuterFortress (Cart) 01 Decomp (`NES-ME-USA`)
 
-> **Schema Baseline:** `22` Structs · `22` Enums · `1` Typedef (`0` unresolved fields) · `2,324 / 2,324` Mapped Globals · `1` BYO-ROM + `17` Extracted Entries
+> **Schema Baseline:** `22` Structs · `22` Enums · `1` Typedef (`0` unresolved fields) · `2,324` Catalog Globals (`2,342` Header Externs) · `26` Cohesive Modules (`0` Raw Tokens) · `1` BYO-ROM + `17` Extracted Entries
 
 This manual defines the recovered C11 type system, 6502 memory map, cartridge header layout, clean-room SHA-256 baseline, and JSON verification schemas for `IronFrame-OuterFortress-Cart-01-Decomp`. Detailed per-bank matrices and address-space tables live in the [Symbol & Bank Reference](specifications/symbol-and-bank-reference.md).
 
@@ -17,13 +17,13 @@ This manual defines the recovered C11 type system, 6502 memory map, cartridge he
 | [mg_world.h](../schemas/types/mg_world.h) | `99` | Actor Structure-of-Arrays slots, room/building/floor IDs, doors/elevators, guard AI & collision state |
 | [mg_audio.h](../schemas/types/mg_audio.h) | `95` | 6-channel sound driver slots, sequencer parse state, note/envelope timers, control opcodes |
 
-Inside `Corpus/readable/include/`, these type headers combine with `metalgear_globals.h`, `metalgear_functions.h`, and `ghidra_compat.h` (`8` headers total) to support 16-bit freestanding C11 parity builds across the local C tree.
+Inside `Corpus/readable/include/`, these type headers combine with `metalgear_globals.h` (`2,342` `extern` declarations = `2,324` catalog globals + `18` deduplicated synthetic/bank-scoped overrides from [d3_symbol_overrides.json](../schemas/d3_symbol_overrides.json), `0` raw Ghidra externs), `metalgear_functions.h` (including `8` synthesized `D3` adapters and `9` sub-entry prototypes), and `ghidra_compat.h` (`8` headers total) to support 16-bit freestanding C11 parity builds across all `26` cohesive `D3_Mapped` C modules.
 
 ---
 
 ## 2. Mapped 6502 Address-Space Globals (`2,324 / 2,324`)
 
-[globals_map.json](../schemas/globals_map.json) and [globals_index.json](../schemas/globals_index.json) classify every global symbol (`100%` of `2,324` referenced labels) across `10` hardware and ROM address bands:
+[globals_map.json](../schemas/globals_map.json) and [globals_index.json](../schemas/globals_index.json) classify every global symbol (`100%` of `2,324` referenced labels) across `10` hardware and ROM address bands (augmented at `D3_Mapped` by `20` override entries deduplicated into `18` unique `g_*` declarations in `metalgear_globals.h`):
 
 | Address Range | Memory Region | Mapped Globals | Notes |
 | :--- | :--- | ---: | :--- |
@@ -37,7 +37,7 @@ Inside `Corpus/readable/include/`, these type headers combine with `metalgear_gl
 | `$4000-$4025` | **APU / OAM-DMA / IO MMIO** | `23` | APU channels, `$4014` OAMDMA, `$4016/$4017` controller ports |
 | `$8000-$BFFF` | **Banked PRG ROM (`BANK_00..06`)** | `1,084` | Switchable lookup tables, room scripts, music sequences, sprites |
 | `$C000-$FFFF` | **Fixed PRG ROM (`PRG_FIXED_07`)** | `884` | Dispatch tables, `$FFD0-$FFD7` UNROM LUT, core data & vectors |
-| **Total** | **Full 6502 Address Space** | **`2,324`** | **`1,246` resident + `1,078` bank-scoped (`2,324 / 2,324`)** |
+| **Total** | **Full 6502 Address Space** | **`2,324`** | **`1,246` resident + `1,078` bank-scoped (`2,324 / 2,324`; `2,342` `extern`s w/ `18` synthetic aliases)** |
 
 ---
 
@@ -66,13 +66,15 @@ Inside `Corpus/readable/include/`, these type headers combine with `metalgear_gl
 
 | Artifact | Purpose & Current State |
 | :--- | :--- |
-| [d4_build_report.json](../schemas/d4_build_report.json) | Standard 18 v2 C11 build telemetry (`68/68` fragments compiled, `0` errors/warnings, `10/10` parity assertions passed; `craftsmanshipTellCount: 2866`, awaiting `v0.2.0`–`v0.3.0` refactoring; excluded from `v0.1.0` `D2` `.decomp`) |
-| [s4_verify_report.json](../schemas/s4_verify_report.json) | Standard 18 v2 host behavioral parity report (`10/10` assertions passing via modular `d4_harness/`) |
+| [d3_module_map.json](../schemas/d3_module_map.json) | Standard 18 v2 deterministic `26`-module partition (`10` `src/core/` + `16` `overlays/BANK_00..06.prg/`) assigning all `499/499` functions with `0` `_01.._NN.c` fragments |
+| [d3_symbol_overrides.json](../schemas/d3_symbol_overrides.json) | Standard 18 v2 clean-room symbol registry (`1` `localRenames`, `20` `syntheticGlobals` -> `18` deduplicated externs, `44` `functionCallOverrides`, `8` `trampolineDeclarations`, `9` `subEntryDeclarations`, `0` trademark tokens or C bodies) |
+| [d4_build_report.json](../schemas/d4_build_report.json) | Standard 18 v2 C11 build telemetry (`26/26` cohesive `D3_Mapped` modules compiled, `0` errors/warnings, `10/10` mapped parity assertions passed; `craftsmanshipTellCount: 2874`, awaiting `v0.3.0` `D4_CleanSource` refactoring; excluded from `v0.2.0` `D3` `.decomp`) |
+| [s4_verify_report.json](../schemas/s4_verify_report.json) | Standard 18 v2 host behavioral parity report (`10/10` assertions passing via mapped `g_*` globals in modular `d4_harness/`) |
 | [d5_byte_match.json](../schemas/d5_byte_match.json) | Standard 18 v2 `asm6502_d5.py` SHA-256 verification across `8/8` PRG binaries + `131,088`-byte reassembled ROM (`0` mismatched bytes) |
 | [spec_coverage.json](../schemas/spec_coverage.json) | Standard 18 v2 coverage summary (`499/499` functions, `2,324/2,324` globals, `definedStructCount: 22`, `definedEnumCount: 22`, `unresolvedFieldCount: 0`) |
-| [decomp_recipe.json](../schemas/decomp_recipe.json) | Clean-room `.decomp` recipe (`engineId: reCart`, `0.1.x`, `targetDecompTier: D2`, excluding `d4_harness/`, `tests/`, and `d4_build_report.json`) |
+| [decomp_recipe.json](../schemas/decomp_recipe.json) | Clean-room `.decomp` recipe (`engineId: reCart`, `0.1.x`, `targetDecompTier: D3`, `packageVersion: 0.2.0`, `decompSchemaVersion: 1.0.0`, excluding `d4_harness/`, `tests/`, and `d4_build_report.json`) |
 | [decomp_local.example.json](../schemas/decomp_local.example.json) | Template documenting `--data-dir`, `--out-dir`, `--tools-dir`, `--log-dir`, `--zig-exe`, and env overrides (`IRONFRAME_DATA_DIR`, `RD_DECOMP_TOOLS`, `ZIG_EXE`) |
 | [functions_catalog.json](../schemas/functions_catalog.json) | Complete `499`-function metadata catalog (`0` SDK, `0` failed) across `core` + `bank_00..06` |
 | [clusters.json](../schemas/clusters.json) | Domain clustering mapping functions, module splits, and cross-bank edges |
 | [call_graph.json](../schemas/call_graph.json) | Dependency waves `0..9` (`max_wave=9`), nontrivial SCC registry (`$94ED <-> $96E4`), and zero embedded strings (`strings: []`) |
-| [research.manifest.json](../research.manifest.json) | Research manifest (`schemaVersion: 2`, `version: 0.1.0`) locking `D2 / S4 / R0` baseline and targeting `D5 / S5 / R3` (`reCart` `0.1.x`) |
+| [research.manifest.json](../research.manifest.json) | Research manifest (`schemaVersion: 2`, `version: 0.2.0`) locking `D3 / S4 / R0` baseline (`preservedTiers: ["D1_Raw", "D2_Structured", "D3_Mapped"]`, `metrics.readableFiles: 38`, `gates.D3.passed: true`) and targeting `D5 / S5 / R3` (`reCart` `0.1.x`) |

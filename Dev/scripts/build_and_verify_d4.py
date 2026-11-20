@@ -1,6 +1,6 @@
 # @module: IronFrame.Dev.scripts.build_and_verify_d4
 # @purpose: Stage D4 Zig freestanding archive builder and native host parity harness verifier
-# @depends-on: argparse, json, os, pathlib, re, subprocess, sys, tempfile, nes_cli_common
+# @depends-on: argparse, json, os, pathlib, re, subprocess, sys, tempfile, coalesce_d4_modules, nes_cli_common
 # @exports: PASS1_FLAGS, TARGET_LINK_FUNCS, generate_globals_defs, generate_host_stubs, run_pass1_archive, run_pass2_host, main
 
 from __future__ import annotations
@@ -19,6 +19,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
+from coalesce_d4_modules import extract_func_blocks  # noqa: E402
 from nes_cli_common import (  # noqa: E402
     GAME_ID, detect_host_zig_target, missing_media_payload, resolve_paths,
     resolve_zig_executable, utc_now_iso, write_json_log,
@@ -34,17 +35,18 @@ _GHIDRA_CRAFT_RE = re.compile(
 PASS1_FLAGS = ["-std=gnu11", "-fsigned-char", "-O1", "-ffreestanding", "-fno-builtin"]
 TARGET_LINK_FUNCS = frozenset(
     "mg_fxa_enter_game_mode mg_fxa_advance_game_mode mg_fxa_tick_state_timer inline_jump_table_dispatch "
-    "unrom_select_bank_0 unrom_restore_active_bank read_joypads_edge_triggered mg_b034_hud_write_bcd_digit_tile "
-    "mg_b034_update_bridge_platforms_and_fall_check mg_b034_tick_countdown_timer_and_hud "
-    "mg_b034_set_timer_state_67 mg_b56_transceiver_update_freq_hud mg_b56_audio_update_channel "
-    "mg_b56_audio_parse_seq_event mg_b56_audio_exec_control_opcode mg_b56_audio_sync_pause_mute "
-    "mg_b56_audio_backup_pause_state mg_b56_audio_ramp_dmc_dac".split()
+    "unrom_select_bank_0 unrom_select_bank_6 unrom_restore_active_bank read_joypads_edge_triggered "
+    "mg_b034_hud_init_vram_queue_header mg_b034_hud_write_bcd_digit_tile mg_b034_update_bridge_platforms_and_fall_check "
+    "mg_b034_tick_countdown_timer_and_hud mg_b034_set_timer_state_67 mg_b56_transceiver_update_freq_hud "
+    "mg_b56_audio_update_channel mg_b56_audio_parse_seq_event mg_b56_audio_exec_control_opcode "
+    "mg_b56_audio_sync_pause_mute mg_b56_audio_backup_pause_state mg_b56_audio_ramp_dmc_dac".split()
 )
 _SYNTH_U8 = (
     "g_game_mode g_game_submode g_frame_counter g_title_exit_flag g_pause_flag g_state_timer_lo "
     "g_state_timer_hi g_apu_pulse1_ctrl g_apu_pulse1_sweep g_apu_pulse2_ctrl g_apu_pulse2_sweep "
-    "g_apu_noise_ctrl g_apu_dmc_dac DAT_0067 DAT_0071 DAT_00ea DAT_00eb DAT_0384 DAT_0388 DAT_038a "
-    "DAT_0390 DAT_0396 DAT_039c DAT_03a2 DAT_03ae DAT_03cc DAT_03d8 DAT_03f8 DAT_03ff DAT_0740 DAT_0741"
+    "g_apu_noise_ctrl g_apu_dmc_dac g_zp_var_0067 g_zp_var_0071 g_zp_var_00ea g_zp_var_00eb "
+    "g_snd_ram_0384 g_snd_ram_0388 g_snd_ram_038a g_snd_ram_0390 g_snd_ram_0396 g_snd_ram_039c "
+    "g_snd_ram_03a2 g_snd_ram_03ae g_snd_ram_03cc g_snd_ram_03d8 g_snd_pause_state g_wram_0741"
 ).split()
 _SYNTH_FUNCS = (
     "void unrom_select_bank_0(void); void unrom_select_bank_6(void); void mg_b034_hud_init_vram_queue_header(void); "
@@ -92,15 +94,17 @@ def generate_globals_defs(globals_h: Path, dst_c: Path) -> int:
     return len(lines) - 1
 
 
-def _select_link_tus(c_files: list[Path]) -> tuple[list[Path], set[str]]:
-    selected, defined = [], set()
-    def_re = re.compile(r"^[A-Za-z_][\w\s\*]*?\b([A-Za-z_]\w*)\s*\([^;]*\)\s*\{", re.MULTILINE)
+def _build_host_target_tu(c_files: list[Path], dst_c: Path) -> tuple[list[Path], set[str]]:
+    hdr = '#include "metalgear_types.h"\n#include "metalgear_globals.h"\n#include "metalgear_functions.h"\n\n'
+    blocks, defined = [], set()
     for cf in c_files:
-        defs = set(def_re.findall(cf.read_text(encoding="utf-8", errors="replace")))
-        if defs & TARGET_LINK_FUNCS:
-            selected.append(cf)
-            defined |= defs
-    return selected, defined
+        for _addr, name, blk in extract_func_blocks(cf.read_text(encoding="utf-8", errors="replace")):
+            if name in TARGET_LINK_FUNCS and name not in defined:
+                defined.add(name)
+                blocks.append(blk)
+    dst_c.parent.mkdir(parents=True, exist_ok=True)
+    dst_c.write_text(hdr + "\n\n".join(blocks) + "\n", encoding="utf-8", newline="\n")
+    return [dst_c], defined
 
 
 def generate_host_stubs(functions_h: Path, compat_h: Path, defined_syms: set[str], dst_c: Path) -> int:
@@ -156,7 +160,7 @@ def run_pass2_host(zig: Path, env: dict[str, str], host_target: str, c_files: li
     """Link selected readable TUs against d4_harness/*.c and run host parity assertions."""
     host_dir = work_dir / "build" / "host"
     host_dir.mkdir(parents=True, exist_ok=True)
-    linked_tus, defined_syms = _select_link_tus(c_files)
+    linked_tus, defined_syms = _build_host_target_tu(c_files, host_dir / "host_targets.c")
     stubs_c, inc_dir, harness_dir = host_dir / "host_stubs.c", readable_dir / "include", SCRIPT_DIR / "d4_harness"
     harness_c = sorted(harness_dir.glob("*.c"))
     generate_host_stubs(inc_dir / "metalgear_functions.h", inc_dir / "ghidra_compat.h", defined_syms, stubs_c)
@@ -200,7 +204,7 @@ def _run_offline_synthetic(zig: Path, zig_ver: str, host_target: str, out_dir: P
         env, inc = _zig_env(work), work / "synth_inc"
         target = _probe_target(zig, env, work)
         inc.mkdir(parents=True, exist_ok=True)
-        (inc / "metalgear_globals.h").write_text("#pragma once\n#include <stdint.h>\nextern uint8_t BYTE_ARRAY_ff99[];\n" + "\n".join(f"extern uint8_t {g};" for g in _SYNTH_U8) + "\n", encoding="utf-8")
+        (inc / "metalgear_globals.h").write_text("#pragma once\n#include <stdint.h>\nextern uint8_t g_fixed_tbl_ff99[97], g_vram_transfer_queue[64], g_snd_pause_backup[7];\n" + "\n".join(f"extern uint8_t {g};" for g in _SYNTH_U8) + "\n", encoding="utf-8")
         (inc / "metalgear_functions.h").write_text("#pragma once\n#include <stdint.h>\ntypedef uint8_t byte;\n" + _SYNTH_FUNCS.replace("; ", ";\n") + "\n", encoding="utf-8")
         globals_c, stubs_c = work / "synth_globals.c", work / "synth_stubs.c"
         generate_globals_defs(inc / "metalgear_globals.h", globals_c)

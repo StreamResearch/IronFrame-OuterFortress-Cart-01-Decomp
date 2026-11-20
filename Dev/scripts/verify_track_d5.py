@@ -1,6 +1,6 @@
 # @module: IronFrame.Dev.scripts.verify_track_d5
 # @purpose: Unified Tier R Stage D0-D5 / S0-S4 integrity, schemas, SLOC, and hygiene verifier
-# @depends-on: argparse, hashlib, json, pathlib, re, subprocess, sys, zlib, asm6502_d5, nes_cli_common
+# @depends-on: argparse, hashlib, json, pathlib, re, subprocess, sys, zlib, asm6502_d5, coalesce_d4_modules, nes_cli_common
 # @exports: main
 
 from __future__ import annotations
@@ -20,6 +20,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from asm6502_d5 import OPCODES, assemble_text  # noqa: E402
+from coalesce_d4_modules import scan_raw_symbols  # noqa: E402
 from nes_cli_common import (  # noqa: E402
     GAME_ID,
     crc32_hex,
@@ -37,6 +38,8 @@ _EXPECTED_ROM_CRC32 = "25ba3d04"
 _EXPECTED_ROM_SHA1 = "9f7448fddaedc1801e2970e50722ac3cfacd19b8"
 _EXPECTED_ROM_SHA256 = "79095355436222161cb3841ff9b5c7a572e77af11461935e433bd6e8dfd0f164"
 _RAW_COL_RE = re.compile(r"^\$[0-9A-Fa-f]{4}:\s+[0-9A-Fa-f]{2}\b", re.M)
+_FRAG_RE = re.compile(r"_\d{2}\.c$")
+_BANKS_8 = [f"BANK_{b:02d}.prg" for b in range(7)] + ["PRG_FIXED_07.prg"]
 _BANNED_NAME_RE = re.compile(r"^(FUN_|fn_[0-9a-fA-F]+|func_[0-9a-fA-F]+|sub_[0-9a-fA-F]+|unk_|todo_|helper_[0-9]+$)")
 _PARAM_PH_RE = re.compile(r"^param_[0-9]+$")
 _LEGACY_V1_KEYS = frozenset({
@@ -68,16 +71,19 @@ def _check_manifest(paths: Any, checks: list[dict[str, Any]]) -> dict[str, Any]:
         _rec(checks, "manifest_honest_state", False, "Missing or invalid Dev/research.manifest.json")
         return {}
     gates = m.get("gates") or {}
-    d_ok = all((gates.get(t) or {}).get("passed") is True for t in ("D0", "D1", "D2"))
+    tier_cur = m.get("currentDecompTier")
+    d_req = ("D0", "D1", "D2", "D3") if tier_cur in ("D3", "D4", "D5") else ("D0", "D1", "D2")
+    d_ok = all((gates.get(t) or {}).get("passed") is True for t in d_req)
+    pres_ok = (m.get("preservedTiers") == ["D1_Raw", "D2_Structured", "D3_Mapped"]) if tier_cur in ("D3", "D4", "D5") else True
     s_ok = all((gates.get(t) or {}).get("passed") is True for t in ("S0", "S1", "S2", "S3", "S4"))
     met = m.get("metrics") or {}
     ws_ok = (paths.dev_dir / str(m.get("workspaceFile") or "")).is_file()
     ok = (
         m.get("schemaVersion") == 2 and m.get("gameId") == GAME_ID
-        and m.get("currentDecompTier") in ("D2", "D3", "D4", "D5") and m.get("goalDecompTier") == "D5"
+        and tier_cur in ("D2", "D3", "D4", "D5") and m.get("goalDecompTier") == "D5"
         and m.get("currentStudyTier") == "S4" and m.get("goalStudyTier") == "S5"
         and met.get("failedFunctions") == 0 and met.get("functionsTotal") == 499 and met.get("functionsNamed") == 499
-        and met.get("globalsTotal") == 2324 and met.get("globalsMapped") == 2324 and d_ok and s_ok and ws_ok
+        and met.get("globalsTotal") == 2324 and met.get("globalsMapped") == 2324 and d_ok and pres_ok and s_ok and ws_ok
     )
     _rec(checks, "manifest_honest_state", ok, f"D={m.get('currentDecompTier')}/{m.get('goalDecompTier')}, S={m.get('currentStudyTier')}/{m.get('goalStudyTier')}, fn={met.get('functionsNamed')}, g={met.get('globalsMapped')}, ws={ws_ok}")
     return m
@@ -122,11 +128,24 @@ def _check_schemas(paths: Any, checks: list[dict[str, Any]]) -> list[tuple[str, 
     )
     _rec(checks, "stage1_to_3_schemas", s13_ok, f"funcs={len(set(f_names))}/499, globals={len(set(g_names))}/2324, specUnres={sp.get('unresolvedFieldCount') if isinstance(sp, dict) else None}")
 
+    d3m, d3o = _load_json(sc / "d3_module_map.json"), _load_json(sc / "d3_symbol_overrides.json")
+    mods = d3m.get("modules") or [] if isinstance(d3m, dict) else []
+    m_fns = [fn for mod in mods if isinstance(mod, dict) for fn in (mod.get("functions") or [])]
+    d3_ok = (
+        isinstance(d3m, dict) and d3m.get("schemaVersion") == 2 and d3m.get("gameId") == GAME_ID
+        and d3m.get("moduleCount") == 26 and d3m.get("functionCount") == 499
+        and len(mods) == 26 and len(m_fns) == 499 and len(set(m_fns)) == 499
+        and isinstance(d3o, dict) and d3o.get("schemaVersion") == 2 and d3o.get("gameId") == GAME_ID
+        and all(bool(d3o.get(k)) for k in ("syntheticGlobals", "functionCallOverrides", "trampolineDeclarations", "subEntryDeclarations"))
+    )
+    _rec(checks, "d3_mapping_schemas_v2", d3_ok, f"mods={len(mods)}/26, fns={len(set(m_fns))}/499, d3o={d3o.get('schemaVersion') if isinstance(d3o, dict) else None}")
+
     d4, s4, d5 = _load_json(sc / "d4_build_report.json"), _load_json(sc / "s4_verify_report.json"), _load_json(sc / "d5_byte_match.json")
     v2_clean = all(isinstance(r, dict) and r.get("schemaVersion") == 2 and r.get("gameId") == GAME_ID and not _has_legacy_v1(r) for r in (d4, s4, d5))
     rep_ok = (
         v2_clean and d4.get("isPassed") is True and d4.get("compilerErrorCount") == 0 and d4.get("compilerWarningCount") == 0
-        and int(d4.get("assertionsPassedCount", 0)) >= 10 and int(d4.get("compiledFileCount", 0)) >= 68
+        and int(d4.get("assertionsPassedCount", 0)) >= 10 and int(d4.get("compiledFileCount", 0)) >= 26
+        and d4.get("compiledFileCount") == d4.get("totalReadableFiles")
         and s4.get("isPassed") is True and s4.get("compilerErrorCount") == 0 and s4.get("compilerWarningCount") == 0
         and int(s4.get("assertionsPassedCount", 0)) >= 10 and d5.get("isPassed") is True
         and d5.get("matchedBinaryCount") == 8 and d5.get("mismatchedBytes") == 0 and str(d5.get("crc32Hex", "")).lower() == _EXPECTED_ROM_CRC32
@@ -170,10 +189,18 @@ def _check_corpus_artifacts(paths: Any, entries: list[tuple[str, int | None, str
     ]
     _rec(checks, "corpus_standalone_files", len(entries) == 17 and not bad_ent, f"entries={len(entries)}, bad={bad_ent[:3]}")
     c_files = sorted(paths.readable_dir.rglob("*.c"))
+    frags = [p.name for p in c_files if _FRAG_RE.search(p.name)]
+    raw_c = scan_raw_symbols(paths.readable_dir)
     failed_m = sum(1 for p in c_files if "DECOMPILE FAILED" in p.read_text(encoding="utf-8", errors="replace"))
     compat = paths.readable_dir / "include" / "ghidra_compat.h"
     rec_inc = compat.is_file() and bool(re.search(r'^\s*#include\s+"[^"]*_types\.h"', compat.read_text(encoding="utf-8"), re.M))
-    _rec(checks, "corpus_readable_c_tree", len(c_files) >= 68 and failed_m == 0 and compat.is_file() and not rec_inc and (paths.readable_dir / "compile_commands.json").is_file(), f"cFiles={len(c_files)}, failedMarkers={failed_m}")
+    _rec(checks, "corpus_readable_c_tree", len(c_files) == 26 and not frags and not raw_c and failed_m == 0 and compat.is_file() and not rec_inc and (paths.readable_dir / "compile_commands.json").is_file(), f"cFiles={len(c_files)}/26, frags={len(frags)}, raw={len(raw_c)}, failed={failed_m}")
+    tiers_dir, d3_dir = paths.corpus_root / "tiers", paths.corpus_root / "tiers" / "D3_Mapped"
+    d1_ok = all((tiers_dir / "D1_Raw" / b / "functions.json").is_file() for b in _BANKS_8)
+    d2_cnt = sum(1 for _ in (tiers_dir / "D2_Structured").rglob("*.c")) if (tiers_dir / "D2_Structured").is_dir() else 0
+    d3_c = list(d3_dir.rglob("*.c")) if d3_dir.is_dir() else []
+    d3_raw = scan_raw_symbols(d3_dir) if d3_dir.is_dir() else ["missing"]
+    _rec(checks, "corpus_tiers_d1_to_d3", d1_ok and d2_cnt == 68 and len(d3_c) == 26 and not d3_raw, f"d1={d1_ok}, d2={d2_cnt}/68, d3={len(d3_c)}/26, d3Raw={len(d3_raw)}")
 
     arch = paths.work_dir / "build" / "le16" / "libmetal_gear_d4.a"
     runner = paths.work_dir / "build" / "host" / ("d4_parity_runner.exe" if sys.platform == "win32" else "d4_parity_runner")

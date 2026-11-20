@@ -4,7 +4,7 @@
   "manifestType": "research-repo",
   "appId": "ironframe-outerfortress-cart-01-decomp",
   "researchId": "ironframe-outerfortress-cart-01-decomp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "gameId": "ironframe-outerfortress-cart-01",
   "title": "IronFrame OuterFortress (Cart) 01",
   "platform": "nes",
@@ -16,10 +16,14 @@
   "serialOrHash": "NES-ME-USA",
   "abiProfile": "nes-ines-6502",
   "researchAxis": "hybrid",
-  "currentDecompTier": "D2",
+  "currentDecompTier": "D3",
   "goalDecompTier": "D5",
   "d4ParityTier": "none",
-  "preservedTiers": [],
+  "preservedTiers": [
+    "D1_Raw",
+    "D2_Structured",
+    "D3_Mapped"
+  ],
   "currentStudyTier": "S4",
   "goalStudyTier": "S5",
   "currentRecompTier": "R0",
@@ -96,7 +100,7 @@
     "globalsTotal": 2324,
     "globalsMapped": 2324,
     "domainsCount": 8,
-    "readableFiles": 77,
+    "readableFiles": 38,
     "workspaceReady": true,
     "structsDefined": 22
   },
@@ -114,8 +118,8 @@
       "verifiedAtUtc": "2026-11-13T09:37:08Z"
     },
     "D3": {
-      "passed": false,
-      "verifiedAtUtc": null
+      "passed": true,
+      "verifiedAtUtc": "2026-11-20T08:52:11.837Z"
     },
     "D4": {
       "passed": false,
@@ -198,5 +202,5 @@
       "verifiedAtUtc": null
     }
   },
-  "updatedAtUtc": "2026-11-20T05:30:00.000Z"
+  "updatedAtUtc": "2026-11-20T08:52:11.837Z"
 }

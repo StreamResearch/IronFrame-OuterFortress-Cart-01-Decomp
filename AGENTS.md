@@ -1,6 +1,6 @@
 # Context: IronFrame-OuterFortress-Cart-01-Decomp
 
-- **Tier R (`nes`):** `D2/S4/R0` (`goal: D5/S5/R3`, target engine `reCart` `0.1.x`). Zero `Builds`/`Releases`; `Corpus` & `Dev/data/` gitignored (`-xr!Corpus\*`, `standalone/` RO).
+- **Tier R (`nes`):** `D3/S4/R0` (`goal: D5/S5/R3`, target engine `reCart` `0.1.x`, `v0.2.0` `26` cohesive `D3_Mapped` C modules). Zero `Builds`/`Releases`; `Corpus` & `Dev/data/` gitignored (`-xr!Corpus\*`, `standalone/` RO).
 - **Control:** [research.manifest.json](Dev/research.manifest.json) | [decomp_recipe.json](Dev/schemas/decomp_recipe.json) | [IronFrame-OuterFortress-Cart-01-Decomp.code-workspace](Dev/IronFrame-OuterFortress-Cart-01-Decomp.code-workspace) | Downstream: `MetalGearRecomp` (`read-only`)
 
 ## 1. Quartet, Security & State

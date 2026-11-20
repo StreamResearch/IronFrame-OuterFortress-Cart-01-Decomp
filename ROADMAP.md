@@ -1,6 +1,6 @@
 # Roadmap
 
-Current baseline: **v0.1.0 (Beta — `D2/S4/R0` Baseline & Clean-Room `.decomp`)** | Active target: **v0.1.0** | See [CHANGELOG.md](CHANGELOG.md) for release notes.
+Current baseline: **v0.2.0 (Beta — Cohesive Mapped C & Multi-Tier Snapshots)** | Active target: **v0.2.0** | See [CHANGELOG.md](CHANGELOG.md) for release notes.
 
 ## Vision
 
@@ -15,25 +15,23 @@ flowchart LR
     V040 --> V100["v1.0.0: Byte-Exact & Archival Gold"]
 ```
 
-## Active Milestone: v0.1.0 — Clean-Room Scaffolding, Portable Package & Public Storefront
+## Active Milestone: v0.2.0 — Mapped Cohesive C Modules & Multi-Tier Snapshots
 
-- [x] Establish coded repository identity (`IronFrame-OuterFortress-Cart-01-Decomp`), community health templates, security and contribution guides, offline CI checks (`.github/workflows/ci.yml`), clean-room emblems (`Dev/assets/`), and human-first GitHub Pages static site workflow (`.github/workflows/pages.yml`).
-- [x] Scrub workstation paths, personal archive paths, and uncoded trademarks across root docs, technical manuals, headers, catalogs, stage notes, and IDE workspace configuration.
-- [x] Purge all four embedded `BANK_06` C function bodies and `READABLE_FIXES` from `Dev/scripts/gen_d4_globals_and_lifts.py` and centralize standalone CLI path overrides (`--data-dir`, `--out-dir`, `--log-dir`, `--offline-synthetic`) via `Dev/scripts/nes_cli_common.py`.
-- [x] Author self-contained `nes_unrom_unpack.py` + `nes_6502_cfg.py`, upgrade `standalone_integrity.json` to v2 (`1` BYO-ROM checksum + `17` deterministic `extracted/` entries), and export `reCart` (`0.1.x`) validated `IronFrame-OuterFortress-Cart-01.decomp` via `export_decomp_bundle.py` and `package_release.py`.
-- [x] Split `d4_harness/` into four modular C/H files (`<= 200` lines each), fix UNROM `$8000` bank-swap and sound pause-mute tests (`10/10`), verify `14/14` offline `unittest` tests and `12/12` `verify_track_d5.py` checks (`D2/S4/R0`), and upgrade all JSON reports to schema v2.
-- [x] Rebuild clean local source archive snapshots, perform human-reviewed clean Git history reset, publish the `v0.1.0` pre-release, and activate live GitHub Pages.
+- [x] Author clean-room partition and symbol-override schemas (`d3_module_map.json`, `d3_symbol_overrides.json`) grouping all `499` functions across `26` domain C modules (`10` core fixed-bank modules + `16` switchable-bank overlay modules) and resolving `1` local label, `20` synthetic/bank-scoped symbol entries (`18` deduplicated externs), `44` raw function overrides, `8` declarative bank/signature adapters, and `9` sub-entry prototypes.
+- [x] Build `coalesce_d4_modules.py` and `materialize_decomp_tiers.py` (`<= 250` code lines each, reusing shared CLI containment) to replace all `68` line-split fragments with the `26` cohesive domain modules, rewrite all `299` raw symbol aliases and `44` raw calls (`0` remaining raw tokens), synthesize the `8` adapters into `core_unrom_and_math.c`, and preserve raw, sliced, and mapped local snapshot tiers.
+- [x] Upgrade `d4_harness/` and `build_and_verify_d4.py` to mapped `g_*` scalar and array globals (`g_fixed_tbl_ff99`, `g_vram_transfer_queue`, `g_snd_pause_backup`), verifying `26/26` freestanding C11 module compilations (`0` errors, `0` warnings) and `10/10` host parity assertions alongside `8/8` ROM bank `1:1` byte-exact 6502 assembly (`CRC32=25BA3D04`).
+- [x] Expand the offline `unittest` suite (`18/18` passing, adding `test_tiers_and_coalesce.py`) and `verify_track_d5.py` (`14/14` full checks, `8/8` offline synthetic), validate `v0.2.0` `IronFrame-OuterFortress-Cart-01.decomp` strictly against `reCart` (`0.1.x`) clean-room rules, synchronize documentation and release bundles, and cut clean source archives.
 
 ## Upcoming Milestones
 
-- **v0.2.0 — Mapped Cohesive C:** Coalesce all `499` functions from `68` legacy line-split fragments into logical domain C modules, resolve remaining raw global aliases and missing declarations, and materialize local multi-tier snapshot trees.
-- **v0.3.0 — Clean Idiomatic C & Subsystem Parity:** Refactor every function file-by-file into human-authored C11 with zero decompiler tells, remove compiler/linter suppressions, compile cleanly under `-Wall -Wextra -Wno-unused-parameter`, and ship zero-body rewrite shards.
+- **v0.3.0 — Clean Idiomatic C & Subsystem Parity:** Refactor every function file-by-file into human-authored C11 with zero decompiler idioms, remove compiler/linter suppressions, compile cleanly under `-Wall -Wextra -Wno-unused-parameter`, and ship zero-body rewrite shards.
 - **v0.4.0 — Frame-by-Frame Execution Lockstep & Bank Decoders:** Build a clean-room NES bus runtime to verify multi-scene WRAM/OAM/PPU/APU traces against reference execution oracles (with hardware stack masked transparently), and ship flat decoders and specification chapters for Bank `1..4` and sound tables.
 - **v1.0.0 — Byte-Exact & Archival Reference Gold:** Certify clean-room end-to-end ROM verification from a fresh clone with user-supplied media, finalize zero-gap format coverage (`0` unresolved fields) and technical manuals, and publish the non-prerelease Gold milestone.
 
 ## Completed Milestones
 
-- [x] **v0.1.0 Clean-Room Tooling & Baseline (`2026-11-20`):** Verified `1:1` 6502 assembly reassembly across `8 / 8` PRG banks (`131,088` bytes, `CRC32=25BA3D04`), indexed `499 / 499` functions and `2,324 / 2,324` globals across `22` structs and `22` enums (`D2/S4/R0`), delivered BYO-ROM unpacking and `reCart` (`0.1.x`) validated `IronFrame-OuterFortress-Cart-01.decomp`, passed `14/14` offline `unittest` cases and `12/12` `verify_track_d5.py` checks, and shipped the `v0.1.0` pre-release and human-first GitHub Pages site. ([Notes](CHANGELOG.md#010---2026-11-20))
+- [x] **v0.2.0 Mapped Cohesive C Modules & Multi-Tier Snapshots (`2026-11-20`):** Coalesced all `499 / 499` functions from `68` line-split fragments into `26` cohesive domain C modules (`10` core + `16` overlay modules), resolved all `299` raw symbol aliases and `44` raw cross-bank calls (`0` remaining raw tokens, `8` synthesized adapters), preserved raw/sliced/mapped local snapshot tiers, compiled `26/26` C11 modules (`0` errors/warnings, `10/10` mapped host parity), matched `8/8` ROM banks `1:1` (`CRC32=25BA3D04`), passed `18/18` offline `unittest` cases and `14/14` `verify_track_d5.py` checks, and shipped the validated `v0.2.0` `.decomp` bundle. ([Notes](CHANGELOG.md#020---2026-11-20))
+- [x] **v0.1.0 Clean-Room Tooling & Baseline (`2026-11-20`):** Verified `1:1` 6502 assembly reassembly across `8 / 8` PRG banks (`131,088` bytes, `CRC32=25BA3D04`), indexed `499 / 499` functions and `2,324 / 2,324` globals across `22` structs and `22` enums, delivered BYO-ROM unpacking and `reCart` (`0.1.x`) validated `IronFrame-OuterFortress-Cart-01.decomp`, passed `14/14` offline `unittest` cases and `12/12` `verify_track_d5.py` checks, and shipped the `v0.1.0` pre-release and human-first GitHub Pages site. ([Notes](CHANGELOG.md#010---2026-11-20))
 
 ## Icebox
 

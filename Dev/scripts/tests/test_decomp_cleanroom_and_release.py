@@ -51,6 +51,9 @@ class TestDecompBundleCleanroom(unittest.TestCase):
         self.assertEqual(manifest["moduleId"], "ironframe-outerfortress-cart-01")
         self.assertEqual(manifest["engineId"], "reCart")
         self.assertEqual(manifest["upstreamResearchPath"], "IronFrame-OuterFortress-Cart-01-Decomp")
+        self.assertEqual(manifest["packageVersion"], "0.2.0")
+        self.assertEqual(manifest["targetDecompTier"], "D3")
+        self.assertEqual(manifest["decompSchemaVersion"], "1.0.0")
 
         with tempfile.TemporaryDirectory(prefix="t_decomp_exp_") as tmp:
             troot = Path(tmp)
@@ -64,6 +67,8 @@ class TestDecompBundleCleanroom(unittest.TestCase):
             with zipfile.ZipFile(out1, "r") as zf:
                 names = set(zf.namelist())
             self.assertIn("module.decomp.json", names)
+            self.assertIn("Dev/schemas/d3_module_map.json", names)
+            self.assertIn("Dev/schemas/d3_symbol_overrides.json", names)
             self.assertNotIn("Dev/schemas/d4_build_report.json", names)
             self.assertFalse(any(n.startswith(("Dev/scripts/d4_harness/", "Dev/scripts/tests/")) for n in names))
 

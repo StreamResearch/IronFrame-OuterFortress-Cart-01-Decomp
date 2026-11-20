@@ -77,12 +77,12 @@ static int test_03_unrom_bank_switch(const char *dir, TestResult *r) {
             bank_ids_ok = 0;
         }
     }
-    BYTE_ARRAY_ff99[0x37] = 0xFFu;
-    BYTE_ARRAY_ff99[0x3d] = 0xFFu;
+    g_fixed_tbl_ff99[0x37] = 0xFFu;
+    g_fixed_tbl_ff99[0x3d] = 0xFFu;
     unrom_select_bank_0();
-    int s0 = (BYTE_ARRAY_ff99[0x37] == 0u);
+    int s0 = (g_fixed_tbl_ff99[0x37] == 0u);
     unrom_select_bank_6();
-    int s6 = (BYTE_ARRAY_ff99[0x3d] == 6u);
+    int s6 = (g_fixed_tbl_ff99[0x3d] == 6u);
     snprintf(r->detail, sizeof(r->detail), "c94c=%d c958=%d bank_ids=%d bank0=%d bank6=%d",
              c94c_ok, c958_ok, bank_ids_ok, s0, s6);
     return c94c_ok && c958_ok && bank_ids_ok && s0 && s6;
@@ -107,11 +107,11 @@ static int test_04_bcd_digit_conversion(const char *dir, TestResult *r) {
             bcd_ok = 0;
         }
     }
-    DAT_0740 = 0u;
-    DAT_0741 = 0u;
+    g_vram_transfer_queue[0] = 0u;
+    g_wram_0741 = 0u;
     mg_b034_hud_init_vram_queue_header();
-    int hdr_ok = (DAT_0740 == 1u) && (DAT_0741 == 0x23u);
-    snprintf(r->detail, sizeof(r->detail), "ca2c_sig=%d hud_hdr=(%u,0x%02X)", bcd_ok, DAT_0740, DAT_0741);
+    int hdr_ok = (g_vram_transfer_queue[0] == 1u) && (g_wram_0741 == 0x23u);
+    snprintf(r->detail, sizeof(r->detail), "ca2c_sig=%d hud_hdr=(%u,0x%02X)", bcd_ok, g_vram_transfer_queue[0], g_wram_0741);
     return bcd_ok && hdr_ok;
 }
 

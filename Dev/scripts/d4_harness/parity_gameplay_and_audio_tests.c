@@ -14,18 +14,18 @@ static int test_06_self_destruct_countdown(const char *dir, TestResult *r) {
     int sig_ok = (bank0[0x3F50u] == 0xA5u) && (bank0[0x3F51u] == 0x67u) &&
                  (bank0[0x3F52u] == 0xC9u) && (bank0[0x3F53u] == 0x07u) &&
                  (bank0[0x3F7Au] == 0x20u) && (bank0[0x3F7Bu] == 0x2Cu) && (bank0[0x3F7Cu] == 0xCAu);
-    DAT_0067 = 0u;
+    g_zp_var_0067 = 0u;
     mg_b034_set_timer_state_67(7u);
-    int set_ok = (DAT_0067 == 7u);
-    DAT_0071 = 1u;
+    int set_ok = (g_zp_var_0067 == 7u);
+    g_zp_var_0071 = 1u;
     g_frame_counter = 3u;
     mg_b034_tick_countdown_timer_and_hud();
-    int tick_ok = (DAT_0067 == 0u);
+    int tick_ok = (g_zp_var_0067 == 0u);
     g_state_timer_lo = 2u;
     g_state_timer_hi = 0u;
     uint8_t rem = mg_fxa_tick_state_timer();
     int state_ok = (g_state_timer_lo == 1u) && (rem != 0u);
-    snprintf(r->detail, sizeof(r->detail), "sig=%d timer_67=(7->%u) state_lo=%u", sig_ok && set_ok, DAT_0067, g_state_timer_lo);
+    snprintf(r->detail, sizeof(r->detail), "sig=%d timer_67=(7->%u) state_lo=%u", sig_ok && set_ok, g_zp_var_0067, g_state_timer_lo);
     return sig_ok && set_ok && tick_ok && state_ok;
 }
 
@@ -91,42 +91,42 @@ static int test_09_bank06_audio_pause_mute(const char *dir, TestResult *r) {
                 (bank6[0x1708u] == 0xFEu) && (bank6[0x1709u] == 0xCEu) && (bank6[0x170Au] == 0x03u);
 
     const uint8_t saved_d8 = 0x41u;
-    DAT_03d8 = saved_d8;
-    DAT_03cc = 0x42u;
-    DAT_0390 = 0x43u;
-    DAT_0396 = 0x44u;
-    DAT_0384 = 0x45u;
-    DAT_039c = 0x46u;
-    DAT_03a2 = 0x47u;
-    DAT_03ff = 0u;
-    DAT_03ae = 0u;
+    g_snd_ram_03d8 = saved_d8;
+    g_snd_ram_03cc = 0x42u;
+    g_snd_ram_0390 = 0x43u;
+    g_snd_ram_0396 = 0x44u;
+    g_snd_ram_0384 = 0x45u;
+    g_snd_ram_039c = 0x46u;
+    g_snd_ram_03a2 = 0x47u;
+    g_snd_pause_state = 0u;
+    g_snd_ram_03ae = 0u;
     g_apu_pulse1_ctrl = 0u;
     g_apu_pulse2_ctrl = 0u;
     g_apu_noise_ctrl = 0u;
     g_apu_pulse1_sweep = 0u;
     g_apu_pulse2_sweep = 0u;
     g_pause_flag = 1u;
-    DAT_00ea = 0u;
-    DAT_038a = 0x31u;
+    g_zp_var_00ea = 0u;
+    g_snd_ram_038a = 0x31u;
     mg_b56_audio_sync_pause_mute();
-    int pause_ok = (DAT_00ea == 1u) && (DAT_03ff == 0x31u) && (DAT_03f8 == saved_d8) &&
+    int pause_ok = (g_zp_var_00ea == 1u) && (g_snd_pause_state == 0x31u) && (g_snd_pause_backup[0] == saved_d8) &&
                    (g_apu_pulse1_ctrl == 0x30u) && (g_apu_pulse2_ctrl == 0x30u) &&
                    (g_apu_noise_ctrl == 0x30u) && (g_apu_pulse1_sweep == 0x7fu) &&
                    (g_apu_pulse2_sweep == 0x7fu);
 
-    DAT_03d8 = 0u;
-    DAT_039c = 0u;
-    DAT_03a2 = 0u;
+    g_snd_ram_03d8 = 0u;
+    g_snd_ram_039c = 0u;
+    g_snd_ram_03a2 = 0u;
     g_pause_flag = 0u;
     mg_b56_audio_sync_pause_mute();
-    int resume_ok = (DAT_00ea == 0u) && (DAT_03ff == 0u) &&
-                    (DAT_03d8 == saved_d8) && (DAT_039c == 0x46u) && (DAT_03a2 == 0x47u);
+    int resume_ok = (g_zp_var_00ea == 0u) && (g_snd_pause_state == 0u) &&
+                    (g_snd_ram_03d8 == saved_d8) && (g_snd_ram_039c == 0x46u) && (g_snd_ram_03a2 == 0x47u);
 
-    DAT_0388 = 0u;
-    DAT_00eb = 12u;
+    g_snd_ram_0388 = 0u;
+    g_zp_var_00eb = 12u;
     g_apu_dmc_dac = 0u;
     mg_b56_audio_ramp_dmc_dac();
-    int dmc_ok = (DAT_00eb == 8u) && (g_apu_dmc_dac == 8u);
+    int dmc_ok = (g_zp_var_00eb == 8u) && (g_apu_dmc_dac == 8u);
 
     snprintf(r->detail, sizeof(r->detail), "note_lut_12=%d fe_loop_sig=%d pause=%d resume=%d dmc=%d",
              note_ok, fe_ok, pause_ok, resume_ok, dmc_ok);
