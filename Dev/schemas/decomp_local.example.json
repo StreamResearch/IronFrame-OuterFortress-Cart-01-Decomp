@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "usageNotes": "Copy this template to gitignored Dev/data/decomp_local.json or configure the listed CLI flags and environment variables locally without modifying tracked files.",
+  "cliOverrides": {
+    "dataDirFlag": "--data-dir <path-to-local-corpus-or-work-dir>",
+    "outDirFlag": "--out-dir <path-to-local-output-dir>",
+    "toolsDirFlag": "--tools-dir <path-to-rd-decomp-tools>",
+    "logDirFlag": "--log-dir <path-to-local-logs>",
+    "zigExeFlag": "--zig-exe <path-to-zig-executable>",
+    "outFlag": "--out <path-to-output.decomp>"
+  },
+  "environmentVariables": {
+    "IRONFRAME_DATA_DIR": "./Corpus",
+    "RD_DECOMP_TOOLS": "../../Personal/R&D/Dev/tools/decomp",
+    "ZIG_EXE": "zig"
+  },
+  "localPathsExample": {
+    "dataDirectory": "./Corpus",
+    "unpackedOutputDirectory": "./Corpus/work/unpacked",
+    "decompBundleOutputPath": "./Corpus/work/extracts/ironframe-outerfortress-cart-01-v0.1.0.decomp",
+    "toolsDirectory": "../../Personal/R&D/Dev/tools/decomp",
+    "zigExecutablePath": "zig",
+    "logDirectory": "./Dev/logs"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "generatedAtUtc": "2026-11-20T06:51:09.657Z",
+  "tierMode": "tier_r",
+  "target": "msp430-freestanding-none",
+  "hostParityTarget": "x86-windows-gnu",
+  "compiler": "zig cc 0.17.0",
+  "compilerFlags": [
+    "-std=gnu11",
+    "-fsigned-char",
+    "-O1",
+    "-ffreestanding",
+    "-fno-builtin"
+  ],
+  "totalReadableFiles": 68,
+  "compiledFileCount": 68,
+  "archivePath": "work/build/le16/libmetal_gear_d4.a",
+  "compilerErrorCount": 0,
+  "compilerWarningCount": 0,
+  "craftsmanshipTellCount": 2866,
+  "isZeroWarningsVerified": false,
+  "isZeroDecompilerTellsVerified": false,
+  "isPassed": true,
+  "assertionsPassedCount": 10,
+  "assertionsTotalCount": 10,
+  "tests": [
+    {
+      "name": "vectors_and_unrom_lut",
+      "isPassed": true,
+      "detail": "NMI=C06C RST=C001 IRQ=C0B7 UNROM_LUT=0..6"
+    },
+    {
+      "name": "inline_jump_table_dispatch",
+      "isPassed": true,
+      "detail": "sites=16 jmp_ind=1 first_vec=[C131,C163]"
+    },
+    {
+      "name": "unrom_bank_switch_restore",
+      "isPassed": true,
+      "detail": "c94c=1 c958=1 bank_ids=1 bank0=1 bank6=1"
+    },
+    {
+      "name": "binary_to_bcd_hud_digit",
+      "isPassed": true,
+      "detail": "ca2c_sig=1 hud_hdr=(1,0x23)"
+    },
+    {
+      "name": "rolling_bridge_pitfall_mask",
+      "isPassed": true,
+      "detail": "b995_curve=1 symmetric=1 pit_bound=1"
+    },
+    {
+      "name": "self_destruct_countdown_timer",
+      "isPassed": true,
+      "detail": "sig=1 timer_67=(7->0) state_lo=1"
+    },
+    {
+      "name": "guard_alert_and_mode_reset",
+      "isPassed": true,
+      "detail": "rom=1 enter=1 advance=5"
+    },
+    {
+      "name": "transceiver_codec_freq_lut",
+      "isPassed": true,
+      "detail": "ptr_bounds=1 freq_lut_ff=1"
+    },
+    {
+      "name": "bank06_audio_pause_mute_and_fe_loop",
+      "isPassed": true,
+      "detail": "note_lut_12=1 fe_loop_sig=1 pause=1 resume=1 dmc=1"
+    },
+    {
+      "name": "room_metatile_pointer_bounds",
+      "isPassed": true,
+      "detail": "bank1_4_ptrs_ok=1 fd00_fe00_pop=1"
+    }
+  ]
+}

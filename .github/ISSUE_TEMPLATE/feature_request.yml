@@ -1,0 +1,30 @@
+name: Feature or research request
+description: Propose a clean-room format decoder, documentation improvement, or tooling enhancement
+title: "[Request]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Keep proposals strictly clean-room: zero copyrighted ROM binaries, extracted game assets, or retail disassembly listings.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Research Gap
+      description: What format, verification gap, or workflow limitation does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution or Scope
+      description: Describe the proposed decoder, schema addition, or documentation update.
+    validations:
+      required: true
+  - type: checkboxes
+    id: cleanroom
+    attributes:
+      label: Clean-Room Confirmation
+      options:
+        - label: I confirm this proposal avoids copyrighted binaries, assets, and raw game text.
+          required: true

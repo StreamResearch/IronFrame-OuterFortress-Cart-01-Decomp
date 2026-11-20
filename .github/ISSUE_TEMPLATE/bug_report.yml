@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a defect in the clean-room tooling, schemas, or documentation
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not attach retail ROMs, extracted game assets, or copyrighted code/text. For suspected asset leaks or security issues, report privately via the repository Security tab.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - Clean-room 6502 Assembler (asm6502_d5.py)
+        - Schemas & C Headers (Dev/schemas/)
+        - Build / Parity Scripts (Dev/scripts/)
+        - Documentation & Manuals (Dev/docs/)
+        - CI / GitHub Workflows (.github/)
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS and Python Version
+      placeholder: "Windows 11 / Ubuntu 24.04, Python 3.12.x"
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to Reproduce
+      description: Exact command run and arguments used
+      placeholder: "python -B Dev/scripts/..."
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected vs. Actual Behavior
+    validations:
+      required: true

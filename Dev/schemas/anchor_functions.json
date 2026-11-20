@@ -1,0 +1,496 @@
+[
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c001",
+    "ghidra_name": "FUN_c001",
+    "name": "vec_reset",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Hardware reset vector that waits for PPU warmup, clears RAM, initializes PPU/APU, switches to bank 6, and starts audio."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c06c",
+    "ghidra_name": "FUN_c06c",
+    "name": "vec_nmi_handler",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "saved_a",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 7,
+    "summary": "NMI interrupt handler that runs OAM DMA, updates PPU mask and scroll, polls joypads, ticks audio, and dispatches the main state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c0b7",
+    "ghidra_name": "FUN_c0b7",
+    "name": "vec_irq_noop",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Empty IRQ vector stub that returns immediately."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c0b8",
+    "ghidra_name": "FUN_c0b8",
+    "name": "ppu_init_hardware_and_nmi",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Initializes APU channels, disables frame IRQ, enables NMI in PPU_CTRL, and sets the 5-frame blanking delay."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c0c9",
+    "ghidra_name": "FUN_c0c9",
+    "name": "ppu_enable_nmi_and_delay",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Enables NMI and pattern table bits in PPU_CTRL and sets the 5-frame display delay counter."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c0d7",
+    "ghidra_name": "FUN_c0d7",
+    "name": "ppu_apply_scroll_and_ctrl",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Resets PPU address latch to nametable 0, writes shadow scroll coordinates to PPU_SCROLL, and restores PPU_CTRL."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c0f7",
+    "ghidra_name": "FUN_c0f7",
+    "name": "ppu_disable_rendering_and_nmi",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Zeroes PPU_ADDR, PPU_MASK, and PPU_CTRL to safely disable rendering and NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c104",
+    "ghidra_name": "FUN_c104",
+    "name": "main_game_state_tick",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 6,
+    "summary": "Increments the global frame counter, checks pause triggers in active states, and dispatches the top-level game state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c14b",
+    "ghidra_name": "FUN_c14b",
+    "name": "enter_transceiver_or_pause_screen",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Disables rendering, loads screen layout 0x82 via the bank loader, re-enables display, and invokes the overlay UI setup."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c189",
+    "ghidra_name": "FUN_c189",
+    "name": "game_over_and_continue_handler",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Handles game-over music trigger, death timer countdown, and transition to continue or reset state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c673",
+    "ghidra_name": "FUN_c673",
+    "name": "clear_entity_state_buffer",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Zeroes the 128-byte entity state buffer at RAM 0x0300-0x037F."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c689",
+    "ghidra_name": "FUN_c689",
+    "name": "mul_u8_u16_shift_add",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "multiplicand",
+        "type": "uint8_t"
+      },
+      {
+        "name": "passthrough_y",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Performs a 16-step shift-and-add multiplication storing the result across zero-page 0x80-0x82."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c6b7",
+    "ghidra_name": "FUN_c6b7",
+    "name": "inline_jump_table_dispatch",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "table_index",
+        "type": "int8_t"
+      },
+      {
+        "name": "arg_x",
+        "type": "uint8_t"
+      },
+      {
+        "name": "arg_y",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Reads a 16-bit target address from the inline pointer table after the JSR return address and jumps to it."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c6d5",
+    "ghidra_name": "FUN_c6d5",
+    "name": "add_u8_to_zp_u16",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "addend",
+        "type": "uint8_t"
+      },
+      {
+        "name": "zp_addr",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Adds an 8-bit unsigned value to a 16-bit little-endian integer in zero page with carry propagation."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c932",
+    "ghidra_name": "FUN_c932",
+    "name": "unrom_select_bank_0",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects UNROM PRG bank 0 via bus-conflict-safe write to ROM address 0xFFD0."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c936",
+    "ghidra_name": "FUN_c936",
+    "name": "unrom_select_bank_1",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects UNROM PRG bank 1 via bus-conflict-safe write to ROM address 0xFFD1."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c93a",
+    "ghidra_name": "FUN_c93a",
+    "name": "unrom_select_bank_2",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects UNROM PRG bank 2 via bus-conflict-safe write to ROM address 0xFFD2."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c93e",
+    "ghidra_name": "FUN_c93e",
+    "name": "unrom_select_bank_3",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects UNROM PRG bank 3 via bus-conflict-safe write to ROM address 0xFFD3."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c942",
+    "ghidra_name": "FUN_c942",
+    "name": "unrom_select_bank_4",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects UNROM PRG bank 4 via bus-conflict-safe write to ROM address 0xFFD4."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c946",
+    "ghidra_name": "FUN_c946",
+    "name": "unrom_select_bank_5",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects UNROM PRG bank 5 via bus-conflict-safe write to ROM address 0xFFD5."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c94a",
+    "ghidra_name": "FUN_c94a",
+    "name": "unrom_select_bank_6",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects UNROM PRG bank 6 (audio and shared tables) via bus-conflict-safe write to ROM address 0xFFD6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c94c",
+    "ghidra_name": "FUN_c94c",
+    "name": "unrom_select_bank_index",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "bank_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects an UNROM PRG bank by index and resets the tracked active bank shadow."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c958",
+    "ghidra_name": "FUN_c958",
+    "name": "unrom_restore_active_bank",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Restores the UNROM PRG bank stored in zero-page 0x27."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c989",
+    "ghidra_name": "FUN_c989",
+    "name": "load_room_bank_and_pointer",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to the PRG bank for the current room and loads its room data pointer into zero-page 0x80."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ca03",
+    "ghidra_name": "FUN_ca03",
+    "name": "select_room_tileset_bank",
+    "return_type": "int8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to the tileset PRG bank for the current room and returns the doubled tileset table offset."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ca21",
+    "ghidra_name": "FUN_ca21",
+    "name": "load_zp80_ptr_from_bank_table",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "table_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Loads a 16-bit pointer from the active bank's 0x8001 pointer table into zero-page 0x80."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d2e2",
+    "ghidra_name": "FUN_d2e2",
+    "name": "build_oam_sprite_list",
+    "return_type": "int8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Iterates over 32 sprite slots in 0x0300-0x0360 and populates the OAM shadow buffer."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d492",
+    "ghidra_name": "FUN_d492",
+    "name": "update_bank3_sprite_graphics",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to UNROM bank 3 to run sprite updates and restores the previous PRG bank."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d4a4",
+    "ghidra_name": "FUN_d4a4",
+    "name": "queue_ppu_tile_stream",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "stream_id",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Copies a PPU tile update stream from the bank-0 table into the 0x0740 NMI transfer queue."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d513",
+    "ghidra_name": "FUN_d513",
+    "name": "ppu_upload_zp80_stream_immediate",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Disables rendering, streams nametable/attribute bytes from zero-page 0x80 to PPU_DATA until zero terminator, and re-enables NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d5a6",
+    "ghidra_name": "FUN_d5a6",
+    "name": "ppu_upload_chunked_nametable_slice",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Disables rendering and uploads a 96-byte nametable slice to PPU_DATA while preserving multi-frame cursor state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d7ed",
+    "ghidra_name": "FUN_d7ed",
+    "name": "gameplay_frame_tick",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 6,
+    "summary": "Main active gameplay tick handling pause triggers, radio/transceiver mode, and all entity/world updates."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000fbea",
+    "ghidra_name": "FUN_fbea",
+    "name": "switch_bank6_and_play_sound",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "sound_id",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to UNROM bank 6 and invokes the audio trigger routine for the requested sound ID."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ff00",
+    "ghidra_name": "FUN_ff00",
+    "name": "read_joypads_edge_triggered",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Polls both NES joypads, masks held inputs, and records newly pressed button edges in 0xF5 and 0xF6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ff26",
+    "ghidra_name": "FUN_ff26",
+    "name": "read_joypads_raw_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Polls both NES joypads and stores raw held button bitmasks in 0x15 and 0x16."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ff32",
+    "ghidra_name": "FUN_ff32",
+    "name": "poll_joypad_shift_registers",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Strobes hardware joypad ports 0x4016/0x4017 and shifts 8 bits per controller into zero-page 0x84 and 0x85."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ff5d",
+    "ghidra_name": "FUN_ff5d",
+    "name": "handle_pause_start_select_trigger",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 5,
+    "summary": "Checks Start/Select edge bits in 0xF5 to toggle pause/transceiver mode or play pause sound effect."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000933c",
+    "ghidra_name": "FUN_933c",
+    "name": "audio_engine_frame_tick",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 4,
+    "summary": "Advances audio frame timers/envelopes and updates all 6 APU sound channels."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000099a8",
+    "ghidra_name": "FUN_99a8",
+    "name": "audio_trigger_sound_or_bgm",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "sound_id",
+        "type": "uint8_t"
+      },
+      {
+        "name": "channel_flags",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 2,
+    "summary": "Triggers a BGM track or sound effect by ID, handles silence/fade commands, and initializes channel sequence state."
+  }
+]

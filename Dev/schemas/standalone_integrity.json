@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "platformId": "nes",
+  "serialOrHash": "NES-ME-USA",
+  "generatedAtUtc": "2026-11-20T06:20:00.000Z",
+  "totalItemCount": 17,
+  "fileSizeBytes": 3717065,
+  "requiredRomChecksums": [
+    {
+      "relativePath": "data/rom/NES-ME-USA.nes",
+      "expectedSizeBytes": 131088,
+      "expectedSha256": "79095355436222161cb3841ff9b5c7a572e77af11461935e433bd6e8dfd0f164",
+      "crc32Hex": "25ba3d04",
+      "isRequired": true
+    }
+  ],
+  "entries": [
+    {
+      "relativePath": "extracted/BANK_00.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "96d482df0707bef38714935c751b17b523bfb4239321df3d4470a97329cc6710",
+      "crc32Hex": "a20c1d7d"
+    },
+    {
+      "relativePath": "extracted/BANK_00.s",
+      "fileSizeBytes": 447591,
+      "sha256Hex": "8b8adb9325151adfa280fe3ad7425ff1c40406933bbb798605e02094e8d78ea5",
+      "crc32Hex": "38beaeec"
+    },
+    {
+      "relativePath": "extracted/BANK_01.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "4b84529d2370808470c5db28b5ae57e32f2465ab0e08acdaca1ce67503a1b524",
+      "crc32Hex": "ab5fd404"
+    },
+    {
+      "relativePath": "extracted/BANK_01.s",
+      "fileSizeBytes": 474598,
+      "sha256Hex": "43842db687c5cf2a1916bd6c163c0ec456c9f483adda1260fec585b779a9ab21",
+      "crc32Hex": "bcfadef0"
+    },
+    {
+      "relativePath": "extracted/BANK_02.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "e22b96c19778704a4975baee589f450ed1b370138a147b30d5dccd757da7f4cd",
+      "crc32Hex": "9baa256d"
+    },
+    {
+      "relativePath": "extracted/BANK_02.s",
+      "fileSizeBytes": 427990,
+      "sha256Hex": "b6b4ea3a78bad7406e478f3f3c124ba4086eae313fd9b60b3055eadbb19f965e",
+      "crc32Hex": "f35a435d"
+    },
+    {
+      "relativePath": "extracted/BANK_03.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "728a9cc76ce3dbdc977ad33ffd10540688d4fad51c50a1087dcbf780406a9ec3",
+      "crc32Hex": "55396edc"
+    },
+    {
+      "relativePath": "extracted/BANK_03.s",
+      "fileSizeBytes": 448243,
+      "sha256Hex": "1c3701d31a9c0ba93be78d0eadd8e1b486fa9bf052fb272d936157db59509704",
+      "crc32Hex": "3721f584"
+    },
+    {
+      "relativePath": "extracted/BANK_04.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "093f60271a5f03f827362f219c3496333ff9378a5df840bdd732dde5e71320b4",
+      "crc32Hex": "b82fd165"
+    },
+    {
+      "relativePath": "extracted/BANK_04.s",
+      "fileSizeBytes": 449474,
+      "sha256Hex": "06f65768e674266d85a659a8fbc91f463a0c328d92c03fa639f2e16448c2849a",
+      "crc32Hex": "c4a458ca"
+    },
+    {
+      "relativePath": "extracted/BANK_05.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "9a90082b0849e45659fffdf0a3f3c03425632d501e487d6cc97f863abc38fc6e",
+      "crc32Hex": "5288c13b"
+    },
+    {
+      "relativePath": "extracted/BANK_05.s",
+      "fileSizeBytes": 458974,
+      "sha256Hex": "6d7798c628604260213171c9444ccfefbead2526d1de533ec1eecb7d37c88ebf",
+      "crc32Hex": "410a7336"
+    },
+    {
+      "relativePath": "extracted/BANK_06.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "7345973dcfdfd454fc5f5a9ec55f506192ec59e855b722c7538cf7ff8600833b",
+      "crc32Hex": "4315ad50"
+    },
+    {
+      "relativePath": "extracted/BANK_06.s",
+      "fileSizeBytes": 442711,
+      "sha256Hex": "230067b7986144aedb24494e1ac42f5a906d470c76e06a58220222c8d3644809",
+      "crc32Hex": "cc7d5d99"
+    },
+    {
+      "relativePath": "extracted/nes_bank_layout.json",
+      "fileSizeBytes": 17110,
+      "sha256Hex": "1d17f72e65338db09fb6674f952224a73c3462fe846ee9e40f3e02312f26d903",
+      "crc32Hex": "50384951"
+    },
+    {
+      "relativePath": "extracted/PRG_FIXED_07.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "96d482df0707bef38714935c751b17b523bfb4239321df3d4470a97329cc6710",
+      "crc32Hex": "a20c1d7d"
+    },
+    {
+      "relativePath": "extracted/PRG_FIXED_07.s",
+      "fileSizeBytes": 288230,
+      "sha256Hex": "ad1f383f5b57d63e80a7e760d795d2f0eb2f6cb02be89c256e6012d02ce33729",
+      "crc32Hex": "e2294f38"
+    }
+  ]
+}

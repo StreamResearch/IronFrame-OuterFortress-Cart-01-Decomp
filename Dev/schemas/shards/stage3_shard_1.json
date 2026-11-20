@@ -1,0 +1,1366 @@
+[
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c253",
+    "ghidra_name": "FUN_c253",
+    "name": "mg_fxa_play_menu_input_sfx",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Plays menu confirm or select sound effects via audio trigger when A or Select buttons are newly pressed."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c42b",
+    "ghidra_name": "FUN_c42b",
+    "name": "mg_fxa_set_timer_and_next_submode",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "delay_frames",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Sets the low state timer byte in 0x2A and increments the game submode counter by one."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c42d",
+    "ghidra_name": "FUN_c42d",
+    "name": "mg_fxa_advance_game_submode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Increments the global game submode counter in 0x11 by one."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c430",
+    "ghidra_name": "FUN_c430",
+    "name": "mg_fxa_next_game_mode_with_timer",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Advances to the next top-level game mode, sets the state timer to 0x80, and clears the title exit flag and submode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c434",
+    "ghidra_name": "FUN_c434",
+    "name": "mg_fxa_advance_game_mode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Advances to the next top-level game mode and resets the title exit flag and submode counter."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c43d",
+    "ghidra_name": "FUN_c43d",
+    "name": "mg_fxa_enter_game_mode",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "target_mode",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Transitions to the specified top-level game mode with a 0x50-frame timer, resets submode and title exit flags, and returns zero."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c445",
+    "ghidra_name": "FUN_c445",
+    "name": "mg_fxa_tick_state_timer",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Decrements the 16-bit state countdown timer in 0x2A-0x2B and returns nonzero while active or on low-byte wrap."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c458",
+    "ghidra_name": "FUN_c458",
+    "name": "mg_fxa_reset_cutscene_advance_submode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Resets the cutscene step counter in 0x07CE to zero and advances the game submode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c49b",
+    "ghidra_name": "FUN_c49b",
+    "name": "mg_fxa_blank_ppu_mask_shadow",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Clears the PPU mask shadow register in 0xFE to blank rendering on the next NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c546",
+    "ghidra_name": "FUN_c546",
+    "name": "mg_fxa_update_room_bgm",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects and triggers room, alert, or transition background music based on transition state, demo flags, and active alert status."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c5d3",
+    "ghidra_name": "FUN_c5d3",
+    "name": "mg_fxa_select_default_area_bgm",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects default area BGM track 0x69 or 0x45 from room metadata flags and triggers playback when the track changes."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c5e1",
+    "ghidra_name": "FUN_c5e1",
+    "name": "mg_fxa_play_bgm_if_changed",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "track_id",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Updates the requested BGM track shadow in 0xEF and triggers audio playback when the track changes and demo rules permit."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c653",
+    "ghidra_name": "FUN_c653",
+    "name": "mg_fxa_ppu_upload_status_attr_row",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Uploads null-terminated attribute data from RAM 0x0700 to PPU nametable attribute memory at 0x23C0 and re-enables NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c67f",
+    "ghidra_name": "FUN_c67f",
+    "name": "mg_fxa_clear_zp_actor_tables",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Zeroes 66 bytes of zero-page actor and alert state starting at address 0x0098."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c6df",
+    "ghidra_name": "FUN_c6df",
+    "name": "mg_fxa_sub_u8_from_zp_u16",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "subtrahend",
+        "type": "uint8_t"
+      },
+      {
+        "name": "zp_addr",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Subtracts an 8-bit unsigned value from a 16-bit little-endian integer in zero page with borrow propagation."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c6eb",
+    "ghidra_name": "FUN_c6eb",
+    "name": "mg_fxa_zero_sprite_ram_via_ptr0",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Zeroes the 128-byte sprite and actor attribute buffer at 0x0300-0x037F using zero-page pointer 0x80."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000cb33",
+    "ghidra_name": "FUN_cb33",
+    "name": "mg_fxa_write_oam_sprite_attr",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "oam_offset",
+        "type": "uint8_t"
+      },
+      {
+        "name": "meta_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Computes palette and flip attributes from metasprite data at 0x88 and writes the attribute byte to the OAM shadow buffer."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d37b",
+    "ghidra_name": "FUN_d37b",
+    "name": "mg_fxa_stash_zp_8e_8b",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "val_8e",
+        "type": "uint8_t"
+      },
+      {
+        "name": "val_8b",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Stores two byte arguments into zero-page scratch locations 0x8E and 0x8B and returns the first value."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d3c0",
+    "ghidra_name": "FUN_d3c0",
+    "name": "mg_fxa_ppu_stream_default_layout",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Streams the built-in compressed PPU tile layout at 0xD444+0x32 to PPU_DATA and re-enables NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d3cf",
+    "ghidra_name": "FUN_d3cf",
+    "name": "mg_fxa_ppu_stream_screen_reset",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Disables rendering, resets scroll and queue cursor, streams the compressed PPU layout at 0xD444+8, and re-enables NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d50a",
+    "ghidra_name": "FUN_d50a",
+    "name": "mg_fxa_vram_queue_push_byte",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "value",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Appends a single byte to the 0x0740 NMI VRAM transfer queue and increments the queue cursor."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d50c",
+    "ghidra_name": "FUN_d50c",
+    "name": "mg_fxa_vram_queue_write_at",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "value",
+        "type": "uint8_t"
+      },
+      {
+        "name": "queue_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Writes a byte to a specific index in the 0x0740 VRAM transfer queue and sets the cursor to the following slot."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d6b5",
+    "ghidra_name": "FUN_d6b5",
+    "name": "mg_fxa_apply_demo_joypad_input",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "script_offset",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Loads scripted demo input for player 1 from zero-page pointer 0x80 and clears player 2 joypad state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d752",
+    "ghidra_name": "FUN_d752",
+    "name": "mg_fxa_init_new_game_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Initializes rank, health, starting room, and player coordinates for a new game and clears gameplay zero-page work bytes."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d758",
+    "ghidra_name": "FUN_d758",
+    "name": "mg_fxa_init_continue_game_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Initializes player health, spawn room, and coordinates for a continued game while preserving current rank and card flags."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000da17",
+    "ghidra_name": "FUN_da17",
+    "name": "mg_fxa_copy_4bytes_to_zp88",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Copies four bytes from the source pointer at 0x82 into the destination pointer at 0x88 starting at the given offset."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000da25",
+    "ghidra_name": "FUN_da25",
+    "name": "mg_fxa_load_room_data_ptr",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Loads the 16-bit room data pointer for the current room ID from the active bank's pointer table into zero-page 0x80."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000db19",
+    "ghidra_name": "FUN_db19",
+    "name": "mg_fxa_check_special_room_tile",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Checks whether the current room ID and sampled tile ID in 0x8F match the special lookup tables at 0xE630."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dc3f",
+    "ghidra_name": "FUN_dc3f",
+    "name": "mg_fxa_actor_ai_noop_stub",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "No-op actor handler stub that returns immediately."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dce8",
+    "ghidra_name": "FUN_dce8",
+    "name": "mg_fxa_return_noop",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Single-instruction return stub that performs no operation."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dce9",
+    "ghidra_name": "FUN_dce9",
+    "name": "mg_fxa_step_actor_patrol_script",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Advances an actor's patrol script command and timer from bank table 0x8048, entering a wait state or returning actor status."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dd6e",
+    "ghidra_name": "FUN_dd6e",
+    "name": "mg_fxa_update_actor_walk_sprite",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "facing_dir",
+        "type": "uint8_t"
+      },
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Selects and stores the animated walking sprite ID for an actor based on direction, frame counter, and actor type."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000de0c",
+    "ghidra_name": "FUN_de0c",
+    "name": "mg_fxa_grant_actor_health_drop",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "int8_t"
+      },
+      {
+        "name": "drop_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Applies a health pickup value from table 0xDE2B, sets room init mode to 3, and returns the actor to state 1."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000de33",
+    "ghidra_name": "FUN_de33",
+    "name": "mg_fxa_enter_actor_alert_spin",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Transitions an actor into state 6 and resets its alert event flag, animation index, and step timer."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000de40",
+    "ghidra_name": "FUN_de40",
+    "name": "mg_fxa_tick_actor_alert_anim",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "current_state",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Animates an actor's alert or exclamation overlay sprites until its countdown expires, then restores state 1."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dec8",
+    "ghidra_name": "FUN_dec8",
+    "name": "mg_fxa_move_actor_down_clamped",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Increments an actor's Y coordinate in 0x0348 up to the lower screen limit of 0xF1."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ded3",
+    "ghidra_name": "FUN_ded3",
+    "name": "mg_fxa_move_actor_up_clamped",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Decrements an actor's Y coordinate in 0x0348 if it is greater than zero."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dedc",
+    "ghidra_name": "FUN_dedc",
+    "name": "mg_fxa_move_actor_right_clamped",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Increments an actor's X coordinate in 0x0328 up to the right screen limit of 0xA8."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dee7",
+    "ghidra_name": "FUN_dee7",
+    "name": "mg_fxa_move_actor_left_clamped",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Decrements an actor's X coordinate in 0x0328 if it is greater than zero."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000defb",
+    "ghidra_name": "FUN_defb",
+    "name": "mg_fxa_start_actor_pause_state",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Transitions an actor to pause state 2 and sets a randomized look counter and duration timer from the frame counter."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000df0f",
+    "ghidra_name": "FUN_df0f",
+    "name": "mg_fxa_tick_actor_pause_look",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Ticks an actor's pause-and-look timer, cycles idle facing sprites, and transitions back to state 1 when complete."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000df72",
+    "ghidra_name": "FUN_df72",
+    "name": "mg_fxa_set_actor_script_from_table",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Assigns an actor's script offset in 0xB0 from lookup table 0xDF7A using its sub-index."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e07a",
+    "ghidra_name": "FUN_e07a",
+    "name": "mg_fxa_update_actor_projectile",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Spawns and advances an aimed actor projectile sprite toward the player's current coordinates."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e3a6",
+    "ghidra_name": "FUN_e3a6",
+    "name": "mg_fxa_check_room_tile_trigger_sfx",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Checks whether the player stands on a special room trigger tile and plays sound effect 0x0E or 0x0D."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e407",
+    "ghidra_name": "FUN_e407",
+    "name": "mg_fxa_step_player_one_pixel",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Advances the player's coordinates by one pixel in the current facing direction and increments step counter 0x3C."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e4c2",
+    "ghidra_name": "FUN_e4c2",
+    "name": "mg_fxa_probe_entity_tile_collision",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "dir_index",
+        "type": "int8_t"
+      },
+      {
+        "name": "entity_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Probes two directional bounding points against the room tile map using 0xE55F and returns the resulting collision code."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e55f",
+    "ghidra_name": "FUN_e55f",
+    "name": "mg_fxa_sample_room_tile_collision",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Samples the room layout tile at the pixel coordinates in zero-page 0x80 and returns its collision classification."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e640",
+    "ghidra_name": "FUN_e640",
+    "name": "mg_fxa_apply_sprite_nudge_offset",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "threshold",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Stores the threshold in 0x81 and nudges player sprite slot 0 X position by one pixel on active frames."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e660",
+    "ghidra_name": "FUN_e660",
+    "name": "mg_fxa_tick_player_punch_anim",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Advances the player punch animation timer, toggles the fist sprite X offset, and updates player sprite state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e77f",
+    "ghidra_name": "FUN_e77f",
+    "name": "mg_fxa_place_overlay_sprite_slot1",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Configures sprite slot 1 with tile 0x39 at fixed Y 0x5C and X set to player Y minus 0x10."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e968",
+    "ghidra_name": "FUN_e968",
+    "name": "mg_fxa_trigger_actor_alert",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Activates alert mode for the detecting actor in 0x88, displays the alert marker sprite, and triggers alert BGM."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e9c1",
+    "ghidra_name": "FUN_e9c1",
+    "name": "mg_fxa_scan_actors_trigger_alert",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Scans the first four actor slots for an active enemy when not already alerted and triggers alert mode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000eb3b",
+    "ghidra_name": "FUN_eb3b",
+    "name": "mg_fxa_check_player_door_entry",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Periodically checks player tile collision and room flags to handle door entry and room transition triggers."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ebce",
+    "ghidra_name": "FUN_ebce",
+    "name": "mg_fxa_load_zp8c_8d_from_ptr88",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "end_offset",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Reads a two-byte pair backwards from the pointer in 0x88 into zero-page scratch registers 0x8C and 0x8D."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ebd9",
+    "ghidra_name": "FUN_ebd9",
+    "name": "mg_fxa_advance_door_scan_cursor",
+    "return_type": "int8_t",
+    "params": [
+      {
+        "name": "entry_offset",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Increments door loop index 0x91, decrements remaining count 0x90, and returns the entry offset advanced by 7."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ec39",
+    "ghidra_name": "FUN_ec39",
+    "name": "mg_fxa_set_door_exit_trigger",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Sets room transition state 0x39 using the matched door index with bit 6 set and clears room init mode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ec44",
+    "ghidra_name": "FUN_ec44",
+    "name": "mg_fxa_advance_door_pos_by_32",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Adds 32 to the 16-bit value in zero-page 0x8C-0x8D with carry propagation."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ec52",
+    "ghidra_name": "FUN_ec52",
+    "name": "mg_fxa_sub_28_from_zp8d",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Subtracts 0x1C (28) from zero-page scratch byte 0x8D."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ec5a",
+    "ghidra_name": "FUN_ec5a",
+    "name": "mg_fxa_add_28_to_zp8d",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Adds 0x1C (28) to zero-page scratch byte 0x8D."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ecde",
+    "ghidra_name": "FUN_ecde",
+    "name": "mg_fxa_scan_horizontal_doors",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Scans horizontal door records in 0x88 against player position and direction and triggers transition if unlocked."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ed82",
+    "ghidra_name": "FUN_ed82",
+    "name": "mg_fxa_check_door_unlock_state",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Verifies whether a matched door record is unlocked by checking room init mode, bit 3 flags, and player action state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ee22",
+    "ghidra_name": "FUN_ee22",
+    "name": "mg_fxa_add_stride_5",
+    "return_type": "int8_t",
+    "params": [
+      {
+        "name": "base_offset",
+        "type": "int8_t"
+      },
+      {
+        "name": "step_count",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Computes an offset by adding a stride of 5 bytes for the specified number of iterations."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ee7a",
+    "ghidra_name": "FUN_ee7a",
+    "name": "mg_fxa_spawn_weapon_slot_7a",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Finds a free slot in 0x5D-0x5F to deploy an item from stock 0x7A, decrements stock, and plays sound 0x26."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ee9f",
+    "ghidra_name": "FUN_ee9f",
+    "name": "mg_fxa_deploy_item_7b",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Activates slot 0x52 using item stock 0x7B when available, updates inventory flag bit 2, and plays sound 0x26."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000eebc",
+    "ghidra_name": "FUN_eebc",
+    "name": "mg_fxa_fire_equipped_weapon_sfx",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Checks weapon cooldowns and ammo counters in 0x7C and 0x7F and plays the corresponding firing sound effect."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ef1f",
+    "ghidra_name": "FUN_ef1f",
+    "name": "mg_fxa_fire_bullet_with_silencer_sfx",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Fires a player projectile every 8 frames when button A is held and plays either silenced or standard gunshot audio."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ef55",
+    "ghidra_name": "FUN_ef55",
+    "name": "mg_fxa_play_weapon_or_empty_sfx",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Plays sound effect 0x11 when flag 0x79 is nonzero or sound effect 0x24 otherwise."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f0e6",
+    "ghidra_name": "FUN_f0e6",
+    "name": "mg_fxa_step_projectile_movement",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "direction",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Advances the active projectile sprite by direction and speed, despawning it when it leaves screen bounds."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f162",
+    "ghidra_name": "FUN_f162",
+    "name": "mg_fxa_despawn_current_projectile",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Deactivates the projectile indexed by zero-page 0x85 and clears its status nibble in 0x4E or 0x61."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f164",
+    "ghidra_name": "FUN_f164",
+    "name": "mg_fxa_despawn_projectile_slot",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Deactivates the specified projectile slot, resets associated player weapon flags, and clears its status nibble."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f365",
+    "ghidra_name": "FUN_f365",
+    "name": "mg_fxa_queue_hud_health_and_rank",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Builds and queues PPU tile updates in 0x0740 for the HUD health gauge and player rank indicator."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f4ac",
+    "ghidra_name": "FUN_f4ac",
+    "name": "mg_fxa_is_room_item_uncollected",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Checks whether the current room is in the 10-entry item table and returns 1 if its collection bit is still clear."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f507",
+    "ghidra_name": "FUN_f507",
+    "name": "mg_fxa_store_weapon_or_aux_state",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "state_val",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Stores the given state value into 0x55 when scratch flag 0x87 equals 3, or into 0x44 otherwise."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f5c0",
+    "ghidra_name": "FUN_f5c0",
+    "name": "mg_fxa_spawn_room_boss_or_prop",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Initializes boss or multi-sprite room props in OAM shadow tables 0x0308-0x035F when entering matching special rooms."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f6ba",
+    "ghidra_name": "FUN_f6ba",
+    "name": "mg_fxa_check_room_hostage_flag",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Looks up the current room in the 24-entry hostage table and clears 0x65 if that room's rescue bit is already set."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f89d",
+    "ghidra_name": "FUN_f89d",
+    "name": "mg_fxa_count_hostages_and_check_rank",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Counts rescued hostages across 0x72-0x74 into 0x97 and triggers rank-up audio when rescue thresholds are met."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f923",
+    "ghidra_name": "FUN_f923",
+    "name": "mg_fxa_spawn_room_item_sprites",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Populates item and key pickup sprites from bank table 0x884E according to the current room and progression flags."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000fb29",
+    "ghidra_name": "FUN_fb29",
+    "name": "mg_fxa_collect_supply_item",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "item_id",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Applies a collected ration or ammo pickup, updating player health or weapon stock clamped to the current rank maximum."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ff91",
+    "ghidra_name": "FUN_ff91",
+    "name": "mg_fxa_set_timer_256_frames",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 0,
+    "summary": "Sets the 16-bit state timer in 0x2A-0x2B to 0x0100 (256 frames)."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c128",
+    "ghidra_name": "FUN_c128",
+    "name": "mg_fxa_call_bank3_b999",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to UNROM bank 3, invokes routine 0xB999, and restores bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c163",
+    "ghidra_name": "FUN_c163",
+    "name": "mg_fxa_update_title_cursor_sprite",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Updates the title screen cursor sprite position from option 0x1E, ticks the state timer, and advances game mode if X is zero."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c184",
+    "ghidra_name": "FUN_c184",
+    "name": "mg_fxa_reset_to_game_mode_0",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Transitions the game state machine back to top-level mode 0 by calling 0xC43D."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c1d6",
+    "ghidra_name": "FUN_c1d6",
+    "name": "mg_fxa_dispatch_submode_c1d6",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Dispatches the current game submode in 0x11 through the inline jump table at 0xC1D6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c1e1",
+    "ghidra_name": "FUN_c1e1",
+    "name": "mg_fxa_start_new_or_continue_game",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Initializes either a new game or a continued game based on menu selection 0x1E and resets the cutscene step."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c1eb",
+    "ghidra_name": "FUN_c1eb",
+    "name": "mg_fxa_start_continue_game",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Initializes continued game state via 0xD758 and resets the cutscene step counter."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c1f1",
+    "ghidra_name": "FUN_c1f1",
+    "name": "mg_fxa_start_room_bgm_and_mode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Updates the room background music via 0xC546 and advances to the next top-level game mode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c20d",
+    "ghidra_name": "FUN_c20d",
+    "name": "mg_fxa_dispatch_submode_c20d",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Dispatches the current game submode in 0x11 through the inline jump table at 0xC20D."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c21e",
+    "ghidra_name": "FUN_c21e",
+    "name": "mg_fxa_load_screen_and_next_submode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Streams the screen layout at 0xD3CF, clears the CHR stream page index, and advances the game submode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c2bd",
+    "ghidra_name": "FUN_c2bd",
+    "name": "mg_fxa_dispatch_submode_c2bd",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Dispatches the current game submode in 0x11 through the inline jump table at 0xC2BD."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c348",
+    "ghidra_name": "FUN_c348",
+    "name": "mg_fxa_dispatch_submode_c348",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Dispatches the current game submode in 0x11 through the inline jump table at 0xC348."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c365",
+    "ghidra_name": "FUN_c365",
+    "name": "mg_fxa_resume_gameplay_mode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Restores active gameplay mode 5, clears temporary weapon and room reload flags, resumes room music, and triggers bank 0 alert setup if active."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c460",
+    "ghidra_name": "FUN_c460",
+    "name": "mg_fxa_dispatch_cutscene_step",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Dispatches the active cutscene step in 0x07CE via inline jump table, or advances submode when the step wraps from 0xFF."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c4de",
+    "ghidra_name": "FUN_c4de",
+    "name": "mg_fxa_cutscene_upload_attr_step",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Blanks the PPU mask shadow, uploads the RAM 0x0700 attribute row via 0xC653, and advances the cutscene step."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c61e",
+    "ghidra_name": "FUN_c61e",
+    "name": "mg_fxa_ppu_upload_menu_text_block",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "entry_index",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Uploads a null-terminated PPU text or attribute block indexed by entry_index from table 0xC5FF, or runs default layout 0xD3C0."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c9b5",
+    "ghidra_name": "FUN_c9b5",
+    "name": "mg_fxa_load_special_room_chr_slice",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Selects UNROM bank 0 to upload a chunked nametable slice for special rooms, or marks 0x07CF as 0xFF for standard rooms."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ca9e",
+    "ghidra_name": "FUN_ca9e",
+    "name": "mg_fxa_emit_metasprite_to_oam",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "oam_offset",
+        "type": "uint8_t"
+      },
+      {
+        "name": "tile_attr_seed",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Renders a multi-tile metasprite sequence into the 0x0200 OAM shadow buffer and updates the OAM write cursor in 0x84."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000cbad",
+    "ghidra_name": "FUN_cbad",
+    "name": "mg_fxa_finish_oam_sprite_entry",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Finalizes a single OAM sprite entry's attributes via 0xCB33, advances the OAM cursor by four bytes, and returns 0x8E."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d3d1",
+    "ghidra_name": "FUN_d3d1",
+    "name": "mg_fxa_ppu_stream_indexed_layout",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "layout_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Disables rendering, resets scroll, streams the compressed PPU nametable layout at 0xD444[layout_offset], and re-enables NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d7ce",
+    "ghidra_name": "FUN_d7ce",
+    "name": "mg_fxa_dispatch_room_init_mode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Dispatches the room initialization mode in 0x2C through the inline jump table at 0xD7CE."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d87d",
+    "ghidra_name": "FUN_d87d",
+    "name": "mg_fxa_call_bank4_bcb8",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to UNROM bank 4, invokes routine 0xBCB8, and restores bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d8e2",
+    "ghidra_name": "FUN_d8e2",
+    "name": "mg_fxa_queue_hud_and_bank2_digits",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "digit_steps",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Updates HUD health and rank tiles, switches to UNROM bank 2, and formats a 4-digit readout into the 0x0740 VRAM queue."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d8eb",
+    "ghidra_name": "FUN_d8eb",
+    "name": "mg_fxa_trampoline_bank3_d8eb",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Selects UNROM bank 3 via 0xC93E and transfers control into the swapped bank."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d8f1",
+    "ghidra_name": "FUN_d8f1",
+    "name": "mg_fxa_call_bank0_b3fc",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to UNROM bank 0, invokes routine 0xB3FC, and restores bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d903",
+    "ghidra_name": "FUN_d903",
+    "name": "mg_fxa_call_bank5_be6a",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to UNROM bank 5, invokes routine 0xBE6A, and restores bank 6."
+  }
+]

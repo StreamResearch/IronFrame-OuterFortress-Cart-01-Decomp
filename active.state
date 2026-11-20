@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 2,
+  "lifecycleState": "active",
+  "name": "MetalGear-NintendoNES",
+  "projectGroup": "Research",
+  "relativePath": "Research/MetalGear-NintendoNES",
+  "containerTier": "Tier R (3-Folder Research)",
+  "ecosystemTier": "ResearchTrack",
+  "appArchetype": "LAB",
+  "version": "0.1.0",
+  "activeMilestone": "0.1.0",
+  "goalMajorVersion": "1.0.0",
+  "stateChangedDate": "2026-11-20",
+  "lastVersionDate": "2026-11-20",
+  "productionSubpath": null,
+  "supersededBy": null,
+  "tasklistDetailLevel": 3,
+  "openTaskCount": 6,
+  "completedTaskCount": 8,
+  "openReportCount": 0,
+  "isPublicRepo": true,
+  "requireHumanReviewBeforePush": true,
+  "discordPost": {
+    "isEnabled": true,
+    "serverName": null,
+    "guildId": null,
+    "channelName": null,
+    "channelId": null,
+    "deliveryMethod": "webhook",
+    "secretEnvKey": "DISCORD_WEBHOOK_FOUNDATION",
+    "autoPostOnRelease": true
+  },
+  "gates": {
+    "isGate0ScopePassed": true,
+    "isGate1PlanPassed": true,
+    "isGate2BuildPassed": true,
+    "isInspecterVerified": true,
+    "isTessaSynced": true
+  },
+  "notes": "v0.1.0 (Beta) clean-room release published on StreamResearch/IronFrame-OuterFortress-Cart-01-Decomp (D2/S4/R0 targeting D5/S5/R3 + reCart 0.1.x on reEngine v0.5.0; 14/14 offline unittest; 12/12 verify_track_d5; reCart.Decomp validated .decomp; human-gated PUBLIC flip + Pages + clean Archive). Retaining requireHumanReviewBeforePush=true.",
+  "updatedAtUtc": "2026-11-20T07:07:00.000Z"
+}

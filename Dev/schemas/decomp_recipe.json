@@ -1,0 +1,54 @@
+{
+  "moduleId": "ironframe-outerfortress-cart-01",
+  "title": "IronFrame OuterFortress (Cart) 01",
+  "packageFileName": "IronFrame-OuterFortress-Cart-01.decomp",
+  "upstreamResearchPath": "IronFrame-OuterFortress-Cart-01-Decomp",
+  "platformId": "nes",
+  "engineId": "reCart",
+  "engineVersion": "0.1.0",
+  "compatibleEngineTrack": "0.1.x",
+  "supportedEngineTracks": [
+    "0.1.x"
+  ],
+  "decompSchemaVersion": "1.0.0",
+  "targetDecompTier": "D2",
+  "goalDecompTier": "D5",
+  "packageVersion": "0.1.0",
+  "serialNumber": "NES-ME-USA",
+  "expectedSha256": "79095355436222161cb3841ff9b5c7a572e77af11461935e433bd6e8dfd0f164",
+  "sleighLanguageId": "6502:LE:16:default",
+  "ghidraProjectName": "IronFrameOuterFortressCart01",
+  "preloadRomDir": "data/rom",
+  "recipeEntryPoint": "Dev/scripts/nes_unrom_unpack.py",
+  "customUnpackerScript": "Dev/scripts/nes_unrom_unpack.py",
+  "toolchainRequirements": {
+    "minimumGhidraVersion": "11.2",
+    "requiresHeadlessJdk": true,
+    "requiredExtensions": []
+  },
+  "cleanRoomRules": {
+    "allowRetailStrings": false,
+    "allowCFunctionBodies": false,
+    "allowRetailAssets": false,
+    "allowTrademarkTokens": false
+  },
+  "bundleDirectories": [
+    "Dev/schemas",
+    "Dev/scripts"
+  ],
+  "excludedSubtrees": [
+    "Corpus",
+    "Archive",
+    ".git",
+    "Dev/docs",
+    "Dev/data",
+    "Dev/logs",
+    "Dev/scripts/d4_harness",
+    "Dev/scripts/tests",
+    "__pycache__",
+    ".pytest_cache"
+  ],
+  "excludedFiles": [
+    "Dev/schemas/d4_build_report.json"
+  ]
+}

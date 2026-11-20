@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security & Asset Leak Reporting
+    url: https://github.com/StreamResearch/IronFrame-OuterFortress-Cart-01-Decomp/security/advisories/new
+    about: Report suspected security vulnerabilities or accidental copyrighted material exposure privately.
+  - name: Releases & Package Downloads
+    url: https://github.com/StreamResearch/IronFrame-OuterFortress-Cart-01-Decomp/releases
+    about: Browse published milestone snapshots and release notes.

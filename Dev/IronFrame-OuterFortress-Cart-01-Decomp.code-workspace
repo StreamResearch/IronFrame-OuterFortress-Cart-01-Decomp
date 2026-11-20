@@ -1,0 +1,105 @@
+{
+  "folders": [
+    {
+      "name": "1. Research Root (Docs, Config & State)",
+      "path": ".."
+    },
+    {
+      "name": "2. Clean-Room Schemas & Bundles",
+      "path": "./schemas"
+    },
+    {
+      "name": "3. Technical Manuals & Spokes",
+      "path": "./docs"
+    },
+    {
+      "name": "4. Scripts, Parity Harness & Unit Tests",
+      "path": "./scripts"
+    },
+    {
+      "name": "5. Local Readable C (BYO Corpus, gitignored)",
+      "path": "../Corpus/readable"
+    }
+  ],
+  "settings": {
+    "clangd.path": "clangd",
+    "clangd.arguments": [
+      "--background-index",
+      "--compile-commands-dir=${workspaceFolder:5. Local Readable C (BYO Corpus, gitignored)}",
+      "--header-insertion=never",
+      "--limit-results=0",
+      "-j=4"
+    ],
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "files.associations": {
+      "*.h": "c",
+      "*.c": "c"
+    },
+    "python.defaultInterpreterPath": "python",
+    "files.eol": "\n",
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/.cache": true,
+      "**/[Dd]esktop.ini": true
+    }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Run Offline Unit Tests",
+        "type": "shell",
+        "command": "python",
+        "args": ["-B", "-m", "unittest", "discover", "-s", "./scripts/tests", "-v"],
+        "options": { "cwd": "${workspaceFolder:2. Clean-Room Schemas & Bundles}/.." },
+        "group": { "kind": "test", "isDefault": true }
+      },
+      {
+        "label": "Unpack BYO ROM (iNES Mapper 2)",
+        "type": "shell",
+        "command": "python",
+        "args": ["-B", "./scripts/nes_unrom_unpack.py"],
+        "options": { "cwd": "${workspaceFolder:2. Clean-Room Schemas & Bundles}/.." },
+        "group": "build"
+      },
+      {
+        "label": "Build & Verify D5 Assembly (1:1 PRG/NES)",
+        "type": "shell",
+        "command": "python",
+        "args": ["-B", "./scripts/build_and_verify_d5.py"],
+        "options": { "cwd": "${workspaceFolder:2. Clean-Room Schemas & Bundles}/.." },
+        "group": { "kind": "build", "isDefault": true }
+      },
+      {
+        "label": "Build & Verify D4 C Archive & Parity",
+        "type": "shell",
+        "command": "python",
+        "args": ["-B", "./scripts/build_and_verify_d4.py"],
+        "options": { "cwd": "${workspaceFolder:2. Clean-Room Schemas & Bundles}/.." },
+        "group": "build"
+      },
+      {
+        "label": "Export Strict .decomp Bundle",
+        "type": "shell",
+        "command": "python",
+        "args": ["-B", "./scripts/export_decomp_bundle.py", "--verify-cleanroom", "--strict"],
+        "options": { "cwd": "${workspaceFolder:2. Clean-Room Schemas & Bundles}/.." },
+        "group": "build"
+      },
+      {
+        "label": "Verify Research Track Gates",
+        "type": "shell",
+        "command": "python",
+        "args": ["-B", "./scripts/verify_track_d5.py"],
+        "options": { "cwd": "${workspaceFolder:2. Clean-Room Schemas & Bundles}/.." },
+        "group": "test"
+      }
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "llvm-vs-code-extensions.vscode-clangd",
+      "ms-python.python"
+    ]
+  }
+}

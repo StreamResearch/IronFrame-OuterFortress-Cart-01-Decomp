@@ -1,0 +1,1120 @@
+[
+  {
+    "program": "BANK_01.prg",
+    "address": "0x000099a8",
+    "ghidra_name": "FUN_99a8",
+    "name": "mg_b12_b1_write_zp8e_and_halt",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "value",
+        "type": "uint8_t"
+      },
+      {
+        "name": "zp_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_01",
+    "wave": 0,
+    "summary": "Writes a byte to zero-page offset 0x8E plus index, stores the index at 0xFEA3, and halts at an invalid opcode boundary."
+  },
+  {
+    "program": "BANK_01.prg",
+    "address": "0x0000b7ea",
+    "ghidra_name": "FUN_b7ea",
+    "name": "mg_b12_b1_upload_ppu_stream_batch",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "batch_index",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_01",
+    "wave": 3,
+    "summary": "Blanks rendering, uploads 2 or 20 PPU nametable streams from table 0xB814 via ppu_upload_zp80_stream_immediate, and restores PPU_MASK."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x00009956",
+    "ghidra_name": "FUN_9956",
+    "name": "mg_b12_b2_noop_stub",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Bank-2 stub that calls the fixed-bank vec_irq_noop routine and returns."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000ac54",
+    "ghidra_name": "FUN_ac54",
+    "name": "mg_b12_b2_call_2020_twice",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Invokes the external 0x2020 subroutine twice in succession and returns."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b022",
+    "ghidra_name": "FUN_b022",
+    "name": "mg_b12_tick_intro_trigger_and_vram_anim",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Checks sprite frame/position trigger to advance state 0x60 with SFX 0x7D, and periodically queues a 21-byte VRAM packet at 0x0740."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b0e3",
+    "ghidra_name": "FUN_b0e3",
+    "name": "mg_b12_load_counted_packet_by_index",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "packet_index",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Loads a bank-2 packet by unscaled index into the 0x0740 VRAM queue and copies its 0xFF-terminated payload."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b105",
+    "ghidra_name": "FUN_b105",
+    "name": "mg_b12_copy_ff_terminated_payload",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "start_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Decodes a destination pointer from g_zp_ptr0 at start_offset and copies 0xFF-terminated bytes into 0x0702 or target memory."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b2c5",
+    "ghidra_name": "FUN_b2c5",
+    "name": "mg_b12_tick_boss_phase_every_8_frames",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Increments actor phase timer 0x55 and resets boss state 0x60 to zero every 8 ticks."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b2d2",
+    "ghidra_name": "FUN_b2d2",
+    "name": "mg_b12_choose_boss_chase_direction",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Every 8 frames, selects boss movement state 1-4 in 0x60 based on actor 0x0328/0x0348 position relative to 0x0320/0x0340."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b3e2",
+    "ghidra_name": "FUN_b3e2",
+    "name": "mg_b12_check_boss_align_every_8_frames",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "dir_table_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Every 8 frames, tests sprite ID and horizontal alignment within 48 pixels to set boss attack state 6-9 in 0x60."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b3e8",
+    "ghidra_name": "FUN_b3e8",
+    "name": "mg_b12_check_boss_sprite_and_horiz_align",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "dir_table_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Checks sprite ID match against table 0xB4C9 and horizontal proximity within 48 pixels to select attack state 6-9."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b3fc",
+    "ghidra_name": "FUN_b3fc",
+    "name": "mg_b12_eval_boss_horiz_attack_window",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Computes horizontal distance between 0x0328 and 0x0320 and returns boss attack state 6-9 if within 48 pixels, else 0."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b438",
+    "ghidra_name": "FUN_b438",
+    "name": "mg_b12_eval_boss_vert_attack_window",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Computes vertical distance between 0x0348 and 0x0340 and returns boss attack state 6-9 if within 64 pixels, else 0."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b523",
+    "ghidra_name": "FUN_b523",
+    "name": "mg_b12_shift_zp4c_and_halt_stub",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "zp_offset",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Shifts DAT_46B5 left and zero-page offset 0x4C right before hitting an invalid-instruction halt."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b52e",
+    "ghidra_name": "FUN_b52e",
+    "name": "mg_b12_toggle_actor_idle_sprite_slow",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Every 128 frames, toggles the sprite ID of slot g_zp_ptr1 in 0x0308 between 0x5F and 0x62."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b546",
+    "ghidra_name": "FUN_b546",
+    "name": "mg_b12_move_actor_toward_center_y",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Steps actor slot g_zp_ptr1 vertically toward Y=0x80 while toggling walk sprite IDs and resets state when centered."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b556",
+    "ghidra_name": "FUN_b556",
+    "name": "mg_b12_step_actor_down_and_animate",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      },
+      {
+        "name": "anim_gate",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Increments actor Y coordinate in 0x0348 and toggles its sprite ID between 0x61 and 0x62 when anim_gate is zero."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b56c",
+    "ghidra_name": "FUN_b56c",
+    "name": "mg_b12_step_actor_up_and_animate",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      },
+      {
+        "name": "anim_gate",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Decrements actor Y coordinate in 0x0348 and toggles its sprite ID between 0x5F and 0x60 when anim_gate is zero."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b5d4",
+    "ghidra_name": "FUN_b5d4",
+    "name": "mg_b12_init_three_actor_timers",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Initializes countdown timers 0x55-0x57 to 0x7F and advances boss state 0x60."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b65b",
+    "ghidra_name": "FUN_b65b",
+    "name": "mg_b12_update_boss_minion_slots",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Spawns, animates, and times out boss minion/projectile slots in 0x0308 using timers 0x55-0x57 and 0x42."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b6af",
+    "ghidra_name": "FUN_b6af",
+    "name": "mg_b12_advance_actor_x_with_bounds",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Advances actor X coordinate 0x0328 on table-masked frames, advancing state 0x60 at X=0x58 and clamping at X=0x88."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b74d",
+    "ghidra_name": "FUN_b74d",
+    "name": "mg_b12_sweep_orbit_angle_ccw",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "start_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Decrements shared orbit angle 0x55 by 2 and updates polar sprite positions for slots start_slot..6 until angle reaches 0xE2."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b75c",
+    "ghidra_name": "FUN_b75c",
+    "name": "mg_b12_step_orbit_sprites_until_zero",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "start_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Advances state 0x60 when orbit angle 0x55 reaches zero, otherwise updates polar positions for slots start_slot..6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b78f",
+    "ghidra_name": "FUN_b78f",
+    "name": "mg_b12_clear_orbit_sprites_and_reset",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "start_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Clears actor sprite IDs from start_slot to 6 in 0x0308 and resets state 0x60 and angle 0x55 when 0x55 equals 0x30."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b7a6",
+    "ghidra_name": "FUN_b7a6",
+    "name": "mg_b12_select_boss_sprite_by_angle",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Selects boss sprite ID 0x5B, 0x5C, or 0x5D in 0x0308 based on the signed range of angle/offset 0x55."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b7c0",
+    "ghidra_name": "FUN_b7c0",
+    "name": "mg_b12_update_polar_orbit_slot",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "orbit_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Computes sine/cosine screen coordinates around (0x8F, 0x8E) for an orbiting sprite slot and increments its angle."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b89b",
+    "ghidra_name": "FUN_b89b",
+    "name": "mg_b12_fire_pattern_barrage",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Steps barrage sequence index 0x55 every 16 frames to spawn projectiles at Y=0x70 or 0x90 until timer 0x56 hits 64."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b8e5",
+    "ghidra_name": "FUN_b8e5",
+    "name": "mg_b12_pick_boss_vert_state_b8e5",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Sets boss state 0x60 to 1 or 2 by comparing actor Y 0x0348 against player X 0x35 and vertical bounds 0x18-0xD6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b922",
+    "ghidra_name": "FUN_b922",
+    "name": "mg_b12_step_boss_down_and_fire",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Moves actor Y 0x0348 down by 2, animating sprite 0x0308 and spawning projectiles when Y wraps or aligns with 0xB976."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b967",
+    "ghidra_name": "FUN_b967",
+    "name": "mg_b12_cycle_boss_sprite_4e_to_50",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Decrements boss sprite ID 0x0308 and wraps from 0x4E back to 0x50."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b983",
+    "ghidra_name": "FUN_b983",
+    "name": "mg_b12_tick_four_shots_and_dispatch",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Updates 4 projectile sprite timers at 0x0310/0x55-0x58 and dispatches boss state 0x60 via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b9c0",
+    "ghidra_name": "FUN_b9c0",
+    "name": "mg_b12_pick_boss_vert_state_b9c0",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Sets boss state 0x60 to 1 or 2 by comparing actor Y 0x0348 against player X 0x35 and vertical bounds 0x48-0xC6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000ba03",
+    "ghidra_name": "FUN_ba03",
+    "name": "mg_b12_advance_boss_y_and_aim_shot",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Advances actor Y 0x0348 by 2 against stop table 0xBA4A or aims and fires a tracked projectile with SFX 0x17."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000ba4f",
+    "ghidra_name": "FUN_ba4f",
+    "name": "mg_b12_compute_aim_direction_to_player",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Computes signed X/Y deltas between actor (0x0328, 0x0348) and player (0x0320+8, 0x0340) and returns an aim angle from table 0xBAB6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bbb6",
+    "ghidra_name": "FUN_bbb6",
+    "name": "mg_b12_spawn_boss_projectile",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Allocates a free projectile slot in 0x0310-0x0315, plays SFX 7, positions it from 0xBC09, and packs its direction nibble into 0x61-0x63."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bbe1",
+    "ghidra_name": "FUN_bbe1",
+    "name": "mg_b12_init_projectile_slot_at_offset",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "x_offset",
+        "type": "int8_t"
+      },
+      {
+        "name": "parent_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Positions projectile slot 0x8B horizontally relative to parent_slot, sets sprite 0x28, and packs direction nibble 0x8A into 0x61-0x63."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bc11",
+    "ghidra_name": "FUN_bc11",
+    "name": "mg_b12_cycle_boss_sprite_from_table",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "table_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Every 8 frames, increments boss sprite ID 0x0308 and wraps it using limit/reset bounds from table 0xBC29."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bc7f",
+    "ghidra_name": "FUN_bc7f",
+    "name": "mg_b12_set_sprite_slot_id",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "sprite_id",
+        "type": "uint8_t"
+      },
+      {
+        "name": "slot_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Writes a metasprite ID directly into the sprite ID table at 0x0300 + slot_index."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bcdf",
+    "ghidra_name": "FUN_bcdf",
+    "name": "mg_b12_queue_menu_clear_vram_packets",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "When dialog/menu mode 0x07E0 is below 4, queues two 14-byte zeroed VRAM clear packets at 0x0740 and 0x0752 using 0xBECF coordinates."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000be0f",
+    "ghidra_name": "FUN_be0f",
+    "name": "mg_b12_build_menu_vram_row_packets",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Builds three 4-byte VRAM transfer packets at 0x0740 for menu mode 0 or looks up mode-indexed nametable coordinates in 0xBECF."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000be73",
+    "ghidra_name": "FUN_be73",
+    "name": "mg_b12_flush_menu_vram_step_and_exit",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "ppu_addr_hi",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Queues three 4-byte VRAM packets using ppu_addr_hi, advances menu step 0x07E0, and restores display/state when step reaches 10."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bfbe",
+    "ghidra_name": "FUN_bfbe",
+    "name": "mg_b12_step_cutscene_scroll_and_return",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 0,
+    "summary": "Updates sprite X 0x0320 from player Y 0x36 + 5, clears room init mode 0x2C at 0x58, decrements 0x36, and restores bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b019",
+    "ghidra_name": "FUN_b019",
+    "name": "mg_b12_dispatch_boss_state_b019",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Dispatches boss/cutscene state 0x60 through the inline jump table at 0xB019 via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b094",
+    "ghidra_name": "FUN_b094",
+    "name": "mg_b12_tick_new_game_intro_sequence",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Streams 6 intro packets every 4 frames and initializes the player's starting health (0x96), rank (1), and room mode (3) at step 16."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b0e5",
+    "ghidra_name": "FUN_b0e5",
+    "name": "mg_b12_load_counted_packet_by_offset",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "table_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Loads a bank-2 packet by pre-doubled table_offset into 0x0740 and copies its 0xFF-terminated payload."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b2a5",
+    "ghidra_name": "FUN_b2a5",
+    "name": "mg_b12_return_to_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Switches UNROM PRG bank back to bank 6 via unrom_select_bank_index(6) and returns."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b2aa",
+    "ghidra_name": "FUN_b2aa",
+    "name": "mg_b12_dispatch_boss_state_b2aa",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Dispatches boss state 0x60 through the inline jump table at 0xB2AA via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b301",
+    "ghidra_name": "FUN_b301",
+    "name": "mg_b12_move_boss_up_and_check_align",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Checks boss attack alignment at 0xB3E2/0xB3FC and moves actor Y 0x0348 up by 2 or switches state 0x60 to 3/4 near top edge."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b33b",
+    "ghidra_name": "FUN_b33b",
+    "name": "mg_b12_move_boss_down_and_check_stops",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Moves actor Y 0x0348 down by 2 while checking 0xB3E2/0xB3FC alignment and table 0xB4C9 stop positions."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b353",
+    "ghidra_name": "FUN_b353",
+    "name": "mg_b12_move_boss_left_and_check_stops",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Moves actor X 0x0328 left by 2 while checking 0xB3E2/0xB438 alignment and table 0xB4C9 stop positions."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b383",
+    "ghidra_name": "FUN_b383",
+    "name": "mg_b12_boss_patrol_branch_stub",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Boss patrol entry at 0xB383 whose body merges into adjacent 0xB39B-0xB438 alignment blocks."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b39b",
+    "ghidra_name": "FUN_b39b",
+    "name": "mg_b12_boss_top_edge_dispatch_stub",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Sets actor slot index 0x89 to 8 and tests whether actor Y 0x0348 equals 0x20 before adjacent alignment checks."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b472",
+    "ghidra_name": "FUN_b472",
+    "name": "mg_b12_step_boss_up_to_top_bound",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Runs alignment check 0xB3E2(4) and steps actor Y 0x0348 up by 2 until below 0x12, resetting state 0x60 to 0."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b48a",
+    "ghidra_name": "FUN_b48a",
+    "name": "mg_b12_step_boss_down_to_bottom_bound",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Runs alignment check 0xB3E2(6) and steps actor Y 0x0348 down by 2 until reaching 0xDF, resetting state 0x60 to 0."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b49d",
+    "ghidra_name": "FUN_b49d",
+    "name": "mg_b12_step_boss_left_to_bound",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Runs alignment check 0xB3E2(0) and steps actor X 0x0328 left by 2 until reaching 0x21, then switches state 0x60."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b4b0",
+    "ghidra_name": "FUN_b4b0",
+    "name": "mg_b12_step_boss_right_to_bound",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Runs alignment check 0xB3E2(2) and steps actor X 0x0328 right by 2 until reaching 0x95, then switches state 0x60."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b4f7",
+    "ghidra_name": "FUN_b4f7",
+    "name": "mg_b12_dispatch_twin_actor_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Selects state 0x60 or 0x56 for actor slot g_zp_ptr1, overrides to state 2 on X proximity within 8 pixels, and dispatches via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b590",
+    "ghidra_name": "FUN_b590",
+    "name": "mg_b12_chase_player_y_and_set_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Steps actor slot g_zp_ptr1 vertically toward player Y 0x0340 and sets state 0x56 or 0x60 to 1."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b5c0",
+    "ghidra_name": "FUN_b5c0",
+    "name": "mg_b12_play_periodic_sfx9_and_dispatch",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Triggers SFX 9 every 16 frames and dispatches boss state 0x60 via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b6d6",
+    "ghidra_name": "FUN_b6d6",
+    "name": "mg_b12_set_orbit_center_and_dispatch",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Increments phase 0x55, sets orbit origin (0x8F, 0x8E) to (0x28, 0x68) with slot 1, and dispatches state 0x60 via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b6f9",
+    "ghidra_name": "FUN_b6f9",
+    "name": "mg_b12_expand_orbit_ring_phase",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_multiplier",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Expands radii for orbiting sprites 1-6 (playing SFX 0x19 on step 1) and advances state 0x60 when step 0x55 reaches 16."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b731",
+    "ghidra_name": "FUN_b731",
+    "name": "mg_b12_rotate_orbit_until_step32",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "start_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Advances state 0x60 when orbit phase 0x55 reaches 32, otherwise updates polar sprite slots start_slot..6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b762",
+    "ghidra_name": "FUN_b762",
+    "name": "mg_b12_contract_orbit_ring_phase",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "start_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Shrinks orbit radii in 0xB8+slot for slots start_slot..6, updates polar coordinates, and advances state 0x60 at step 16."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b7cf",
+    "ghidra_name": "FUN_b7cf",
+    "name": "mg_b12_check_drop_bomb_and_dispatch",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Spawns a 0x54 projectile with SFX 0x0F when player X aligns with actor Y on 128-tick intervals, then dispatches state 0x60."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b7ea",
+    "ghidra_name": "FUN_b7ea",
+    "name": "mg_b12_init_b2_bomb_slot_and_dispatch",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "projectile_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Initializes projectile slot under 0x16 as sprite 0x54 with SFX 0x0F, increments timer 0x57, and dispatches state 0x60."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b815",
+    "ghidra_name": "FUN_b815",
+    "name": "mg_b12_patrol_left_and_barrage",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Cycles sprite via 0xBC11(3), steps X 0x0328 left every 4 frames until transition to state 2, and spawns barrage shots."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b830",
+    "ghidra_name": "FUN_b830",
+    "name": "mg_b12_patrol_right_and_barrage",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Cycles sprite via 0xBC11(3), steps X 0x0328 right every 4 frames until X=0x30 (state 3), and spawns barrage shots."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b8c0",
+    "ghidra_name": "FUN_b8c0",
+    "name": "mg_b12_drift_four_sprites_and_dispatch",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Every 8 frames, offsets sprite Y slots 0x0351-0x0353 and 0x0355, then dispatches boss state 0x60 via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b902",
+    "ghidra_name": "FUN_b902",
+    "name": "mg_b12_step_boss_up_and_check_stops",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Moves actor Y 0x0348 up by 2, animates sprite via 0xBC11(0), and sets state 0x60 to 3 if Y matches table 0xB976."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b92a",
+    "ghidra_name": "FUN_b92a",
+    "name": "mg_b12_hold_stop_and_fire_projectile",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Fires projectiles and animates sprite 0x0308 while actor Y 0x0348 matches table 0xB976, or resets state 0x60."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b999",
+    "ghidra_name": "FUN_b999",
+    "name": "mg_b12_step_remaining_shot_slots",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "shot_timer",
+        "type": "int8_t"
+      },
+      {
+        "name": "slot_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Advances projectile sprite animation across remaining slots 0x0310+slot_index..3 and dispatches state 0x60 via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b9de",
+    "ghidra_name": "FUN_b9de",
+    "name": "mg_b12_step_boss_up_to_ba4a_stops",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Moves actor Y 0x0348 up by 2, switches to sprite 0x48 and state 3 on table 0xBA4A stop match, or animates via 0xBC11(2)."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000ba0b",
+    "ghidra_name": "FUN_ba0b",
+    "name": "mg_b12_aim_and_fire_quad_shot",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Every 32 frames, aims at the player and spawns a projectile in 0x0310-0x0313 with SFX 0x17 when angle is in 4..12."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bc37",
+    "ghidra_name": "FUN_bc37",
+    "name": "mg_b12_update_twin_turret_aim_and_pos",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Tracks player X 0x35 for sprite slots 8-9 within 0xBCCB bounds and selects firing direction from 0xBCCB every 16 frames."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bfd0",
+    "ghidra_name": "FUN_bfd0",
+    "name": "mg_b12_tick_ending_or_title_anim_timer",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 1,
+    "summary": "Increments timer 0x51 to animate sprite 0x0300 via table 0xBFFC, transitions game mode 0x10 to 6 on wrap, and selects bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b013",
+    "ghidra_name": "FUN_b013",
+    "name": "mg_b12_run_boss_state_b013_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Executes boss/cutscene state dispatch at 0xB019 and restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b0ca",
+    "ghidra_name": "FUN_b0ca",
+    "name": "mg_b12_stream_six_packets_and_sprites",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Loops through 6 packet offsets (0-10 step 2) calling 0xB0E5 and update_bank3_sprite_graphics before restoring bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b2a2",
+    "ghidra_name": "FUN_b2a2",
+    "name": "mg_b12_entry_dispatch_boss_b2a2",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Entry wrapper that transfers control directly to boss state dispatcher at 0xB2AA."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b4e3",
+    "ghidra_name": "FUN_b4e3",
+    "name": "mg_b12_tick_two_boss_actor_slots",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Iterates active boss actor slots 0 and 1 in 0x0308 and dispatches each through 0xB4F7."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b5ba",
+    "ghidra_name": "FUN_b5ba",
+    "name": "mg_b12_run_boss_sfx9_dispatch_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Runs periodic SFX 9 and boss state dispatch at 0xB5C0, then restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b6a9",
+    "ghidra_name": "FUN_b6a9",
+    "name": "mg_b12_run_actor_x_advance_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Advances bounded actor X movement via 0xB6AF and restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b6d0",
+    "ghidra_name": "FUN_b6d0",
+    "name": "mg_b12_run_orbit_boss_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Runs orbiting boss state setup and dispatch at 0xB6D6, then restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b7c9",
+    "ghidra_name": "FUN_b7c9",
+    "name": "mg_b12_run_bomb_boss_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Runs bomb-dropping boss update at 0xB7CF and restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b8ba",
+    "ghidra_name": "FUN_b8ba",
+    "name": "mg_b12_run_four_sprite_drift_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Runs four-sprite drift and state dispatch at 0xB8C0, then restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b97d",
+    "ghidra_name": "FUN_b97d",
+    "name": "mg_b12_run_four_shots_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Updates four boss shot timers via 0xB983 and restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bc31",
+    "ghidra_name": "FUN_bc31",
+    "name": "mg_b12_run_twin_turrets_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Updates twin turret tracking and firing via 0xBC37 and restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bf97",
+    "ghidra_name": "FUN_bf97",
+    "name": "mg_b12_check_room_trigger_zone_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 2,
+    "summary": "Checks if player is in (0x60..0xAF, 0x88) with action != 0x0D to play sound 0x1D via switch_bank6_and_play_sound and set room init mode 0x2C to 0x0B before restoring bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000b4dd",
+    "ghidra_name": "FUN_b4dd",
+    "name": "mg_b12_run_twin_boss_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 3,
+    "summary": "Ticks both boss actor slots via 0xB4E3 and restores UNROM bank 6."
+  },
+  {
+    "program": "BANK_02.prg",
+    "address": "0x0000bd7a",
+    "ghidra_name": "FUN_bd7a",
+    "name": "mg_b12_handle_menu_cursor_input",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_02",
+    "wave": 4,
+    "summary": "Handles Up/Down/A/B joypad1 edge inputs for the 3-option menu cursor 0x4B with selection/move sound effects."
+  }
+]

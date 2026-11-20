@@ -1,0 +1,1346 @@
+[
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d90e",
+    "ghidra_name": "FUN_d90e",
+    "name": "mg_fxb_inc_zp80_ptr",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Increments the 16-bit pointer stored in zero-page 0x80 by 1."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d920",
+    "ghidra_name": "FUN_d920",
+    "name": "mg_fxb_dec_zp88_ptr_nonzero",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Decrements the 16-bit counter at zero-page 0x88 by 1 and returns the bitwise OR of its bytes."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d9d1",
+    "ghidra_name": "FUN_d9d1",
+    "name": "mg_fxb_expand_room_metatile",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "metatile_id",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Expands a 4x4 room metatile from PRG bank 4 into the room layout buffer at zero-page 0x88."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000da42",
+    "ghidra_name": "FUN_da42",
+    "name": "mg_fxb_check_actor_dir_collision",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "dir_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Maps a direction index through the actor collision table, switches to bank 6, and tests background tile solidity."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000da88",
+    "ghidra_name": "FUN_da88",
+    "name": "mg_fxb_backup_and_clear_actors",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Copies the four primary actor sprite slots to backup slots, clears active actor states and alert flag, and invokes bank 0 alert cleanup."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000db05",
+    "ghidra_name": "FUN_db05",
+    "name": "mg_fxb_dispatch_bank3_actor_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to PRG bank 3 to invoke the actor behavior dispatcher and restores the previously active PRG bank."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000db10",
+    "ghidra_name": "FUN_db10",
+    "name": "mg_fxb_dispatch_bank4_actor_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to PRG bank 4 to invoke the actor behavior dispatcher and restores the previously active PRG bank."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dbe0",
+    "ghidra_name": "FUN_dbe0",
+    "name": "mg_fxb_calc_actor_dist_sq",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "dir_index",
+        "type": "int8_t"
+      },
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Computes the 16-bit squared distance from an actor's stepped position in a candidate direction to the player in zero-page 0x80-0x82."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000deb9",
+    "ghidra_name": "FUN_deb9",
+    "name": "mg_fxb_dispatch_actor_dir_step",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "step_flags",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Dispatches an actor movement step by direction bits via the inline jump table, or sets room init mode 8 in room 0xC7 when negative."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dfad",
+    "ghidra_name": "FUN_dfad",
+    "name": "mg_fxb_choose_actor_chase_dir",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Computes Manhattan deltas between the player and an actor slot, stores the longer axis step count, and returns the cardinal chase direction."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e4c8",
+    "ghidra_name": "FUN_e4c8",
+    "name": "mg_fxb_probe_player_front_tiles",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Probes two tile positions ahead of the player based on facing direction and returns the matching collision or interaction code."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e5bf",
+    "ghidra_name": "FUN_e5bf",
+    "name": "mg_fxb_handle_player_hazard_tile",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "anim_tile",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Checks if the player stands on a hazard tile in special rooms, decrements player health periodically with sound, and updates animation state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e7fe",
+    "ghidra_name": "FUN_e7fe",
+    "name": "mg_fxb_update_guard_vision_and_alert",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Scans enemy line-of-sight along axes toward the player to trigger alert mode, or ticks down the alert timer and resumes room BGM."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ea38",
+    "ghidra_name": "FUN_ea38",
+    "name": "mg_fxb_check_player_actor_overlap",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Tests bounding-box overlap between the player and active actor slots to apply contact damage, alert triggers, or damage SFX."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000eb17",
+    "ghidra_name": "FUN_eb17",
+    "name": "mg_fxb_load_room_door_table_ptr",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to PRG bank 1 to load the current room's door and transition pointer into zero-page 0x88, then restores bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ecc5",
+    "ghidra_name": "FUN_ecc5",
+    "name": "mg_fxb_finalize_door_vram_update",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Adjusts the door VRAM destination address, records it in the transfer queue, plays door SFX if triggered, and clears room transition state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ee33",
+    "ghidra_name": "FUN_ee33",
+    "name": "mg_fxb_try_player_attack",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Checks room eligibility, player state, and A-button input before finding a free weapon slot and dispatching player attack."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000eef9",
+    "ghidra_name": "FUN_eef9",
+    "name": "mg_fxb_try_place_landmine",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Allocates an available mine slot if the player has mines remaining, decrements inventory, spawns the mine, and plays placement SFX."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ef60",
+    "ghidra_name": "FUN_ef60",
+    "name": "mg_fxb_spawn_player_projectile",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Finds a free player weapon slot, computes directional spawn coordinates and sprite ID, plays gunshot SFX if unsuppressed, and stores projectile direction."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f199",
+    "ghidra_name": "FUN_f199",
+    "name": "mg_fxb_step_active_projectile",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "dir_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Advances a player or enemy projectile, checks screen bounds and tile solidity, tests actor/player hitboxes, and applies damage."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f2cc",
+    "ghidra_name": "FUN_f2cc",
+    "name": "mg_fxb_check_projectile_hit_slot",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "proj_slot",
+        "type": "uint8_t"
+      },
+      {
+        "name": "target_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Tests whether a projectile sprite overlaps a target actor or player hitbox and deactivates the projectile on impact."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f3d8",
+    "ghidra_name": "FUN_f3d8",
+    "name": "mg_fxb_init_room_boss_encounter",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Initializes boss encounter state, health, and sprite coordinates for boss rooms, or selects bank 2 for room 0x76."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f4d7",
+    "ghidra_name": "FUN_f4d7",
+    "name": "mg_fxb_apply_boss_damage",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "hit_kind",
+        "type": "int8_t"
+      },
+      {
+        "name": "weapon_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Decrements boss hit count and HP using the weapon damage table and triggers boss defeat handling and explosion SFX on zero HP."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f5b7",
+    "ghidra_name": "FUN_f5b7",
+    "name": "mg_fxb_init_room_hazards_bank0",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to PRG bank 0 to initialize room hazard actors and restores bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f642",
+    "ghidra_name": "FUN_f642",
+    "name": "mg_fxb_dispatch_room_gimmick_tick",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Switches to PRG bank 0 and dispatches room-specific gimmick updates such as traps or special hazards based on room ID."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f74c",
+    "ghidra_name": "FUN_f74c",
+    "name": "mg_fxb_update_prisoners_and_objectives",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Animates prisoner sprites, updates rescued-prisoner and destroyed-target bitfields, and triggers radio messages or rank progress."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f9e7",
+    "ghidra_name": "FUN_f9e7",
+    "name": "mg_fxb_check_item_pickup",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Detects player overlap with room pickup sprites and grants equipment, ammo, rations, cards, or triggers pickup messages and SFX."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000fb98",
+    "ghidra_name": "FUN_fb98",
+    "name": "mg_fxb_dispatch_cutscene_or_ending",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Selects PRG bank 2 or 0 based on substate 0x6B and jumps through the inline pointer table for cutscene or ending handling."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000fcc9",
+    "ghidra_name": "FUN_fcc9",
+    "name": "mg_fxb_clear_ram_and_enable_nmi",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 1,
+    "summary": "Disables rendering, zeroes zero-page 0x22-0xEF and RAM pages 0x0300-0x06FF, and re-enables PPU NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c26e",
+    "ghidra_name": "FUN_c26e",
+    "name": "mg_fxb_queue_alert_overlay_streams",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Queues two XOR-selected PPU tile streams driven by alert channel flags at 0x98."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c299",
+    "ghidra_name": "FUN_c299",
+    "name": "mg_fxb_setup_radio_screen_banks",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Queues PPU tile stream 0x14, invokes bank 5 and bank 3 screen setup routines, restores bank 6, and advances game submode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c2b3",
+    "ghidra_name": "FUN_c2b3",
+    "name": "mg_fxb_check_reset_on_a_button",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Checks if the A button was newly pressed on joypad 1 and resets the main game state to mode 0."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c2f5",
+    "ghidra_name": "FUN_c2f5",
+    "name": "mg_fxb_tick_demo_or_intro_substate",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Switches to bank 4 to run screen state update, then queues stream 9, initializes PPU/HUD state, and sets game mode 4 when submode hits 0."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c33c",
+    "ghidra_name": "FUN_c33c",
+    "name": "mg_fxb_init_room_entities_and_boss",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Initializes room boss state, collectible/objective objects, scripted room spawns, and room hazard actors."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c4a4",
+    "ghidra_name": "FUN_c4a4",
+    "name": "mg_fxb_step_cutscene_chr_or_room",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "chr_page",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Clears PPU mask shadow via 0xC49B and either sets CHR page and increments cutscene step or loads room-specific bank graphics."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c4cd",
+    "ghidra_name": "FUN_c4cd",
+    "name": "mg_fxb_advance_cutscene_palette",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Disables rendering via PPU mask shadow, triggers the cutscene palette/fade step from 0x07CE - 5, and increments cutscene step."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c4e9",
+    "ghidra_name": "FUN_c4e9",
+    "name": "mg_fxb_finish_room_transition",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Queues tile stream 5, resets actor and room tables via bank 4 on normal transitions, clears alert sound, enables display, and ends cutscene."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c961",
+    "ghidra_name": "FUN_c961",
+    "name": "mg_fxb_queue_room_chr_stream",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Selects a PPU tile stream offset based on room bank flags and queues the room's CHR or palette transfer."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c97d",
+    "ghidra_name": "FUN_c97d",
+    "name": "mg_fxb_load_room_layout_chunked",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Loads the current room's bank and data pointer, uploads a chunked nametable slice, and restores PRG bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c983",
+    "ghidra_name": "FUN_c983",
+    "name": "mg_fxb_load_room_layout_immediate",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Loads the current room's bank and data pointer, immediately streams the nametable data to PPU_DATA, and restores PRG bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000cb50",
+    "ghidra_name": "FUN_cb50",
+    "name": "mg_fxb_emit_grid_metasprite",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "table_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Populates a rectangular grid of OAM shadow sprite entries from a metasprite descriptor pointer and advances the OAM write cursor."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d390",
+    "ghidra_name": "FUN_d390",
+    "name": "mg_fxb_init_gameplay_hud_and_audio",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Silences audio channels, clears the 0x0300 entity buffer, initializes gameplay PPU/HUD streams, and invokes bank 1 initialization."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d545",
+    "ghidra_name": "FUN_d545",
+    "name": "mg_fxb_ppu_upload_inline_stream",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Disables rendering, streams inline PPU address and data bytes from after the return address to PPU_DATA until zero terminator, and re-enables NMI."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d698",
+    "ghidra_name": "FUN_d698",
+    "name": "mg_fxb_tick_attract_demo_input",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Checks Start/Select abort during attract-mode demo and replays timed joypad inputs from the active demo sequence script."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d72c",
+    "ghidra_name": "FUN_d72c",
+    "name": "mg_fxb_toggle_gameplay_pause",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Toggles the pause flag when Start is pressed during unfrozen non-demo gameplay and plays the pause sound effect."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d877",
+    "ghidra_name": "FUN_d877",
+    "name": "mg_fxb_run_cutscene_and_restore_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Dispatches the cutscene/ending handler and restores PRG bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d930",
+    "ghidra_name": "FUN_d930",
+    "name": "mg_fxb_decompress_room_layout",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "room_id",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Decompresses the current room's 8x6 metatile grid from bank 5/4 into 0x0400-0x06FF and populates the 48-byte room attribute table at 0x0700."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000db3c",
+    "ghidra_name": "FUN_db3c",
+    "name": "mg_fxb_pathfind_actor_to_player",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Evaluates squared distances and tile/room collision across four cardinal directions for an actor slot and dispatches movement toward the best direction."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000df44",
+    "ghidra_name": "FUN_df44",
+    "name": "mg_fxb_start_actor_chase_step",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Initializes an actor's patrol script, selects a chase direction toward the player, sets AI substate 4, and triggers alert or footstep SFX."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000df7e",
+    "ghidra_name": "FUN_df7e",
+    "name": "mg_fxb_update_actor_chase_step",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Decrements an actor's step timer and advances movement in its current direction if clear, or transitions to substate 5 when blocked."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e435",
+    "ghidra_name": "FUN_e435",
+    "name": "mg_fxb_update_player_movement",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "move_tile",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Reads player D-pad input, updates player position and facing direction, handles special room boundaries, and tests front tile collisions."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e46e",
+    "ghidra_name": "FUN_e46e",
+    "name": "mg_fxb_apply_player_dir_step",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "dir_index",
+        "type": "int8_t"
+      },
+      {
+        "name": "anim_tile",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Sets player facing direction and sprite tile, checks front collision or door/hazard interactions, and nudges player coordinates on free tiles."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e49a",
+    "ghidra_name": "FUN_e49a",
+    "name": "mg_fxb_step_player_blocked_push",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Runs hazard tile checks and pushes player coordinates 1 pixel in the current facing direction."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e96a",
+    "ghidra_name": "FUN_e96a",
+    "name": "mg_fxb_trigger_guard_alert_spot",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Displays the exclamation alert sprite above a spotting guard, triggers alert mode and reinforcement cleanup, and plays alert BGM."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ea03",
+    "ghidra_name": "FUN_ea03",
+    "name": "mg_fxb_update_player_damage_and_blink",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Updates periodic hazard/gas health drain, player post-hit invulnerability blink timer, and actor/hazard collision checks."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000eb5a",
+    "ghidra_name": "FUN_eb5a",
+    "name": "mg_fxb_check_player_door_or_wall",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Checks special room flags or loads the room door pointer and probes the tile at the player's position before dispatching directional handling."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f1ed",
+    "ghidra_name": "FUN_f1ed",
+    "name": "mg_fxb_check_projectile_collision",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "proj_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Tests projectile tile solidity and checks hitbox overlap against the player or actors, applying damage on impact."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f252",
+    "ghidra_name": "FUN_f252",
+    "name": "mg_fxb_check_explosive_actor_hits",
+    "return_type": "int8_t",
+    "params": [
+      {
+        "name": "hit_result",
+        "type": "int8_t"
+      },
+      {
+        "name": "weapon_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Checks an explosive or boss-targeting weapon slot against actor slots 8-15, destroys hit targets or damages bosses, and updates room clear state."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f335",
+    "ghidra_name": "FUN_f335",
+    "name": "mg_fxb_update_enemy_projectiles",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Iterates over enemy projectile slots 0x10-0x15 during active boss fights and steps each active projectile using its packed direction nibble."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f469",
+    "ghidra_name": "FUN_f469",
+    "name": "mg_fxb_update_boss_encounter",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Checks if the current room has an active boss, applies pending weapon hits, and dispatches boss AI in PRG bank 2."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000fcb4",
+    "ghidra_name": "FUN_fcb4",
+    "name": "mg_fxb_reset_ram_for_demo",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Clears gameplay zero-page and RAM buffers and enables NMI via 0xFCC9."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000fcb8",
+    "ghidra_name": "FUN_fcb8",
+    "name": "mg_fxb_init_new_game_from_title",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 2,
+    "summary": "Clears RAM via 0xFCC9, disables demo mode, and loads the selected title option mode into 0x19."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c1f7",
+    "ghidra_name": "FUN_c1f7",
+    "name": "mg_fxb_tick_demo_and_pause",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Polls pause toggle and, while unpaused, counts down the demo state timer to update music and runs the active frame handler."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c229",
+    "ghidra_name": "FUN_c229",
+    "name": "mg_fxb_load_gameover_or_next_chr",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "chr_page",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Clears PPU mask shadow via 0xC49B and either loads a CHR page and advances submode or loads room 0xF5 layout."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c23f",
+    "ghidra_name": "FUN_c23f",
+    "name": "mg_fxb_start_room_alert_hud",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Queues the room CHR stream and stream 6, clears the entity buffer, advances submode, and queues alert overlay streams."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c313",
+    "ghidra_name": "FUN_c313",
+    "name": "mg_fxb_init_ending_or_special_screen",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Disables rendering, uploads room 0xF0 layout and bank 0 screen data, sets palette/stream 0x12, and clears the entity buffer."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c353",
+    "ghidra_name": "FUN_c353",
+    "name": "mg_fxb_enter_room_setup",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Resets player/world timers on full transition or updates boss, hazard, objective, and pickup spawns on partial room transitions."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c486",
+    "ghidra_name": "FUN_c486",
+    "name": "mg_fxb_begin_cutscene_chr_load",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Disables rendering via PPU mask shadow, resets CHR stream page index, queues the room CHR stream, and advances cutscene step."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c493",
+    "ghidra_name": "FUN_c493",
+    "name": "mg_fxb_cutscene_chr_or_room_load",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "chr_page",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Disables rendering via 0xC49B and either sets the CHR page and advances cutscene step or loads the room nametable layout."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c4ba",
+    "ghidra_name": "FUN_c4ba",
+    "name": "mg_fxb_cutscene_decompress_room",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Disables rendering, resets vertical PPU scroll to 0xF8, decompresses the current room layout, restores bank 6, and advances cutscene step."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c9eb",
+    "ghidra_name": "FUN_c9eb",
+    "name": "mg_fxb_upload_room_tileset_chunked",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Selects the room tileset bank and pointer, uploads a chunked nametable slice to PPU_DATA, and restores bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c9f7",
+    "ghidra_name": "FUN_c9f7",
+    "name": "mg_fxb_upload_room_tileset_immediate",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Selects the room tileset bank and pointer, streams all tileset bytes immediately to PPU_DATA, and restores bank 6."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ca5f",
+    "ghidra_name": "FUN_ca5f",
+    "name": "mg_fxb_draw_metasprite_to_oam",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Decodes a metasprite descriptor from zero-page 0x88 into OAM shadow sprite entries using single-sprite or 2-column layout rules."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d57a",
+    "ghidra_name": "FUN_d57a",
+    "name": "mg_fxb_upload_inline_ppu_wrapper",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Forwards directly to the inline PPU data stream uploader at 0xD545."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d647",
+    "ghidra_name": "FUN_d647",
+    "name": "mg_fxb_tick_demo_mode_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Polls attract-mode demo inputs and jumps to the current game submode handler via the inline jump table."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d657",
+    "ghidra_name": "FUN_d657",
+    "name": "mg_fxb_start_attract_demo_sequence",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Clears RAM, initializes HUD and timers, sets starting player coordinates and room from the active demo table, and advances submode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d68b",
+    "ghidra_name": "FUN_d68b",
+    "name": "mg_fxb_setup_demo_room_entities",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Initializes room entities and boss state for the attract-mode demo and increments game submode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d691",
+    "ghidra_name": "FUN_d691",
+    "name": "mg_fxb_tick_paused_or_active_frame",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Checks pause button toggle and invokes the main frame update routine at 0xD7CE."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d886",
+    "ghidra_name": "FUN_d886",
+    "name": "mg_fxb_load_transceiver_or_bank3_gfx",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Invokes bank 5 transceiver setup when CHR page is 0xFF, or uploads bank 3 tile data from 0x910A otherwise."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000da6a",
+    "ghidra_name": "FUN_da6a",
+    "name": "mg_fxb_step_projectile_from_bank6",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "proj_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Switches to PRG bank 6 to run projectile collision/movement at 0xF1ED for a slot and restores bank 0."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dc57",
+    "ghidra_name": "FUN_dc57",
+    "name": "mg_fxb_update_actor_ai_state",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Updates an actor's alert transition, hit-reaction sprite animation, path sync flag, and dispatches by AI substate at 0xA8+slot."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e01e",
+    "ghidra_name": "FUN_e01e",
+    "name": "mg_fxb_start_actor_patrol_wait",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Runs actor pathfinding toward the player and sets a bounded wait timer in substate 4."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e692",
+    "ghidra_name": "FUN_e692",
+    "name": "mg_fxb_check_room_screen_edge_exit",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Detects when the player crosses a screen boundary or special exit, adjusts entry coordinates, loads the adjacent room via bank 4, and sets mode 8."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ebc7",
+    "ghidra_name": "FUN_ebc7",
+    "name": "mg_fxb_clear_init_mode_and_push",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Clears room init mode 0x2C and pushes the player 1 pixel in their facing direction after hazard checks."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000eda8",
+    "ghidra_name": "FUN_eda8",
+    "name": "mg_fxb_handle_room_door_or_elevator",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "door_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Matches a player-triggered door or teleport entry against required card/direction, updates coordinates, and transitions via bank 4."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000f082",
+    "ghidra_name": "FUN_f082",
+    "name": "mg_fxb_update_player_weapons_and_bombs",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Ticks active enemy projectiles, explosive fuse timers, mine detonation checks, and active player weapon slots 2-7."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000fbbe",
+    "ghidra_name": "FUN_fbbe",
+    "name": "mg_fxb_load_pause_menu_graphics",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 3,
+    "summary": "Uploads bank 3 pause/equipment menu graphics to PPU_DATA and queues stream 0x13 when CHR stream page is 0xFF."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c17d",
+    "ghidra_name": "FUN_c17d",
+    "name": "mg_fxb_update_attract_demo_mode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Ticks attract-mode demo state and resets game mode to 0 if the title exit flag is set."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c4ac",
+    "ghidra_name": "FUN_c4ac",
+    "name": "mg_fxb_cutscene_chr_or_tileset_load",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "chr_page",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Disables rendering via 0xC49B and either records the CHR page and advances cutscene step or uploads the room tileset chunked."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d8a6",
+    "ghidra_name": "FUN_d8a6",
+    "name": "mg_fxb_update_transceiver_or_exit",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Runs bank 5 transceiver UI updates while active, or clears overlay state, uploads PPU return stream, and switches to mode 8 on Select."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dcf1",
+    "ghidra_name": "FUN_dcf1",
+    "name": "mg_fxb_step_actor_patrol_script",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Executes an actor's patrol script bytecode on even frames, updating direction, animation frame, pause/alert opcodes, or firing enemy shots."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e05b",
+    "ghidra_name": "FUN_e05b",
+    "name": "mg_fxb_update_actor_attack_shot",
+    "return_type": "int8_t",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Fires an enemy shot for an actor slot via 0xE07A and steps the corresponding enemy projectile slot if active."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e233",
+    "ghidra_name": "FUN_e233",
+    "name": "mg_fxb_update_player_action_and_sprite",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Checks screen edge exits, updates shield/weapon auxiliary sprite 1 and player OAM sprite coords, and dispatches player action state 0x3C."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000eb9b",
+    "ghidra_name": "FUN_eb9b",
+    "name": "mg_fxb_open_vertical_door",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Searches the room door list for a matching vertical door at the player's position, queues VRAM tile clear writes, and opens the door."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ec62",
+    "ghidra_name": "FUN_ec62",
+    "name": "mg_fxb_open_horizontal_door",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Searches the room door list for a matching horizontal door at the player's position, queues VRAM tile clear writes, and opens the door."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ece4",
+    "ghidra_name": "FUN_ece4",
+    "name": "mg_fxb_open_elevator_or_gate",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "door_table_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 4,
+    "summary": "Searches the room door list for a matching left/right gate or elevator at the player's position and queues VRAM tile updates."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000c131",
+    "ghidra_name": "FUN_c131",
+    "name": "mg_fxb_enter_attract_demo_mode",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 5,
+    "summary": "Cycles the attract-mode demo sequence index, enables demo mode, enters the transition screen, and advances to the next game mode."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e038",
+    "ghidra_name": "FUN_e038",
+    "name": "mg_fxb_tick_actor_alert_or_fire",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 5,
+    "summary": "Gates actor firing frequency by frame counter and weapon sprite state before invoking enemy shot firing and projectile stepping."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000e16f",
+    "ghidra_name": "FUN_e16f",
+    "name": "mg_fxb_tick_player_and_world_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 5,
+    "summary": "Updates special gas/equipment room checks, bank 3 and bank 0 environment hooks, delayed actor spawns, and RC missile steering or player actions."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000ed72",
+    "ghidra_name": "FUN_ed72",
+    "name": "mg_fxb_probe_door_after_step",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 5,
+    "summary": "Advances the player's Y tile probe coordinate by 2 and invokes the door/gate matcher at index 3."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dae3",
+    "ghidra_name": "FUN_dae3",
+    "name": "mg_fxb_dispatch_actor_slot_behavior",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_type",
+        "type": "int8_t"
+      },
+      {
+        "name": "actor_slot",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 6,
+    "summary": "Routes an actor slot to its type-specific AI handler via the inline jump table or invokes enemy firing when actor type is 0xF0."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000dab8",
+    "ghidra_name": "FUN_dab8",
+    "name": "mg_fxb_update_all_actors",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 7,
+    "summary": "Ticks the global alert timer and iterates over all 8 actor slots to spawn reinforcements or dispatch each active actor's AI behavior."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d80a",
+    "ghidra_name": "FUN_d80a",
+    "name": "mg_fxb_run_gameplay_simulation_tick",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 8,
+    "summary": "Executes one full gameplay simulation step covering attacks, projectiles, damage, guard vision, actors, bosses, objectives, pickups, health bar, and room gimmicks."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d871",
+    "ghidra_name": "FUN_d871",
+    "name": "mg_fxb_tick_demo_gameplay_frame",
+    "return_type": "void",
+    "params": [],
+    "domain": "core",
+    "wave": 9,
+    "summary": "Steps periodic player movement in bank 6 for attract-mode demo and runs one gameplay simulation tick."
+  },
+  {
+    "program": "PRG_FIXED_07.prg",
+    "address": "0x0000d8fa",
+    "ghidra_name": "FUN_d8fa",
+    "name": "mg_fxb_tick_gameplay_and_score_hud",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "bcd_steps",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "core",
+    "wave": 9,
+    "summary": "Runs one gameplay simulation tick, switches to bank 2, converts a counter to 4 BCD digits, and queues the HUD digit VRAM update."
+  }
+]

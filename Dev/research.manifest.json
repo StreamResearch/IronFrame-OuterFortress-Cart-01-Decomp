@@ -1,0 +1,202 @@
+{
+  "$schema": "https://schemas.local/manifest.v2.json",
+  "schemaVersion": 2,
+  "manifestType": "research-repo",
+  "appId": "ironframe-outerfortress-cart-01-decomp",
+  "researchId": "ironframe-outerfortress-cart-01-decomp",
+  "version": "0.1.0",
+  "gameId": "ironframe-outerfortress-cart-01",
+  "title": "IronFrame OuterFortress (Cart) 01",
+  "platform": "nes",
+  "platformId": "nes",
+  "engineId": "reCart",
+  "compatibleEngineTrack": "0.1.x",
+  "decompSchemaVersion": "1.0.0",
+  "pipelineFamily": "retro_banked_asm_c",
+  "serialOrHash": "NES-ME-USA",
+  "abiProfile": "nes-ines-6502",
+  "researchAxis": "hybrid",
+  "currentDecompTier": "D2",
+  "goalDecompTier": "D5",
+  "d4ParityTier": "none",
+  "preservedTiers": [],
+  "currentStudyTier": "S4",
+  "goalStudyTier": "S5",
+  "currentRecompTier": "R0",
+  "goalRecompTier": "R3",
+  "currentPortTier": "none",
+  "goalPortTier": "none",
+  "isHumanPlaytestSignedOff": false,
+  "workspaceFile": "IronFrame-OuterFortress-Cart-01-Decomp.code-workspace",
+  "recompProjectPath": "../../Personal/MetalGearRecomp",
+  "portProjectPath": null,
+  "downstreamProjects": [
+    "../../Personal/MetalGearRecomp"
+  ],
+  "upstreamResearchPath": null,
+  "graduatedFromPath": "R&D/decomps/nes/metal-gear",
+  "corpusRoot": "Corpus",
+  "deferredStandalonePath": "../Corpus/standalone",
+  "customUnpackerScript": "Dev/scripts/nes_unrom_unpack.py",
+  "decompBundle": {
+    "moduleId": "ironframe-outerfortress-cart-01",
+    "packageFileName": "IronFrame-OuterFortress-Cart-01.decomp",
+    "recipe": "Dev/schemas/decomp_recipe.json",
+    "decompSchemaVersion": "1.0.0"
+  },
+  "binaries": [
+    {
+      "name": "PRG_FIXED_07.prg",
+      "role": "primary",
+      "baseAddress": "0xc000"
+    },
+    {
+      "name": "BANK_00.prg",
+      "role": "secondary",
+      "baseAddress": "0x8000"
+    },
+    {
+      "name": "BANK_01.prg",
+      "role": "secondary",
+      "baseAddress": "0x8000"
+    },
+    {
+      "name": "BANK_02.prg",
+      "role": "secondary",
+      "baseAddress": "0x8000"
+    },
+    {
+      "name": "BANK_03.prg",
+      "role": "secondary",
+      "baseAddress": "0x8000"
+    },
+    {
+      "name": "BANK_04.prg",
+      "role": "secondary",
+      "baseAddress": "0x8000"
+    },
+    {
+      "name": "BANK_05.prg",
+      "role": "secondary",
+      "baseAddress": "0x8000"
+    },
+    {
+      "name": "BANK_06.prg",
+      "role": "secondary",
+      "baseAddress": "0x8000"
+    }
+  ],
+  "metrics": {
+    "binariesCount": 8,
+    "functionsTotal": 499,
+    "functionsSdk": 0,
+    "functionsGame": 499,
+    "functionsNamed": 499,
+    "failedFunctions": 0,
+    "globalsTotal": 2324,
+    "globalsMapped": 2324,
+    "domainsCount": 8,
+    "readableFiles": 77,
+    "workspaceReady": true,
+    "structsDefined": 22
+  },
+  "gates": {
+    "D0": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-13T09:30:30Z"
+    },
+    "D1": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-13T09:30:32Z"
+    },
+    "D2": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-13T09:37:08Z"
+    },
+    "D3": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "D4": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "D5": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "S0": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-14T08:13:00.786Z"
+    },
+    "S1": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-14T08:13:00.786Z"
+    },
+    "S2": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-14T08:13:00.786Z"
+    },
+    "S3": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-14T08:13:00.786Z"
+    },
+    "S4": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-14T08:13:00.786Z"
+    },
+    "S5": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "R0": {
+      "passed": true,
+      "verifiedAtUtc": "2026-11-14T09:04:05.229Z"
+    },
+    "R1": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "R2": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "R3": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "R4": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "R5": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "P0": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "P1": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "P2": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "P3": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "P4": {
+      "passed": false,
+      "verifiedAtUtc": null
+    },
+    "P5": {
+      "passed": false,
+      "verifiedAtUtc": null
+    }
+  },
+  "updatedAtUtc": "2026-11-20T05:30:00.000Z"
+}

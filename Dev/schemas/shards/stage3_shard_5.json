@@ -1,0 +1,782 @@
+[
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b7ea",
+    "ghidra_name": "FUN_b7ea",
+    "name": "mg_b56_transceiver_wait_confirm",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 0,
+    "summary": "Advances the cutscene auto-advance timer when Z is set or blinks the transceiver prompt cursor sprite while polling for A-button confirmation."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b81f",
+    "ghidra_name": "FUN_b81f",
+    "name": "mg_b56_transceiver_clear_dialog_row",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "row_step",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_05",
+    "wave": 0,
+    "summary": "Queues a 24-byte blank row transfer to clear the transceiver dialog window and advances or resets dialog step 0x07E0."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b8d0",
+    "ghidra_name": "FUN_b8d0",
+    "name": "mg_b56_transceiver_update_freq_hud",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 0,
+    "summary": "Converts the active transceiver frequency byte in 0x0046 to two decimal tile digits and queues them into the 0x0740 VRAM buffer."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b95e",
+    "ghidra_name": "FUN_b95e",
+    "name": "mg_b56_transceiver_draw_border_col",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 0,
+    "summary": "Writes 11 vertical border tile bytes (0x9E) directly to PPU_DATA for the transceiver frame and returns 0x9E."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bf3b",
+    "ghidra_name": "FUN_bf3b",
+    "name": "mg_b56_ending_play_second_call",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 0,
+    "summary": "Streams ending transceiver message 0x1F via the dialog printer and advances the ending sequence step with sound 0x79 upon completion."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bf60",
+    "ghidra_name": "FUN_bf60",
+    "name": "mg_b56_ending_fadeout_tick",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 0,
+    "summary": "Throttles the ending palette fadeout to every 8th frame before falling through to upload fade steps and reset to the title screen."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bf67",
+    "ghidra_name": "FUN_bf67",
+    "name": "mg_b56_ending_fadeout_step",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 0,
+    "summary": "Uploads 16-byte fading palette rows to PPU 0x3F00 across three steps and resets game mode and room state at step 0x1E."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b658",
+    "ghidra_name": "FUN_b658",
+    "name": "mg_b56_transceiver_state_dispatch",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 1,
+    "summary": "Refreshes the transceiver frequency display on odd frames and dispatches the transceiver substate via the inline jump table."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b66e",
+    "ghidra_name": "FUN_b66e",
+    "name": "mg_b56_transceiver_clear_and_reply",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 1,
+    "summary": "Clears transceiver dialog rows via 0xB81F and resets dialog mode to 0 with substate 1 once row clearing finishes."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000be6a",
+    "ghidra_name": "FUN_be6a",
+    "name": "mg_b56_ending_sequence_dispatch",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 1,
+    "summary": "Dispatches the active ending cutscene phase indexed by 0x0060 through the inline jump table."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bee7",
+    "ghidra_name": "FUN_bee7",
+    "name": "mg_b56_ending_wait_before_scan",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 1,
+    "summary": "Refreshes the transceiver frequency HUD while waiting 256 frames before resetting dialog state, playing sound 0x86, and advancing the ending step."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bf28",
+    "ghidra_name": "FUN_bf28",
+    "name": "mg_b56_ending_sweep_freq_to_78",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 1,
+    "summary": "Updates the transceiver frequency HUD and increments frequency 0x0046 every 4 frames until reaching 0x4E, then plays sound 0x86 and advances the ending step."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b6bb",
+    "ghidra_name": "FUN_b6bb",
+    "name": "mg_b56_transceiver_match_call",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 2,
+    "summary": "Scans the current room's transceiver call table to match frequency, alert, or story triggers, sets dialog message ID 0x0047, and plays sound 0x86."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b79a",
+    "ghidra_name": "FUN_b79a",
+    "name": "mg_b56_transceiver_stream_dialog",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 2,
+    "summary": "Streams dialog characters from the active message pointer into the 0x0740 VRAM queue, handles page-wait prompts, and signals dialog completion."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bf17",
+    "ghidra_name": "FUN_bf17",
+    "name": "mg_b56_ending_delay_and_clear",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 2,
+    "summary": "Waits 64 frames via 0x0055 before clearing the transceiver dialog box and advancing the ending step when clearing completes."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bf3f",
+    "ghidra_name": "FUN_bf3f",
+    "name": "mg_b56_ending_start_epilogue_bgm",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 2,
+    "summary": "Resets dialog state counters, triggers audio commands 0x86 and 0x65, and advances the ending sequence step."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b686",
+    "ghidra_name": "FUN_b686",
+    "name": "mg_b56_transceiver_auto_call_wait",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 3,
+    "summary": "Polls for incoming room calls or button press while waiting, then clears the transceiver dialog box and returns to substate 0."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b83a",
+    "ghidra_name": "FUN_b83a",
+    "name": "mg_b56_transceiver_fill_vram_tail",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "fill_value",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_05",
+    "wave": 3,
+    "summary": "Initializes VRAM queue length metadata and fills trailing buffer slots 0x0743..0x075A with fill_value before incrementing dialog mode 0x07E0."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000b8f9",
+    "ghidra_name": "FUN_b8f9",
+    "name": "mg_b56_transceiver_init_screen",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 3,
+    "summary": "Clears entity sprites, uploads the 15-row transceiver frame and vertical border columns to PPU nametable memory, re-enables NMI, and plays ring sound 0x79."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000beff",
+    "ghidra_name": "FUN_beff",
+    "name": "mg_b56_ending_play_first_call",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 3,
+    "summary": "Streams ending transceiver message 0x9B via the dialog printer and resets counters with sound 0x79 before advancing the ending step."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bf4f",
+    "ghidra_name": "FUN_bf4f",
+    "name": "mg_b56_ending_play_final_call",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 3,
+    "summary": "Streams ending transceiver message 0x0F via the dialog printer and triggers audio command 0x85 before advancing the ending step."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000be87",
+    "ghidra_name": "FUN_be87",
+    "name": "mg_b56_ending_init_sequence",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 4,
+    "summary": "Resets ending frame counter 0x0055, advances sequence step 0x0060, triggers audio commands 0x86 and 0x81, and jumps to 0xC313."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000be9a",
+    "ghidra_name": "FUN_be9a",
+    "name": "mg_b56_ending_animate_explosion",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 4,
+    "summary": "Queues 4-frame animated tile bursts into 0x0740 every 4 frames for 48 steps, then triggers sound/screen transition and advances the ending step."
+  },
+  {
+    "program": "BANK_05.prg",
+    "address": "0x0000bed5",
+    "ghidra_name": "FUN_bed5",
+    "name": "mg_b56_ending_open_transceiver",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_05",
+    "wave": 4,
+    "summary": "Selects the commander frequency 0x0D, initializes the transceiver screen layout, decrements play substate 0x002C, and optionally plays ring sound 0x79."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00008188",
+    "ghidra_name": "FUN_8188",
+    "name": "mg_b56_elevator_check_room_entry",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Checks if the player's horizontal tile matches an elevator shaft in the current room and initializes elevator ride coordinates and mode 8."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009295",
+    "ghidra_name": "FUN_9295",
+    "name": "mg_b56_audio_backup_pause_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Snapshots active SFX channel state bytes into 0x03F8-0x03FE and sets pause marker 0x03FF to 0x31."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009322",
+    "ghidra_name": "FUN_9322",
+    "name": "mg_b56_audio_ramp_dmc_dac",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Softly ramps the APU DMC DAC level up or down toward silence in 0x00EB and clears triangle linear control when ramp finishes."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009449",
+    "ghidra_name": "FUN_9449",
+    "name": "mg_b56_audio_check_note_release",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Sets release/slur bits 0x06 in channel flags 0x03AA when the remaining note timer falls below the gate threshold in 0x03B6."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000094ea",
+    "ghidra_name": "FUN_94ea",
+    "name": "mg_b56_audio_dispatch_seq_mode",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_flags",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Shifts channel_flags bit 0 into carry to branch between SFX sequence parsing (0x9536) and BGM sequence parsing (0x94ED)."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000969a",
+    "ghidra_name": "FUN_969a",
+    "name": "mg_b56_audio_advance_seq_ptr",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "byte_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Advances the 16-bit sequence pointer in 0x00D9 by byte_offset + 1 and stores it back into channel pointer tables 0x0398/0x039E."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000985b",
+    "ghidra_name": "FUN_985b",
+    "name": "mg_b56_audio_trigger_sfx_slot1",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Triggers sound/noise effect ID 1 via 0x99BB."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009866",
+    "ghidra_name": "FUN_9866",
+    "name": "mg_b56_audio_calc_gate_duration",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "gate_nibble",
+        "type": "uint8_t"
+      },
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Multiplies the channel's note duration 0x0380 by the lower nibble of gate_nibble and divides by 16 to compute the note gate cutoff."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009891",
+    "ghidra_name": "FUN_9891",
+    "name": "mg_b56_audio_load_seq_ptr",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Loads the 16-bit sequence pointer for channel_idx from 0x0398/0x039E into zero-page 0x00D9."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000989e",
+    "ghidra_name": "FUN_989e",
+    "name": "mg_b56_audio_read_branch_ptr",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "seq_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Reads a 16-bit jump target from the active sequence stream at seq_offset + 1 and stores it in 0x0398/0x039E."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000098ab",
+    "ghidra_name": "FUN_98ab",
+    "name": "mg_b56_audio_check_sfx_override",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "reg_value",
+        "type": "uint8_t"
+      },
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Preserves reg_value while checking whether an active SFX channel overrides BGM Pulse 1/2 (setting carry if muted) and restores APU register offset."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000098d8",
+    "ghidra_name": "FUN_98d8",
+    "name": "mg_b56_audio_reset_apu_channels",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Toggles triangle channel off and back on via APU_STATUS and zeroes APU_TRI_LINEAR, returning 0x0F."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000993b",
+    "ghidra_name": "FUN_993b",
+    "name": "mg_b56_audio_apu_write_delay",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Executes a 10-NOP timing delay subroutine between consecutive APU hardware register writes."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009a96",
+    "ghidra_name": "FUN_9a96",
+    "name": "mg_b56_audio_trigger_dmc_sample",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "sample_id",
+        "type": "uint8_t"
+      },
+      {
+        "name": "saved_y",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 0,
+    "summary": "Configures APU DMC control, address, and length registers from table 0xFC80 for sample_id and restarts the DMC channel."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009202",
+    "ghidra_name": "FUN_9202",
+    "name": "mg_b56_audio_write_pulse_regs",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "apu_reg_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 1,
+    "summary": "Writes volume/duty (or mute 0x30 when paused/flagged) and period low/high registers to an APU Pulse channel."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000920b",
+    "ghidra_name": "FUN_920b",
+    "name": "mg_b56_audio_write_pulse_active",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "apu_reg_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 1,
+    "summary": "Unconditionally writes active channel duty/volume shadow and period low/high registers to the target APU Pulse channel."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000093ef",
+    "ghidra_name": "FUN_93ef",
+    "name": "mg_b56_audio_step_volume_env",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 1,
+    "summary": "Advances a channel's software volume envelope sequence, handling loop opcodes (0xFE) and end markers (0xFF), and writes the attenuated APU volume."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009484",
+    "ghidra_name": "FUN_9484",
+    "name": "mg_b56_audio_step_vibrato",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 1,
+    "summary": "Applies 4-phase triangle-wave software vibrato modulation to Pulse 2 period low using parameters in 0x00F0 and 0x03A6-0x03A9."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009946",
+    "ghidra_name": "FUN_9946",
+    "name": "mg_b56_audio_write_apu_ctrl",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "ctrl_value",
+        "type": "uint8_t"
+      },
+      {
+        "name": "apu_reg_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 1,
+    "summary": "ORs ctrl_value with the channel duty mask and writes it to the APU control register if not overridden by an active SFX channel."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009956",
+    "ghidra_name": "FUN_9956",
+    "name": "mg_b56_audio_silence_all_channels",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 1,
+    "summary": "Clears all 6 channel track IDs, global attenuation, and pause state, resets APU channels, and silences Pulse 1/2 and Noise with sweeps disabled."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000099bb",
+    "ghidra_name": "FUN_99bb",
+    "name": "mg_b56_audio_init_track_channels",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "sound_id",
+        "type": "uint8_t"
+      },
+      {
+        "name": "passthrough_y",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 1,
+    "summary": "Enables global audio fade on 0x85 or initializes each channel descriptor from the sound table for sound_id subject to SFX priority."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00008d34",
+    "ghidra_name": "FUN_8d34",
+    "name": "mg_b56_actor_spawn_alert_icon",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "actor_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 2,
+    "summary": "Clears HUD refresh and cursor slot, and if actor state 0xC0+actor_slot is unset, plays sound 0x06 and spawns sprite 0xC0 at the actor's coordinates."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000927c",
+    "ghidra_name": "FUN_927c",
+    "name": "mg_b56_audio_restore_pulse2",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 2,
+    "summary": "Restores APU Pulse 2 sweep (if track 0x81 is active) and hardware registers from channel 1 state when Pulse 2 is active."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009382",
+    "ghidra_name": "FUN_9382",
+    "name": "mg_b56_audio_update_channel",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 2,
+    "summary": "Ticks a single audio channel's attenuation, note duration timer, vibrato, and volume envelope, dispatching sequence parsing when the timer hits zero."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000940d",
+    "ghidra_name": "FUN_940d",
+    "name": "mg_b56_audio_apply_attenuation",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "volume",
+        "type": "uint8_t"
+      },
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 2,
+    "summary": "Stores volume in 0x03E6, subtracts global attenuation 0x03C2 when fade is active (clamping at 0), and writes the result to APU control."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x00009860",
+    "ghidra_name": "FUN_9860",
+    "name": "mg_b56_audio_trigger_sfx_slot2",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 2,
+    "summary": "Triggers sound/noise effect ID 2 via 0x99BB."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x0000922b",
+    "ghidra_name": "FUN_922b",
+    "name": "mg_b56_audio_sync_pause_mute",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_06",
+    "wave": 3,
+    "summary": "Synchronizes pause state 0x0025 with shadow 0x00EA, backing up and muting APU channels on pause or restoring channel registers on resume."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000097dc",
+    "ghidra_name": "FUN_97dc",
+    "name": "mg_b56_audio_setup_note_timing",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "seq_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 3,
+    "summary": "Computes note duration from base tempo and sequence nibble, handles Noise channel percussion/DMC triggers, and computes gate duration for pitched channels."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000095e4",
+    "ghidra_name": "FUN_95e4",
+    "name": "mg_b56_audio_play_bgm_note",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "seq_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 4,
+    "summary": "Decodes a BGM note pitch from the frequency table with octave shifting and detune, updates APU period/envelope registers, and advances the channel sequence pointer."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000094ed",
+    "ghidra_name": "FUN_94ed",
+    "name": "mg_b56_audio_parse_seq_event",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "seq_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 5,
+    "summary": "Parses BGM and SFX sequence command opcodes, tempo/duty/sweep updates, and note events for the active audio channel."
+  },
+  {
+    "program": "BANK_06.prg",
+    "address": "0x000096e4",
+    "ghidra_name": "FUN_96e4",
+    "name": "mg_b56_audio_exec_control_opcode",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "opcode_low",
+        "type": "uint8_t"
+      },
+      {
+        "name": "channel_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "seq_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_06",
+    "wave": 5,
+    "summary": "Executes sequence flow-control opcodes including loop-count repeats (0xFE), pattern subroutine calls/returns, and channel stop handlers."
+  }
+]

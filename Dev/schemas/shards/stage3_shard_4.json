@@ -1,0 +1,1425 @@
+[
+  {
+    "program": "BANK_00.prg",
+    "address": "0x000099a8",
+    "ghidra_name": "FUN_99a8",
+    "name": "mg_b034_bank00_shift_b01e_data_stub",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "entry_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Shifts an entry in bank-0 table 0xB01E left by one bit before hitting unparsed data (bank-6 audio stub alias)."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000a73e",
+    "ghidra_name": "FUN_a73e",
+    "name": "mg_b034_bank00_check_equip_flags_stub",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Inspects equipment flags in zero-page 0x75 and returns without side effects in C output."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000a765",
+    "ghidra_name": "FUN_a765",
+    "name": "mg_b034_try_spawn_alert_guard_checked",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Validates actor slot bounds, empty slot state, and active alert flag before falling into room guard spawning."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000aa54",
+    "ghidra_name": "FUN_aa54",
+    "name": "mg_b034_hud_copy_padded_name_to_queue",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "name_ptr_hi",
+        "type": "uint8_t"
+      },
+      {
+        "name": "start_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Copies a length-prefixed HUD item or weapon string via zero-page 0x80 into the 0x0740 VRAM queue and zero-pads to 15 bytes."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000aa79",
+    "ghidra_name": "FUN_aa79",
+    "name": "mg_b034_hud_init_vram_queue_header",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Initializes the VRAM transfer queue header for a horizontal status-bar write to PPU nametable page 0x23."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000aad7",
+    "ghidra_name": "FUN_aad7",
+    "name": "mg_b034_hud_write_bcd_digit_tile",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "digit_nibble",
+        "type": "uint8_t"
+      },
+      {
+        "name": "queue_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Formats a single BCD digit into tile 0x70+digit in the VRAM queue while suppressing leading zeroes."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b3fc",
+    "ghidra_name": "FUN_b3fc",
+    "name": "mg_b034_update_screen_shake_effect",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Toggles PPU Y-scroll and player sprite X offset every 8 frames to produce screen shake until step counter wraps to zero."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b46d",
+    "ghidra_name": "FUN_b46d",
+    "name": "mg_b034_update_hazard_damage_and_fx",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "pattern_id",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Ticks periodic player health drain, places 4 hazard sprite coordinates from bank-0 tables, and cycles effect tiles 0x90/0x91."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b618",
+    "ghidra_name": "FUN_b618",
+    "name": "mg_b034_vram_cursor_add_offset",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "byte_delta",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Adds an 8-bit unsigned offset to the 16-bit big-endian PPU address cursor in zero-page 0x8D and 0x8E."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b658",
+    "ghidra_name": "FUN_b658",
+    "name": "mg_b034_vram_queue_terminate_at",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "queue_index",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Writes a zero end-of-queue sentinel at the specified offset in the 0x0740 VRAM transfer queue."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b65e",
+    "ghidra_name": "FUN_b65e",
+    "name": "mg_b034_clear_room_tiles_and_queue_vram",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "draw_mode",
+        "type": "int8_t"
+      },
+      {
+        "name": "queue_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Zeroes a horizontal or vertical run of room layout tiles in 0x0400 and appends the matching clear command to the VRAM queue."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b91a",
+    "ghidra_name": "FUN_b91a",
+    "name": "mg_b034_update_bridge_platforms_and_fall_check",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Animates 6 moving bridge platform slots and triggers a fatal pitfall transition to room 5 if the player is outside safe bounds."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000bf42",
+    "ghidra_name": "FUN_bf42",
+    "name": "mg_b034_tick_countdown_timer_and_hud",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Decrements the 16-bit countdown timer in 0x07D7-0x07D8 every 4 frames, formats 4 decimal HUD tiles at PPU 0x232D, or zeroes health at timeout."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000bf67",
+    "ghidra_name": "FUN_bf67",
+    "name": "mg_b034_set_timer_state_67",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "timer_state",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 0,
+    "summary": "Stores the given timer or cutscene phase value into zero-page variable 0x67."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000a771",
+    "ghidra_name": "FUN_a771",
+    "name": "mg_b034_spawn_alert_guard_in_room",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 1,
+    "summary": "Loads an alert-reinforcement guard position for the active room from 0xA7C4 into the actor pool and triggers alert audio."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000aa0c",
+    "ghidra_name": "FUN_aa0c",
+    "name": "mg_b034_hud_refresh_equip_and_ammo",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 1,
+    "summary": "Alternately queues the equipped weapon or item label and its 3-digit BCD ammo count into the bottom status-bar VRAM queue."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b465",
+    "ghidra_name": "FUN_b465",
+    "name": "mg_b034_update_hazard_and_restore_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 1,
+    "summary": "Runs the bank-0 hazard damage and effect update routine and switches UNROM back to PRG bank 6."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b468",
+    "ghidra_name": "FUN_b468",
+    "name": "mg_b034_restore_bank6_trampoline",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 1,
+    "summary": "Restores UNROM PRG bank 6 via unrom_select_bank_index after bank-0 room handler execution."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b622",
+    "ghidra_name": "FUN_b622",
+    "name": "mg_b034_clear_rect_room_tiles_and_queue",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 1,
+    "summary": "Queues 4 border-clearing runs and clears matching tiles in 0x0400 for an expanding blast area sized by zero-page 0x8F."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000bf3a",
+    "ghidra_name": "FUN_bf3a",
+    "name": "mg_b034_tick_countdown_and_restore_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 1,
+    "summary": "Ticks the countdown timer and HUD update routine and restores UNROM PRG bank 6."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b529",
+    "ghidra_name": "FUN_b529",
+    "name": "mg_b034_update_boss_vertical_hover_fx",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 2,
+    "summary": "Cycles actor sprite 0 between 0x92 and 0x93, oscillates its Y coordinate via state counter 0x55, and plays SFX 0x30 at turnaround points."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b6aa",
+    "ghidra_name": "FUN_b6aa",
+    "name": "mg_b034_check_laser_or_blast_player_hit",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "max_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 2,
+    "summary": "Tests active hazard bounding boxes against the player's coordinates, applying instant death, triggering cutscene state in room 0xBD, or starting blast timers."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b7d7",
+    "ghidra_name": "FUN_b7d7",
+    "name": "mg_b034_update_random_hazard_spawns",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 2,
+    "summary": "Selects a pseudo-random hazard pattern index from the frame counter and executes pattern-based hazard spawning and collision checks."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b7e3",
+    "ghidra_name": "FUN_b7e3",
+    "name": "mg_b034_update_pattern_hazard_spawns",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "pattern_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 2,
+    "summary": "Places room hazard sprites from table 0xB890, checks the player hitbox overlap to trigger alert alarm SFX 0x49, or spawns an alert guard."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b914",
+    "ghidra_name": "FUN_b914",
+    "name": "mg_b034_update_bridge_and_restore_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 2,
+    "summary": "Updates the moving bridge platforms and pitfall check and restores UNROM PRG bank 6."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b9ff",
+    "ghidra_name": "FUN_b9ff",
+    "name": "mg_b034_check_room_hazard_zones_and_hits",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "zone_table_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 2,
+    "summary": "Checks the player against room hazard rectangles in table 0xBAA7 to deal periodic damage and detects projectile type 0x29 hits to clear hazard state."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b523",
+    "ghidra_name": "FUN_b523",
+    "name": "mg_b034_update_boss_hover_and_restore_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 3,
+    "summary": "Runs the boss vertical hover animation and SFX update and restores UNROM PRG bank 6."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b584",
+    "ghidra_name": "FUN_b584",
+    "name": "mg_b034_update_timed_explosions",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "layout_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 3,
+    "summary": "Advances up to 4 blast timers in 0x07DA, runs player hit checks, and expands blast tile clearing every 16 frames up to 0x40."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b7c1",
+    "ghidra_name": "FUN_b7c1",
+    "name": "mg_b034_update_pattern_hazards_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 3,
+    "summary": "Executes pattern-indexed room hazard updates and restores UNROM PRG bank 6."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b7c7",
+    "ghidra_name": "FUN_b7c7",
+    "name": "mg_b034_update_random_hazards_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 3,
+    "summary": "Executes pseudo-random room hazard updates and restores UNROM PRG bank 6."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b9a1",
+    "ghidra_name": "FUN_b9a1",
+    "name": "mg_b034_update_hazard_and_palette_cycle",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "zone_table_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_00",
+    "wave": 3,
+    "summary": "Runs room hazard zone collision checks when active and queues a cycling 16-byte PPU palette write at 0x3F00 every 4 frames."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000bb28",
+    "ghidra_name": "FUN_bb28",
+    "name": "mg_b034_upload_bank00_ppu_stream_bb3a",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 3,
+    "summary": "Points zero-page 0x80 to bank-0 PPU stream 0xBB3A and uploads two consecutive immediate nametable segments."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b57e",
+    "ghidra_name": "FUN_b57e",
+    "name": "mg_b034_update_explosions_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 4,
+    "summary": "Runs timed room explosion updates and restores UNROM PRG bank 6."
+  },
+  {
+    "program": "BANK_00.prg",
+    "address": "0x0000b99b",
+    "ghidra_name": "FUN_b99b",
+    "name": "mg_b034_update_hazard_palette_and_bank6",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_00",
+    "wave": 4,
+    "summary": "Runs hazard zone and palette-cycling updates and restores UNROM PRG bank 6."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b847",
+    "ghidra_name": "FUN_b847",
+    "name": "mg_b034_bank03_advance_actor_sprite_state",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Increments the actor substate at zero-page 0xA8+slot and assigns sprite ID 0x31 for player action 0x11 or 0xCD otherwise."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b899",
+    "ghidra_name": "FUN_b899",
+    "name": "mg_b034_bank03_tick_actor_anim_frames",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Decrements the actor animation timer in 0xB0+slot, updates sprite IDs at keyframe thresholds in 0xB8BD, and clears the sprite at 0xB0."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b8bc",
+    "ghidra_name": "FUN_b8bc",
+    "name": "mg_b034_bank03_noop_stub",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Empty bank-3 subroutine stub that returns immediately."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b966",
+    "ghidra_name": "FUN_b966",
+    "name": "mg_b034_pw_decode_byte_with_key",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "low_char",
+        "type": "uint8_t"
+      },
+      {
+        "name": "key_char",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Decodes an 8-bit password field by combining the low 5 bits of low_char with the shifted low 3 bits of key_char via XOR."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b973",
+    "ghidra_name": "FUN_b973",
+    "name": "mg_b034_pw_decode_byte_bit4",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "low_char",
+        "type": "uint8_t"
+      },
+      {
+        "name": "mid_char",
+        "type": "uint8_t"
+      },
+      {
+        "name": "high_char",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Decodes an 8-bit password field from bits 4..0 of low_char, bits 4..3 of mid_char, and bit 4 of high_char."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b986",
+    "ghidra_name": "FUN_b986",
+    "name": "mg_b034_pw_decode_byte_bit3",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "low_char",
+        "type": "uint8_t"
+      },
+      {
+        "name": "mid_char",
+        "type": "uint8_t"
+      },
+      {
+        "name": "high_char",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Decodes an 8-bit password field from bits 4..0 of low_char, bits 4..3 of mid_char, and bit 3 of high_char."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000ba74",
+    "ghidra_name": "FUN_ba74",
+    "name": "mg_b034_pw_queue_invalid_message",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Resets the VRAM write cursor and queues the invalid-password message from 0xBAAD into the 0x0740 buffer for PPU 0x216C."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bab8",
+    "ghidra_name": "FUN_bab8",
+    "name": "mg_b034_pw_compute_checksum",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Sums the 24 password characters in zero-page 0xA8-0xBF with carry starting from seed 7 and returns the 5-bit checksum."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bb45",
+    "ghidra_name": "FUN_bb45",
+    "name": "mg_b034_pw_commit_selected_char",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Saves the selected character index from 0xA7 into the current password slot at 0xA8+0xA6 and queues its tile at PPU address from 0xBBB3."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bb66",
+    "ghidra_name": "FUN_bb66",
+    "name": "mg_b034_pw_clear_grid_cursor",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Queues a blank tile (0x00) at the current password grid cursor PPU address before moving the cursor."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bb6a",
+    "ghidra_name": "FUN_bb6a",
+    "name": "mg_b034_pw_blink_grid_cursor",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Queues a blinking cursor tile (0x7C or 0x00 based on frame counter bits) at the password grid position indexed by 0xA7."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bd4d",
+    "ghidra_name": "FUN_bd4d",
+    "name": "mg_b034_pw_pack_hi_bits_4_3",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "src_a",
+        "type": "uint8_t"
+      },
+      {
+        "name": "src_b",
+        "type": "uint8_t"
+      },
+      {
+        "name": "pw_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Packs bit 7 of src_a and bit 7 of src_b into bits 4 and 3 of password buffer slot 0xA8+pw_slot."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bd5f",
+    "ghidra_name": "FUN_bd5f",
+    "name": "mg_b034_pw_pack_upper_bits",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "src_a",
+        "type": "uint8_t"
+      },
+      {
+        "name": "src_b",
+        "type": "uint8_t"
+      },
+      {
+        "name": "pw_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Packs bits 6..5 of src_a and bits 7..5 of src_b into password buffer slot 0xA8+pw_slot."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bd77",
+    "ghidra_name": "FUN_bd77",
+    "name": "mg_b034_pw_pack_low5_bits",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "value",
+        "type": "uint8_t"
+      },
+      {
+        "name": "pw_slot",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Stores the lower 5 bits of value into password buffer slot 0xA8+pw_slot."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000be35",
+    "ghidra_name": "FUN_be35",
+    "name": "mg_b034_ppu_set_addr_zp90",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Writes the 16-bit PPU nametable address stored in zero-page 0x91 (high) and 0x90 (low) to PPU_ADDR."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000be40",
+    "ghidra_name": "FUN_be40",
+    "name": "mg_b034_ppu_draw_border_horiz",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "corner_tile",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Writes a corner tile followed by zero-page 0x92 horizontal border tiles (0x7B) to PPU_DATA."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000be49",
+    "ghidra_name": "FUN_be49",
+    "name": "mg_b034_ppu_draw_border_vert",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "corner_tile",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Writes a corner tile followed by zero-page 0x93 vertical border tiles (0x9E) to PPU_DATA."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000be57",
+    "ghidra_name": "FUN_be57",
+    "name": "mg_b034_ppu_set_vram_inc_32",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Sets the VRAM address increment-by-32 bit in g_ppu_ctrl_shadow and writes it to PPU_CTRL."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000be60",
+    "ghidra_name": "FUN_be60",
+    "name": "mg_b034_ppu_set_vram_inc_1",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Clears the VRAM address increment-by-32 bit in g_ppu_ctrl_shadow to select +1 mode and writes PPU_CTRL."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000be6a",
+    "ghidra_name": "FUN_be6a",
+    "name": "mg_b034_ppu_box_noop_stub",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Empty PPU box-drawing helper stub that returns immediately."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bf44",
+    "ghidra_name": "FUN_bf44",
+    "name": "mg_b034_ppu_flush_vram_queue_from",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "queue_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 0,
+    "summary": "Processes queued VRAM transfer packets starting at queue_offset into PPU_ADDR and PPU_DATA until a zero terminator."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x00008007",
+    "ghidra_name": "FUN_8007",
+    "name": "mg_b034_bank03_fade_palette_to_room_a5",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Steps through 4 palette fade frames via 0x0740 every 16 frames, transitions into room 0xA5 in mode 8, and restores bank 6."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b83a",
+    "ghidra_name": "FUN_b83a",
+    "name": "mg_b034_bank03_dispatch_actor_state",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Dispatches a bank-3 actor slot via inline_jump_table_dispatch using its state byte at zero-page 0xA8+slot_idx."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b8c3",
+    "ghidra_name": "FUN_b8c3",
+    "name": "mg_b034_pw_unpack_to_game_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Decodes the 24 password characters in 0xA8-0xBF into player rank, keycards, equipment, and progression flags in 0x6E-0x7F."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b999",
+    "ghidra_name": "FUN_b999",
+    "name": "mg_b034_pw_dispatch_submode",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Dispatches the password entry screen phase via inline_jump_table_dispatch using g_game_submode."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b9af",
+    "ghidra_name": "FUN_b9af",
+    "name": "mg_b034_pw_clear_screen_next_submode",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Calls the fixed-bank screen reset routine at 0xD3CF and increments g_game_submode."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bc25",
+    "ghidra_name": "FUN_bc25",
+    "name": "mg_b034_pw_draw_char_grid",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Draws the 32-character password input grid directly to PPU nametable address 0x21E8."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bca7",
+    "ghidra_name": "FUN_bca7",
+    "name": "mg_b034_pw_encode_from_game_state",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Encodes player rank, keycards, equipment, and progression flags in 0x6E-0x7F into 24 5-bit password slots at 0xA8-0xBF."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bd7e",
+    "ghidra_name": "FUN_bd7e",
+    "name": "mg_b034_pw_draw_encoded_group",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "group_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Renders one 5-character encoded password group directly to PPU_DATA using character mapping table 0xBDC0."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bdf6",
+    "ghidra_name": "FUN_bdf6",
+    "name": "mg_b034_ppu_draw_bordered_box",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "box_table_offset",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Draws a framed rectangular UI box directly to PPU_DATA using dimensions and coordinates from table 0xBE6B."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bf67",
+    "ghidra_name": "FUN_bf67",
+    "name": "mg_b034_ppu_flush_vram_queue",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 1,
+    "summary": "Flushes all queued VRAM transfer commands starting from index 0 of 0x0740 to PPU_ADDR and PPU_DATA and resets the queue."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b857",
+    "ghidra_name": "FUN_b857",
+    "name": "mg_b034_bank03_check_actor_player_hit",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Checks 8-pixel proximity between the player and actor slot_idx, decrementing health with SFX 0x2A on hit and updating actor state and sprite."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b9aa",
+    "ghidra_name": "FUN_b9aa",
+    "name": "mg_b034_pw_play_enter_sfx_and_clear",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Plays password screen entry SFX 0x6D, resets the screen via 0xD3CF, and advances g_game_submode."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b9b5",
+    "ghidra_name": "FUN_b9b5",
+    "name": "mg_b034_pw_init_entry_screen",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Blanks rendering, draws password UI boxes, header prompt, and character selection grid, re-enables NMI, and resets entry cursors."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000ba0a",
+    "ghidra_name": "FUN_ba0a",
+    "name": "mg_b034_pw_validate_input",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Unpacks the entered password, verifies its 5-bit checksum and field bounds, and triggers acceptance SFX 0x3A or error message with SFX 0x3B."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000ba50",
+    "ghidra_name": "FUN_ba50",
+    "name": "mg_b034_pw_wait_invalid_timer",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Counts down delay timer 0xA5 after an invalid password and returns to submode 0 via screen reset when it expires."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000ba5b",
+    "ghidra_name": "FUN_ba5b",
+    "name": "mg_b034_pw_wait_accept_and_start",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Counts down delay timer 0xA5 after an accepted password, plays SFX 0x85, clears the screen, and transitions to game mode 4."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bac5",
+    "ghidra_name": "FUN_bac5",
+    "name": "mg_b034_pw_handle_grid_input",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Handles joypad-1 D-pad cursor movement across the 8x4 password grid and A-button character selection with sound effects."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000bc7f",
+    "ghidra_name": "FUN_bc7f",
+    "name": "mg_b034_pw_display_generated_password",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Encodes the active game state, computes its checksum into 0xC0, draws all 5 password groups, and enables NMI."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000be73",
+    "ghidra_name": "FUN_be73",
+    "name": "mg_b034_bank03_check_room_radio_triggers",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 2,
+    "summary": "Checks g_room_id against event tables in 0xBF00 to initiate codec calls or blink transceiver alert bars in the VRAM queue."
+  },
+  {
+    "program": "BANK_03.prg",
+    "address": "0x0000b9f7",
+    "ghidra_name": "FUN_b9f7",
+    "name": "mg_b034_pw_tick_entry_loop",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_03",
+    "wave": 3,
+    "summary": "Runs one password input frame by polling grid input, blinking the cursor, and advancing g_game_submode when 25 characters are entered."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x000080f2",
+    "ghidra_name": "FUN_80f2",
+    "name": "mg_b034_bank04_check_dir_spawn_bounds",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Compares scratch coordinates in zero-page 0x82-0x83 against directional screen bounds indexed by g_player_dir."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x000081f7",
+    "ghidra_name": "FUN_81f7",
+    "name": "mg_b034_lookup_next_room_id",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Resolves the next g_room_id from room adjacency tables in 0x8A8E using direction index 0x39, or sets 0xFF for rooms 0x80-0xCF."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x00008227",
+    "ghidra_name": "FUN_8227",
+    "name": "mg_b034_init_cutscene_player_sprite",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Initializes player sprite slot 0 with type 200 at coordinates (0x20, 0xC0) for the bank-4 ascent cutscene."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x00008237",
+    "ghidra_name": "FUN_8237",
+    "name": "mg_b034_tick_ending_ascent_cutscene",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Ticks the 16-bit cutscene timer in 0x98-0x99, animates player sprite 200/201 rising upward, spawns trailing sprites, and resets submode on end."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x00008a58",
+    "ghidra_name": "FUN_8a58",
+    "name": "mg_b034_reset_transceiver_cursor",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Resets the transceiver/warp state variable at 0x07C9 to zero."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x00008a5f",
+    "ghidra_name": "FUN_8a5f",
+    "name": "mg_b034_arm_or_reset_transceiver_cursor",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Arms 0x07C9 to 0x80 if it currently equals 2, otherwise resets it to zero."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bbec",
+    "ghidra_name": "FUN_bbec",
+    "name": "mg_b034_init_homing_projectile",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Sets projectile actor slot_idx sprite ID to 0x9C, initializes its step timer to 8, and advances its state in 0xA8+slot_idx."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bc33",
+    "ghidra_name": "FUN_bc33",
+    "name": "mg_b034_step_homing_projectile",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Decrements projectile lifetime timer and moves its X/Y coordinates and sprite ID using directional velocity table 0xBCA7."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bc53",
+    "ghidra_name": "FUN_bc53",
+    "name": "mg_b034_set_projectile_dir_sprite",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "dir_idx",
+        "type": "uint8_t"
+      },
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Assigns the directional projectile sprite ID from table 0xBCA7+0x0D to actor slot_idx."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bc78",
+    "ghidra_name": "FUN_bc78",
+    "name": "mg_b034_calc_player_to_actor_delta",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Computes signed quadrant bits in 0xB0+slot_idx and absolute Y/X distances between the player and actor slot_idx."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bcd2",
+    "ghidra_name": "FUN_bcd2",
+    "name": "mg_b034_dialog_advance_phase_and_reset",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Increments the dialog phase in 0x6B and resets g_dialog_menu_mode and g_status_bar_step to zero."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000be27",
+    "ghidra_name": "FUN_be27",
+    "name": "mg_b034_dialog_enter_text_mode",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Switches g_dialog_menu_mode to 1 (text streaming) and resets g_status_bar_step to zero."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000be42",
+    "ghidra_name": "FUN_be42",
+    "name": "mg_b034_dialog_clear_4_rows",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Queues one 20-byte blank dialog row into 0x0740 per frame using g_status_bar_step and enters text mode after 4 rows."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000be6a",
+    "ghidra_name": "FUN_be6a",
+    "name": "mg_b034_dialog_advance_clear_step",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "end_marker",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Stores end_marker into 0x0758, advances g_status_bar_step, and enters dialog text mode at step 4."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000be73",
+    "ghidra_name": "FUN_be73",
+    "name": "mg_b034_dialog_enter_text_mode_if_zero",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Transitions g_dialog_menu_mode to 1 and resets g_status_bar_step when the CPU zero flag is set."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bf42",
+    "ghidra_name": "FUN_bf42",
+    "name": "mg_b034_dialog_restore_bg_and_close",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 0,
+    "summary": "Queues saved background tiles and attributes from 0x042C/0x0700 over 8 steps to erase the dialog window and closes dialog state on step 7."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000801c",
+    "ghidra_name": "FUN_801c",
+    "name": "mg_b034_spawn_room_actors_from_table",
+    "return_type": "uint8_t",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Reads the spawn descriptor for g_room_id from 0x82CA, checks directional bounds, and populates enemy/object slots in 0x0308-0x0368."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x00008a3f",
+    "ghidra_name": "FUN_8a3f",
+    "name": "mg_b034_check_special_room_dir_warp",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Dispatches directional warp logic via inline_jump_table_dispatch in rooms 0xDF and 0xE1, or clears 0x07C9 otherwise."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bbe1",
+    "ghidra_name": "FUN_bbe1",
+    "name": "mg_b034_bank04_dispatch_actor_state",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Dispatches a bank-4 actor slot via inline_jump_table_dispatch using its state byte in 0xA8+slot_idx."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bc62",
+    "ghidra_name": "FUN_bc62",
+    "name": "mg_b034_check_actor_proximity_trigger",
+    "return_type": "void",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "int8_t"
+      }
+    ],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Computes player-to-actor distance and switches actor slot_idx to state 2 with timer 0x10 when within 33 pixels on both axes."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bcb8",
+    "ghidra_name": "FUN_bcb8",
+    "name": "mg_b034_dialog_dispatch_phase",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Sets dialog active flag 0x4C to 1 and dispatches the current dialog phase in 0x6B via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bcc7",
+    "ghidra_name": "FUN_bcc7",
+    "name": "mg_b034_dialog_dispatch_speaker",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Dispatches dialog window layout or speaker variant in 0x48 via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bcdc",
+    "ghidra_name": "FUN_bcdc",
+    "name": "mg_b034_dialog_draw_box_frame_6step",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Queues 6 incremental VRAM packets from 0xBF87 to draw and attribute-mask the standard dialog box before advancing dialog phase."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bd74",
+    "ghidra_name": "FUN_bd74",
+    "name": "mg_b034_dialog_draw_box_frame_8step",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Queues 8 incremental VRAM packets from 0xBF87 to draw and attribute-mask an alternate dialog box before advancing dialog phase."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bdba",
+    "ghidra_name": "FUN_bdba",
+    "name": "mg_b034_dialog_tick_typewriter_and_prompt",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Drives codec/dialog text streaming across PRG banks 0, 1, and 5, blinks continuation sprite 0xC5, and handles button-advance timing."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000be76",
+    "ghidra_name": "FUN_be76",
+    "name": "mg_b034_dialog_clear_6_rows",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Queues one 16-byte blank row into 0x0740 per frame using g_status_bar_step and enters dialog text mode at step 6."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000beac",
+    "ghidra_name": "FUN_beac",
+    "name": "mg_b034_dialog_dispatch_close",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 1,
+    "summary": "Dispatches dialog closing behavior in 0x48 via inline_jump_table_dispatch."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x00008120",
+    "ghidra_name": "FUN_8120",
+    "name": "mg_b034_resolve_room_transition",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 2,
+    "summary": "Evaluates special room warps and transition flags in 0x39 against bank-4 exit tables in 0x8A8E to update g_room_id."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x00008a6d",
+    "ghidra_name": "FUN_8a6d",
+    "name": "mg_b034_tick_transceiver_cursor_warp",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 2,
+    "summary": "Advances 0x07C9 state and decrements g_room_id with SFX 0x3A when bit 7 of 0x07C9 is set."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bbf8",
+    "ghidra_name": "FUN_bbf8",
+    "name": "mg_b034_update_patrol_projectile",
+    "return_type": "uint8_t",
+    "params": [
+      {
+        "name": "slot_idx",
+        "type": "uint8_t"
+      }
+    ],
+    "domain": "bank_04",
+    "wave": 2,
+    "summary": "Checks proximity to the player and, on odd frames, steps the actor along its scripted path in 0xBCA7 while updating its directional sprite."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000beb7",
+    "ghidra_name": "FUN_beb7",
+    "name": "mg_b034_dialog_reset_state_on_close",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 2,
+    "summary": "Resets dialog phase and substate counters on close, playing SFX 0x31 when leaving cutscene substate 10."
+  },
+  {
+    "program": "BANK_04.prg",
+    "address": "0x0000bb91",
+    "ghidra_name": "FUN_bb91",
+    "name": "mg_b034_tick_binoculars_room_peek",
+    "return_type": "void",
+    "params": [],
+    "domain": "bank_04",
+    "wave": 3,
+    "summary": "Draws binoculars reticle sprite 0x3A, resolves directional room peek via 0x8120 on D-pad input, and restores the original room after 64 frames."
+  }
+]

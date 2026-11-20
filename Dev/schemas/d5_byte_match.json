@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "generatedAtUtc": "2026-11-20T06:39:31.555Z",
+  "isPassed": true,
+  "isVerified": true,
+  "matchedBinaryCount": 8,
+  "mismatchedBytes": 0,
+  "fileSizeBytes": 131088,
+  "crc32Hex": "25ba3d04",
+  "md5Hex": "0e514c68eb8d82342a71a74c6d52499b",
+  "sha1Hex": "9f7448fddaedc1801e2970e50722ac3cfacd19b8",
+  "sha256Hex": "79095355436222161cb3841ff9b5c7a572e77af11461935e433bd6e8dfd0f164",
+  "binaries": [
+    {
+      "relativePath": "extracted/BANK_00.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "96d482df0707bef38714935c751b17b523bfb4239321df3d4470a97329cc6710",
+      "mismatchedBytes": 0
+    },
+    {
+      "relativePath": "extracted/BANK_01.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "4b84529d2370808470c5db28b5ae57e32f2465ab0e08acdaca1ce67503a1b524",
+      "mismatchedBytes": 0
+    },
+    {
+      "relativePath": "extracted/BANK_02.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "e22b96c19778704a4975baee589f450ed1b370138a147b30d5dccd757da7f4cd",
+      "mismatchedBytes": 0
+    },
+    {
+      "relativePath": "extracted/BANK_03.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "728a9cc76ce3dbdc977ad33ffd10540688d4fad51c50a1087dcbf780406a9ec3",
+      "mismatchedBytes": 0
+    },
+    {
+      "relativePath": "extracted/BANK_04.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "093f60271a5f03f827362f219c3496333ff9378a5df840bdd732dde5e71320b4",
+      "mismatchedBytes": 0
+    },
+    {
+      "relativePath": "extracted/BANK_05.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "9a90082b0849e45659fffdf0a3f3c03425632d501e487d6cc97f863abc38fc6e",
+      "mismatchedBytes": 0
+    },
+    {
+      "relativePath": "extracted/BANK_06.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "7345973dcfdfd454fc5f5a9ec55f506192ec59e855b722c7538cf7ff8600833b",
+      "mismatchedBytes": 0
+    },
+    {
+      "relativePath": "extracted/PRG_FIXED_07.prg",
+      "fileSizeBytes": 32768,
+      "sha256Hex": "96d482df0707bef38714935c751b17b523bfb4239321df3d4470a97329cc6710",
+      "mismatchedBytes": 0
+    }
+  ]
+}

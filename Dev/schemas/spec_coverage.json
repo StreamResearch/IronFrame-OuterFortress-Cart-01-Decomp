@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "generatedAtUtc": "2026-11-20T06:39:27.675Z",
+  "isPassed": true,
+  "totalFunctionCount": 499,
+  "namedFunctionCount": 499,
+  "totalGlobalCount": 2324,
+  "mappedGlobalCount": 2324,
+  "definedStructCount": 22,
+  "definedEnumCount": 22,
+  "unresolvedFieldCount": 0
+}

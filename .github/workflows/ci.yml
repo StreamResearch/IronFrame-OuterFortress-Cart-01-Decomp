@@ -1,0 +1,166 @@
+name: Clean-Room CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate JSON manifests and schemas
+        run: |
+          python -B - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          root = Path(".")
+          targets = [root / "active.state", root / "Dev" / "research.manifest.json"]
+          targets.extend(sorted((root / "Dev" / "schemas").rglob("*.json")))
+          for p in targets:
+              json.loads(p.read_text(encoding="utf-8"))
+          print(f"Validated {len(targets)} JSON files.")
+
+          cg = json.loads((root / "Dev" / "schemas" / "call_graph.json").read_text(encoding="utf-8"))
+          top_strings = cg.get("strings", [])
+          assert isinstance(top_strings, list) and len(top_strings) == 0, f"call_graph.json strings must be empty, got {len(top_strings)}"
+          funcs_obj = cg.get("functions", {})
+          fn_iter = funcs_obj.values() if isinstance(funcs_obj, dict) else funcs_obj
+          fn_strings = [fn.get("strings") for fn in fn_iter if isinstance(fn, dict) and fn.get("strings")]
+          assert len(fn_strings) == 0, f"call_graph.json function strings must be empty, got {len(fn_strings)}"
+          print(f"call_graph.json verified clean-room (strings=0, functions={len(funcs_obj)}).")
+
+          recipe_path = root / "Dev" / "schemas" / "decomp_recipe.json"
+          assert recipe_path.is_file(), "Missing Dev/schemas/decomp_recipe.json"
+          recipe = json.loads(recipe_path.read_text(encoding="utf-8"))
+          req_str_keys = (
+              "moduleId", "title", "packageFileName", "upstreamResearchPath", "platformId",
+              "engineId", "engineVersion", "compatibleEngineTrack", "decompSchemaVersion",
+              "targetDecompTier", "goalDecompTier", "packageVersion", "serialNumber",
+              "expectedSha256", "sleighLanguageId", "ghidraProjectName", "preloadRomDir",
+              "recipeEntryPoint", "customUnpackerScript",
+          )
+          for k in req_str_keys:
+              v = recipe.get(k)
+              assert isinstance(v, str) and v.strip(), f"decomp_recipe.json missing/empty string field '{k}'"
+          for k in ("supportedEngineTracks", "bundleDirectories", "excludedSubtrees", "excludedFiles"):
+              v = recipe.get(k)
+              assert isinstance(v, list) and len(v) > 0, f"decomp_recipe.json missing/empty list field '{k}'"
+          assert re.fullmatch(r"^[a-z0-9][a-z0-9-]*$", recipe["moduleId"]), f"Invalid moduleId: {recipe['moduleId']}"
+          assert re.fullmatch(r"^[0-9a-f]{64}$", recipe["expectedSha256"]), f"expectedSha256 must be 64-char lowercase hex: {recipe['expectedSha256']}"
+          assert isinstance(recipe.get("toolchainRequirements"), dict), "decomp_recipe.json missing toolchainRequirements"
+          rules = recipe.get("cleanRoomRules")
+          assert isinstance(rules, dict), "decomp_recipe.json missing cleanRoomRules"
+          for rk in ("allowRetailStrings", "allowCFunctionBodies", "allowRetailAssets", "allowTrademarkTokens"):
+              assert rules.get(rk) is False, f"decomp_recipe.json cleanRoomRules.{rk} must be false"
+          print(f"decomp_recipe.json validated ({recipe['moduleId']} v{recipe['packageVersion']}, track {recipe['compatibleEngineTrack']}).")
+          PY
+
+      - name: Clean-room tracked-tree guard
+        run: |
+          python -B - <<'PY'
+          import re
+          import subprocess
+          from pathlib import Path
+
+          tracked = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
+          forbidden_ext = {
+              ".nes", ".fds", ".prg", ".chr", ".bin", ".rom", ".cue", ".iso", ".chd",
+              ".img", ".sav", ".srm", ".gpr", ".rep", ".7z", ".zip", ".rar",
+              ".exe", ".dll", ".o", ".a", ".obj", ".ips", ".bps", ".ups",
+              ".nsf", ".nsfe", ".fm2", ".bk2",
+          }
+          forbidden_suffixes = (".g.cs", ".generated.dll")
+          scan_exts = {".py", ".c", ".h", ".md", ".json"}
+          pii_needles = (
+              "file" + ":///",
+              "ja" + "nov",
+              "e:" + "\\sets",
+              "e:" + "/sets",
+          )
+          c_strip_re = re.compile(r"/\*.*?\*/|//[^\n]*", re.DOTALL)
+          c_body_re = re.compile(
+              r"(?:void|int|uint|short|ushort|char|long|byte|uint8_t|uint16_t|uint32_t|int32_t)"
+              r"\s+(?!mg_d4_probe\b|halt_baddata\b)[A-Za-z_][A-Za-z0-9_]*\s*\([^;{]*\)\s*\{"
+          )
+          bad = []
+          for rel in tracked:
+              p = Path(rel)
+              rel_low = rel.lower()
+              if rel.startswith("Corpus/") or "/Corpus/" in rel:
+                  bad.append(f"Corpus path tracked: {rel}")
+              if p.suffix.lower() in forbidden_ext or rel_low.endswith(forbidden_suffixes):
+                  bad.append(f"Forbidden binary extension tracked: {rel}")
+              if p.suffix.lower() in scan_exts and p.is_file():
+                  text = p.read_text(encoding="utf-8", errors="ignore")
+                  low = text.lower()
+                  for needle in pii_needles:
+                      if needle in low:
+                          bad.append(f"Workstation PII ({needle}) in {rel}")
+                  in_schemas_or_scripts = rel.startswith(("Dev/schemas/", "Dev/scripts/"))
+                  is_harness_or_tests = rel.startswith(("Dev/scripts/d4_harness/", "Dev/scripts/tests/"))
+                  if in_schemas_or_scripts and not is_harness_or_tests:
+                      if p.suffix.lower() == ".json":
+                          if '"cBody"' in text or '"functionBody"' in text or c_body_re.search(text):
+                              bad.append(f"Embedded C body in JSON {rel}")
+                      elif p.suffix.lower() in {".c", ".cpp", ".h"}:
+                          stripped = c_strip_re.sub(" ", text)
+                          if c_body_re.search(stripped):
+                              bad.append(f"Embedded C body in header/source {rel}")
+                      elif p.suffix.lower() == ".py":
+                          if c_body_re.search(text):
+                              bad.append(f"Embedded C body in Python script {rel}")
+          assert not bad, "Clean-room tracked-tree violations:\n" + "\n".join(bad)
+          print(f"Clean-room tracked-tree guard passed ({len(tracked)} files checked).")
+          PY
+
+      - name: Smoke test clean-room 6502 assembler
+        run: |
+          python -B - <<'PY'
+          import sys
+          from pathlib import Path
+
+          sys.path.insert(0, str(Path("Dev/scripts").resolve()))
+          import asm6502_d5
+
+          mnemonic_count = len(asm6502_d5.OPCODES)
+          opcode_count = sum(len(modes) for modes in asm6502_d5.OPCODES.values())
+          assert mnemonic_count == 56, f"Expected 56 mnemonics, got {mnemonic_count}"
+          assert opcode_count == 151, f"Expected 151 opcodes, got {opcode_count}"
+
+          raw, origin, _ = asm6502_d5.assemble_text(".org 0xC000\nLDA #0x01\nSTA 0x00\nRTS\n")
+          assert origin == 0xC000
+          assert raw == bytes([0xA9, 0x01, 0x85, 0x00, 0x60]), f"Unexpected bytes: {raw.hex()}"
+          print(f"asm6502_d5 smoke passed: {mnemonic_count} mnemonics, {opcode_count} opcodes, emitted {raw.hex()}.")
+          PY
+
+      - name: Run offline unit tests
+        run: |
+          python -B - <<'PY'
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          tests_dir = Path("Dev/scripts/tests")
+          test_files = sorted(tests_dir.glob("test_*.py")) if tests_dir.is_dir() else []
+          assert test_files, "Expected Dev/scripts/tests/test_*.py offline unit tests, found none."
+          rc = subprocess.call([sys.executable, "-B", "-m", "unittest", "discover", "-s", str(tests_dir), "-v"])
+          sys.exit(rc)
+          PY
+
+      - name: Clean-room .decomp bundle build check
+        run: python -B Dev/scripts/export_decomp_bundle.py --out "$RUNNER_TEMP/ci-check.decomp" --verify-cleanroom --strict
