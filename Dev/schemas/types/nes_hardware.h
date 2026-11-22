@@ -108,18 +108,18 @@ typedef struct NesApuPulseRegs {
 
 /* APU triangle channel MMIO registers ($4008-$400B) */
 typedef struct NesApuTriangleRegs {
-    uint8_t linear_ctrl; /* +0x00: Control flag + linear counter reload */
-    uint8_t unused_4009; /* +0x01: Unused */
-    uint8_t timer_lo;    /* +0x02: Period low 8 bits */
-    uint8_t len_hi;      /* +0x03: Length counter load + period high 3 bits */
+    uint8_t linear_ctrl;         /* +0x00: Control flag + linear counter reload */
+    uint8_t unused_reg_4009_pad; /* +0x01: Unused */
+    uint8_t timer_lo;            /* +0x02: Period low 8 bits */
+    uint8_t len_hi;              /* +0x03: Length counter load + period high 3 bits */
 } NesApuTriangleRegs; /* 0x04 (4 bytes) */
 
 /* APU noise channel MMIO registers ($400C-$400F) */
 typedef struct NesApuNoiseRegs {
-    uint8_t env;         /* +0x00: Loop + constant vol/envelope */
-    uint8_t unused_400d; /* +0x01: Unused */
-    uint8_t period_mode; /* +0x02: Mode flag + noise period index */
-    uint8_t len_load;    /* +0x03: Length counter load */
+    uint8_t env;                 /* +0x00: Loop + constant vol/envelope */
+    uint8_t unused_reg_400d_pad; /* +0x01: Unused */
+    uint8_t period_mode;         /* +0x02: Mode flag + noise period index */
+    uint8_t len_load;            /* +0x03: Length counter load */
 } NesApuNoiseRegs; /* 0x04 (4 bytes) */
 
 /* APU DMC channel MMIO registers ($4010-$4013) */

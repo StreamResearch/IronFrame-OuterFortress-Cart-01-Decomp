@@ -51,8 +51,8 @@ class TestDecompBundleCleanroom(unittest.TestCase):
         self.assertEqual(manifest["moduleId"], "ironframe-outerfortress-cart-01")
         self.assertEqual(manifest["engineId"], "reCart")
         self.assertEqual(manifest["upstreamResearchPath"], "IronFrame-OuterFortress-Cart-01-Decomp")
-        self.assertEqual(manifest["packageVersion"], "0.2.0")
-        self.assertEqual(manifest["targetDecompTier"], "D3")
+        self.assertEqual(manifest["packageVersion"], "0.3.0")
+        self.assertEqual(manifest["targetDecompTier"], "D4")
         self.assertEqual(manifest["decompSchemaVersion"], "1.0.0")
 
         with tempfile.TemporaryDirectory(prefix="t_decomp_exp_") as tmp:
@@ -69,7 +69,9 @@ class TestDecompBundleCleanroom(unittest.TestCase):
             self.assertIn("module.decomp.json", names)
             self.assertIn("Dev/schemas/d3_module_map.json", names)
             self.assertIn("Dev/schemas/d3_symbol_overrides.json", names)
-            self.assertNotIn("Dev/schemas/d4_build_report.json", names)
+            self.assertIn("Dev/schemas/d4_build_report.json", names)
+            self.assertIn("Dev/schemas/d4_rewrites/core_runtime.json", names)
+            self.assertIn("Dev/schemas/d4_rewrites/overlays_b05_b06.json", names)
             self.assertFalse(any(n.startswith(("Dev/scripts/d4_harness/", "Dev/scripts/tests/")) for n in names))
 
     def test_cleanroom_rejects_forbidden_inputs(self) -> None:
@@ -100,6 +102,10 @@ class TestPackageRelease(unittest.TestCase):
             fake_repo = troot / "repo"
             stage_dir = troot / "stage"
             _stage_temp_repo_copy(fake_repo)
+            st_p = fake_repo / "active.state"
+            st_d = json.loads(st_p.read_text(encoding="utf-8"))
+            st_d["version"] = json.loads((fake_repo / "Dev/research.manifest.json").read_text(encoding="utf-8"))["version"]
+            st_p.write_text(json.dumps(st_d, indent=2) + "\n", encoding="utf-8")
             has_7z = pkg_rel._find_7z() is not None
             rep = pkg_rel.package_release(out_dir=stage_dir, repo_root=fake_repo, log_dir=troot / "logs", make_7z=has_7z)
             self.assertTrue(rep["isPassed"])

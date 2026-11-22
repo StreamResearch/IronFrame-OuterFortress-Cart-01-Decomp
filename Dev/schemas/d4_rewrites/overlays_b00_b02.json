@@ -1,0 +1,2133 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "shardId": "overlays_b00_b02",
+  "rewriteTier": "D4_CleanSource",
+  "compilerFlags": [
+    "-std=gnu11",
+    "-fsigned-char",
+    "-O1",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-parameter"
+  ],
+  "isZeroDecompilerTellsVerified": true,
+  "isZeroWarningsVerified": true,
+  "generatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "updatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "fileCount": 6,
+  "symbolCount": 123,
+  "files": [
+    {
+      "relativePath": "overlays/BANK_00.prg/bank00_hazards_and_countdown.c",
+      "lineCount": 959,
+      "codeSloc": 679,
+      "symbolCount": 26,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000b3fc",
+          "symbol": "mg_b034_update_screen_shake_effect",
+          "signature": "void mg_b034_update_screen_shake_effect(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Toggles PPU Y-scroll and player sprite X offset every 8 frames to produce screen shake until step counter wraps to zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b465",
+          "symbol": "mg_b034_update_hazard_and_restore_bank6",
+          "signature": "void mg_b034_update_hazard_and_restore_bank6(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs the bank-0 hazard damage and effect update routine and switches UNROM back to PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b468",
+          "symbol": "mg_b034_restore_bank6_trampoline",
+          "signature": "void mg_b034_restore_bank6_trampoline(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Restores UNROM PRG bank 6 via unrom_select_bank_index after bank-0 room handler execution.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b46d",
+          "symbol": "mg_b034_update_hazard_damage_and_fx",
+          "signature": "void mg_b034_update_hazard_damage_and_fx(s8 pattern_id)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "uVar2": "next_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks periodic player health drain, places 4 hazard sprite coordinates from bank-0 tables, and cycles effect tiles 0x90/0x91.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b523",
+          "symbol": "mg_b034_update_boss_hover_and_restore_bank6",
+          "signature": "void mg_b034_update_boss_hover_and_restore_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs the boss vertical hover animation and SFX update and restores UNROM PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b529",
+          "symbol": "mg_b034_update_boss_vertical_hover_fx",
+          "signature": "void mg_b034_update_boss_vertical_hover_fx(void)",
+          "localRenames": {
+            "LAB_b570": "step_a",
+            "LAB_b56c": "step_b"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Cycles actor sprite 0 between 0x92 and 0x93, oscillates its Y coordinate via state counter 0x55, and plays SFX 0x30 at turnaround points.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b57e",
+          "symbol": "mg_b034_update_explosions_and_bank6",
+          "signature": "void mg_b034_update_explosions_and_bank6(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs timed room explosion updates and restores UNROM PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b584",
+          "symbol": "mg_b034_update_timed_explosions",
+          "signature": "void mg_b034_update_timed_explosions(s8 layout_idx)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "uVar3": "slot_byte",
+            "bVar2": "step_byte",
+            "bVar4": "idx_byte",
+            "in_X": "cpu_x",
+            "LAB_b5d2": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances up to 4 blast timers in 0x07DA, runs player hit checks, and expands blast tile clearing every 16 frames up to 0x40.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b618",
+          "symbol": "mg_b034_vram_cursor_add_offset",
+          "signature": "void mg_b034_vram_cursor_add_offset(u8 byte_delta)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Adds an 8-bit unsigned offset to the 16-bit big-endian PPU address cursor in zero-page 0x8D and 0x8E.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b622",
+          "symbol": "mg_b034_clear_rect_room_tiles_and_queue",
+          "signature": "void mg_b034_clear_rect_room_tiles_and_queue(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues 4 border-clearing runs and clears matching tiles in 0x0400 for an expanding blast area sized by zero-page 0x8F.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b658",
+          "symbol": "mg_b034_vram_queue_terminate_at",
+          "signature": "void mg_b034_vram_queue_terminate_at(u8 queue_index)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes a zero end-of-queue sentinel at the specified offset in the 0x0740 VRAM transfer queue.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b65e",
+          "symbol": "mg_b034_clear_room_tiles_and_queue_vram",
+          "signature": "void mg_b034_clear_room_tiles_and_queue_vram(s8 draw_mode,u8 queue_offset)",
+          "localRenames": {
+            "uVar1": "byte_val",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Zeroes a horizontal or vertical run of room layout tiles in 0x0400 and appends the matching clear command to the VRAM queue.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b6aa",
+          "symbol": "mg_b034_check_laser_or_blast_player_hit",
+          "signature": "void mg_b034_check_laser_or_blast_player_hit(u8 max_slot)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "cVar3": "signed_delta",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Tests active hazard bounding boxes against Snake's coordinates, applying instant death, triggering cutscene state in room 0xBD, or starting ",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7c1",
+          "symbol": "mg_b034_update_pattern_hazards_and_bank6",
+          "signature": "void mg_b034_update_pattern_hazards_and_bank6(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Executes pattern-indexed room hazard updates and restores UNROM PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7c7",
+          "symbol": "mg_b034_update_random_hazards_and_bank6",
+          "signature": "void mg_b034_update_random_hazards_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Executes pseudo-random room hazard updates and restores UNROM PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7d7",
+          "symbol": "mg_b034_update_random_hazard_spawns",
+          "signature": "void mg_b034_update_random_hazard_spawns(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "in_C": "cpu_carry"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects a pseudo-random hazard pattern index from the frame counter and executes pattern-based hazard spawning and collision checks.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7e3",
+          "symbol": "mg_b034_update_pattern_hazard_spawns",
+          "signature": "void mg_b034_update_pattern_hazard_spawns(s8 pattern_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Places room hazard sprites from table 0xB890, checks Snake hitbox overlap to trigger alert alarm SFX 0x49, or spawns an alert guard.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b914",
+          "symbol": "mg_b034_update_bridge_and_restore_bank6",
+          "signature": "void mg_b034_update_bridge_and_restore_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates the moving bridge platforms and pitfall check and restores UNROM PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b91a",
+          "symbol": "mg_b034_update_bridge_platforms_and_fall_check",
+          "signature": "void mg_b034_update_bridge_platforms_and_fall_check(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "LAB_b95e": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Animates 6 moving bridge platform slots and triggers a fatal pitfall transition to room 5 if Snake is outside safe bounds.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b99b",
+          "symbol": "mg_b034_update_hazard_palette_and_bank6",
+          "signature": "void mg_b034_update_hazard_palette_and_bank6(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs hazard zone and palette-cycling updates and restores UNROM PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b9a1",
+          "symbol": "mg_b034_update_hazard_and_palette_cycle",
+          "signature": "void mg_b034_update_hazard_and_palette_cycle(u8 zone_table_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs room hazard zone collision checks when active and queues a cycling 16-byte PPU palette write at 0x3F00 every 4 frames.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b9ff",
+          "symbol": "mg_b034_check_room_hazard_zones_and_hits",
+          "signature": "void mg_b034_check_room_hazard_zones_and_hits(s8 zone_table_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x",
+            "LAB_ba6f": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks Snake against room hazard rectangles in table 0xBAA7 to deal periodic damage and detects projectile type 0x29 hits to clear hazard st",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bb28",
+          "symbol": "mg_b034_upload_bank00_ppu_stream_bb3a",
+          "signature": "void mg_b034_upload_bank00_ppu_stream_bb3a(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Points zero-page 0x80 to bank-0 PPU stream 0xBB3A and uploads two consecutive immediate nametable segments.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf3a",
+          "symbol": "mg_b034_tick_countdown_and_restore_bank6",
+          "signature": "void mg_b034_tick_countdown_and_restore_bank6(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks the countdown timer and HUD update routine and restores UNROM PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf42",
+          "symbol": "mg_b034_tick_countdown_timer_and_hud",
+          "signature": "void mg_b034_tick_countdown_timer_and_hud(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements the 16-bit countdown timer in 0x07D7-0x07D8 every 4 frames, formats 4 decimal HUD tiles at PPU 0x232D, or zeroes health at timeou",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf67",
+          "symbol": "mg_b034_set_timer_state_67",
+          "signature": "void mg_b034_set_timer_state_67(u8 timer_state)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Stores the given timer or cutscene phase value into zero-page variable 0x67.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_00.prg/bank00_hud_and_guards.c",
+      "lineCount": 251,
+      "codeSloc": 166,
+      "symbolCount": 8,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x000099a8",
+          "symbol": "mg_b034_bank00_shift_b01e_data_stub",
+          "signature": "void mg_b034_bank00_shift_b01e_data_stub(u8 entry_index)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Shifts an entry in bank-0 table 0xB01E left by one bit before hitting unparsed data (bank-6 audio stub alias).",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000a73e",
+          "symbol": "mg_b034_bank00_check_equip_flags_stub",
+          "signature": "void mg_b034_bank00_check_equip_flags_stub(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Inspects equipment flags in zero-page 0x75 and returns without side effects in C output.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000a765",
+          "symbol": "mg_b034_try_spawn_alert_guard_checked",
+          "signature": "void mg_b034_try_spawn_alert_guard_checked(u8 slot_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Validates actor slot bounds, empty slot state, and active alert flag before falling into room guard spawning.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000a771",
+          "symbol": "mg_b034_spawn_alert_guard_in_room",
+          "signature": "void mg_b034_spawn_alert_guard_in_room(u8 slot_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads an alert-reinforcement guard position for the active room from 0xA7C4 into the actor pool and triggers alert audio.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000aa0c",
+          "symbol": "mg_b034_hud_refresh_equip_and_ammo",
+          "signature": "void mg_b034_hud_refresh_equip_and_ammo(void)",
+          "localRenames": {
+            "uVar1": "byte_val",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Alternately queues the equipped weapon or item label and its 3-digit BCD ammo count into the bottom status-bar VRAM queue.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000aa54",
+          "symbol": "mg_b034_hud_copy_padded_name_to_queue",
+          "signature": "void mg_b034_hud_copy_padded_name_to_queue(u8 name_ptr_hi,u8 start_offset)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Copies a length-prefixed HUD item or weapon string via zero-page 0x80 into the 0x0740 VRAM queue and zero-pads to 15 bytes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000aa79",
+          "symbol": "mg_b034_hud_init_vram_queue_header",
+          "signature": "void mg_b034_hud_init_vram_queue_header(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes the VRAM transfer queue header for a horizontal status-bar write to PPU nametable page 0x23.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000aad7",
+          "symbol": "mg_b034_hud_write_bcd_digit_tile",
+          "signature": "void mg_b034_hud_write_bcd_digit_tile(u8 digit_nibble,u8 queue_offset)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Formats a single BCD digit into tile 0x70+digit in the VRAM queue while suppressing leading zeroes.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_01.prg/bank01_ppu_streams.c",
+      "lineCount": 47,
+      "codeSloc": 23,
+      "symbolCount": 2,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x000099a8",
+          "symbol": "mg_b12_b1_write_zp8e_and_halt",
+          "signature": "void mg_b12_b1_write_zp8e_and_halt(u8 value,u8 zp_offset)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes a byte to zero-page offset 0x8E plus index, stores the index at 0xFEA3, and halts at an invalid opcode boundary.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7ea",
+          "symbol": "mg_b12_b1_upload_ppu_stream_batch",
+          "signature": "void mg_b12_b1_upload_ppu_stream_batch(s8 batch_index)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Blanks rendering, uploads 2 or 20 PPU nametable streams from table 0xB814 via ppu_upload_zp80_stream_immediate, and restores PPU_MASK.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_02.prg/bank02_boss_movement_and_minions.c",
+      "lineCount": 1128,
+      "codeSloc": 797,
+      "symbolCount": 33,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000b2a2",
+          "symbol": "mg_b12_entry_dispatch_boss_b2a2",
+          "signature": "void mg_b12_entry_dispatch_boss_b2a2(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Entry wrapper that transfers control directly to boss state dispatcher at 0xB2AA.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b2a5",
+          "symbol": "mg_b12_return_to_bank6",
+          "signature": "void mg_b12_return_to_bank6(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches UNROM PRG bank back to bank 6 via unrom_select_bank_index(6) and returns.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b2aa",
+          "symbol": "mg_b12_dispatch_boss_state_b2aa",
+          "signature": "void mg_b12_dispatch_boss_state_b2aa(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches boss state 0x60 through the inline jump table at 0xB2AA via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b2c5",
+          "symbol": "mg_b12_tick_boss_phase_every_8_frames",
+          "signature": "void mg_b12_tick_boss_phase_every_8_frames(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments actor phase timer 0x55 and resets boss state 0x60 to zero every 8 ticks.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b2d2",
+          "symbol": "mg_b12_choose_boss_chase_direction",
+          "signature": "void mg_b12_choose_boss_chase_direction(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Every 8 frames, selects boss movement state 1-4 in 0x60 based on actor 0x0328/0x0348 position relative to 0x0320/0x0340.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b301",
+          "symbol": "mg_b12_move_boss_up_and_check_align",
+          "signature": "void mg_b12_move_boss_up_and_check_align(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks boss attack alignment at 0xB3E2/0xB3FC and moves actor Y 0x0348 up by 2 or switches state 0x60 to 3/4 near top edge.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b33b",
+          "symbol": "mg_b12_move_boss_down_and_check_stops",
+          "signature": "void mg_b12_move_boss_down_and_check_stops(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Moves actor Y 0x0348 down by 2 while checking 0xB3E2/0xB3FC alignment and table 0xB4C9 stop positions.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b353",
+          "symbol": "mg_b12_move_boss_left_and_check_stops",
+          "signature": "void mg_b12_move_boss_left_and_check_stops(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Moves actor X 0x0328 left by 2 while checking 0xB3E2/0xB438 alignment and table 0xB4C9 stop positions.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b383",
+          "symbol": "mg_b12_boss_patrol_branch_stub",
+          "signature": "u8 mg_b12_boss_patrol_branch_stub(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "cVar3": "signed_delta",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Boss patrol entry at 0xB383 whose body merges into adjacent 0xB39B-0xB438 alignment blocks.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b39b",
+          "symbol": "mg_b12_boss_top_edge_dispatch_stub",
+          "signature": "u8 mg_b12_boss_top_edge_dispatch_stub(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets actor slot index 0x89 to 8 and tests whether actor Y 0x0348 equals 0x20 before adjacent alignment checks.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b3e2",
+          "symbol": "mg_b12_check_boss_align_every_8_frames",
+          "signature": "u8 mg_b12_check_boss_align_every_8_frames(u8 dir_table_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Every 8 frames, tests sprite ID and horizontal alignment within 48 pixels to set boss attack state 6-9 in 0x60.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b3e8",
+          "symbol": "mg_b12_check_boss_sprite_and_horiz_align",
+          "signature": "u8 mg_b12_check_boss_sprite_and_horiz_align(u8 dir_table_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks sprite ID match against table 0xB4C9 and horizontal proximity within 48 pixels to select attack state 6-9.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b3fc",
+          "symbol": "mg_b12_eval_boss_horiz_attack_window",
+          "signature": "u8 mg_b12_eval_boss_horiz_attack_window(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes horizontal distance between 0x0328 and 0x0320 and returns boss attack state 6-9 if within 48 pixels, else 0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b438",
+          "symbol": "mg_b12_eval_boss_vert_attack_window",
+          "signature": "u8 mg_b12_eval_boss_vert_attack_window(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes vertical distance between 0x0348 and 0x0340 and returns boss attack state 6-9 if within 64 pixels, else 0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b472",
+          "symbol": "mg_b12_step_boss_up_to_top_bound",
+          "signature": "void mg_b12_step_boss_up_to_top_bound(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs alignment check 0xB3E2(4) and steps actor Y 0x0348 up by 2 until below 0x12, resetting state 0x60 to 0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b48a",
+          "symbol": "mg_b12_step_boss_down_to_bottom_bound",
+          "signature": "void mg_b12_step_boss_down_to_bottom_bound(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs alignment check 0xB3E2(6) and steps actor Y 0x0348 down by 2 until reaching 0xDF, resetting state 0x60 to 0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b49d",
+          "symbol": "mg_b12_step_boss_left_to_bound",
+          "signature": "void mg_b12_step_boss_left_to_bound(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs alignment check 0xB3E2(0) and steps actor X 0x0328 left by 2 until reaching 0x21, then switches state 0x60.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b4b0",
+          "symbol": "mg_b12_step_boss_right_to_bound",
+          "signature": "void mg_b12_step_boss_right_to_bound(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs alignment check 0xB3E2(2) and steps actor X 0x0328 right by 2 until reaching 0x95, then switches state 0x60.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b4dd",
+          "symbol": "mg_b12_run_twin_boss_and_bank6",
+          "signature": "void mg_b12_run_twin_boss_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks both boss actor slots via 0xB4E3 and restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b4e3",
+          "symbol": "mg_b12_tick_two_boss_actor_slots",
+          "signature": "void mg_b12_tick_two_boss_actor_slots(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Iterates active boss actor slots 0 and 1 in 0x0308 and dispatches each through 0xB4F7.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b4f7",
+          "symbol": "mg_b12_dispatch_twin_actor_state",
+          "signature": "void mg_b12_dispatch_twin_actor_state(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects state 0x60 or 0x56 for actor slot g_zp_ptr1, overrides to state 2 on X proximity within 8 pixels, and dispatches via inline_jump_tab",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b523",
+          "symbol": "mg_b12_shift_zp4c_and_halt_stub",
+          "signature": "void mg_b12_shift_zp4c_and_halt_stub(s8 zp_offset)",
+          "localRenames": {
+            "in_C": "cpu_carry",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Shifts g_sram_46b5 left and zero-page offset 0x4C right before hitting an invalid-instruction halt.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b52e",
+          "symbol": "mg_b12_toggle_actor_idle_sprite_slow",
+          "signature": "void mg_b12_toggle_actor_idle_sprite_slow(void)",
+          "localRenames": {
+            "uVar1": "byte_val"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Every 128 frames, toggles the sprite ID of slot g_zp_ptr1 in 0x0308 between 0x5F and 0x62.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b546",
+          "symbol": "mg_b12_move_actor_toward_center_y",
+          "signature": "void mg_b12_move_actor_toward_center_y(void)",
+          "localRenames": {
+            "uVar3": "slot_byte",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Steps actor slot g_zp_ptr1 vertically toward Y=0x80 while toggling walk sprite IDs and resets state when centered.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b556",
+          "symbol": "mg_b12_step_actor_down_and_animate",
+          "signature": "void mg_b12_step_actor_down_and_animate(u8 actor_slot,s8 anim_gate)",
+          "localRenames": {
+            "uVar1": "byte_val",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments actor Y coordinate in 0x0348 and toggles its sprite ID between 0x61 and 0x62 when anim_gate is zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b56c",
+          "symbol": "mg_b12_step_actor_up_and_animate",
+          "signature": "void mg_b12_step_actor_up_and_animate(u8 actor_slot,s8 anim_gate)",
+          "localRenames": {
+            "uVar1": "byte_val",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements actor Y coordinate in 0x0348 and toggles its sprite ID between 0x5F and 0x60 when anim_gate is zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b590",
+          "symbol": "mg_b12_chase_player_y_and_set_state",
+          "signature": "void mg_b12_chase_player_y_and_set_state(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Steps actor slot g_zp_ptr1 vertically toward player Y 0x0340 and sets state 0x56 or 0x60 to 1.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b5ba",
+          "symbol": "mg_b12_run_boss_sfx9_dispatch_and_bank6",
+          "signature": "void mg_b12_run_boss_sfx9_dispatch_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs periodic SFX 9 and boss state dispatch at 0xB5C0, then restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b5c0",
+          "symbol": "mg_b12_play_periodic_sfx9_and_dispatch",
+          "signature": "void mg_b12_play_periodic_sfx9_and_dispatch(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Triggers SFX 9 every 16 frames and dispatches boss state 0x60 via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b5d4",
+          "symbol": "mg_b12_init_three_actor_timers",
+          "signature": "void mg_b12_init_three_actor_timers(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes countdown timers 0x55-0x57 to 0x7F and advances boss state 0x60.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b65b",
+          "symbol": "mg_b12_update_boss_minion_slots",
+          "signature": "void mg_b12_update_boss_minion_slots(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "cVar3": "signed_delta",
+            "bVar4": "idx_byte",
+            "LAB_b634": "step_a",
+            "LAB_b642": "step_b",
+            "LAB_b644": "step_c",
+            "LAB_b5ed": "step_d",
+            "LAB_b5f2": "step_e"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Spawns, animates, and times out boss minion/projectile slots in 0x0308 using timers 0x55-0x57 and 0x42.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b6a9",
+          "symbol": "mg_b12_run_actor_x_advance_and_bank6",
+          "signature": "void mg_b12_run_actor_x_advance_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances bounded actor X movement via 0xB6AF and restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b6af",
+          "symbol": "mg_b12_advance_actor_x_with_bounds",
+          "signature": "void mg_b12_advance_actor_x_with_bounds(void)",
+          "localRenames": {
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances actor X coordinate 0x0328 on table-masked frames, advancing state 0x60 at X=0x58 and clamping at X=0x88.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_02.prg/bank02_boss_patterns_and_turrets.c",
+      "lineCount": 1101,
+      "codeSloc": 737,
+      "symbolCount": 37,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000b6d0",
+          "symbol": "mg_b12_run_orbit_boss_and_bank6",
+          "signature": "void mg_b12_run_orbit_boss_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs orbiting boss state setup and dispatch at 0xB6D6, then restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b6d6",
+          "symbol": "mg_b12_set_orbit_center_and_dispatch",
+          "signature": "void mg_b12_set_orbit_center_and_dispatch(void)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments phase 0x55, sets orbit origin (0x8F, 0x8E) to (0x28, 0x68) with slot 1, and dispatches state 0x60 via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b6f9",
+          "symbol": "mg_b12_expand_orbit_ring_phase",
+          "signature": "void mg_b12_expand_orbit_ring_phase(u8 slot_multiplier)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Expands radii for orbiting sprites 1-6 (playing SFX 0x19 on step 1) and advances state 0x60 when step 0x55 reaches 16.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b731",
+          "symbol": "mg_b12_rotate_orbit_until_step32",
+          "signature": "void mg_b12_rotate_orbit_until_step32(s8 start_slot)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances state 0x60 when orbit phase 0x55 reaches 32, otherwise updates polar sprite slots start_slot..6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b74d",
+          "symbol": "mg_b12_sweep_orbit_angle_ccw",
+          "signature": "void mg_b12_sweep_orbit_angle_ccw(s8 start_slot)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements shared orbit angle 0x55 by 2 and updates polar sprite positions for slots start_slot..6 until angle reaches 0xE2.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b75c",
+          "symbol": "mg_b12_step_orbit_sprites_until_zero",
+          "signature": "void mg_b12_step_orbit_sprites_until_zero(s8 start_slot)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances state 0x60 when orbit angle 0x55 reaches zero, otherwise updates polar positions for slots start_slot..6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b762",
+          "symbol": "mg_b12_contract_orbit_ring_phase",
+          "signature": "void mg_b12_contract_orbit_ring_phase(u8 start_slot)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Shrinks orbit radii in 0xB8+slot for slots start_slot..6, updates polar coordinates, and advances state 0x60 at step 16.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b78f",
+          "symbol": "mg_b12_clear_orbit_sprites_and_reset",
+          "signature": "void mg_b12_clear_orbit_sprites_and_reset(u8 start_slot)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears actor sprite IDs from start_slot to 6 in 0x0308 and resets state 0x60 and angle 0x55 when 0x55 equals 0x30.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7a6",
+          "symbol": "mg_b12_select_boss_sprite_by_angle",
+          "signature": "void mg_b12_select_boss_sprite_by_angle(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects boss sprite ID 0x5B, 0x5C, or 0x5D in 0x0308 based on the signed range of angle/offset 0x55.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7c0",
+          "symbol": "mg_b12_update_polar_orbit_slot",
+          "signature": "void mg_b12_update_polar_orbit_slot(u8 orbit_slot)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes sine/cosine screen coordinates around (0x8F, 0x8E) for an orbiting sprite slot and increments its angle.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7c9",
+          "symbol": "mg_b12_run_bomb_boss_and_bank6",
+          "signature": "void mg_b12_run_bomb_boss_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs bomb-dropping boss update at 0xB7CF and restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7cf",
+          "symbol": "mg_b12_check_drop_bomb_and_dispatch",
+          "signature": "void mg_b12_check_drop_bomb_and_dispatch(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x",
+            "LAB_b808": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Spawns a 0x54 projectile with SFX 0x0F when player X aligns with actor Y on 128-tick intervals, then dispatches state 0x60.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7ea",
+          "symbol": "mg_b12_init_b2_bomb_slot_and_dispatch",
+          "signature": "void mg_b12_init_b2_bomb_slot_and_dispatch(u8 projectile_slot)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes projectile slot under 0x16 as sprite 0x54 with SFX 0x0F, increments timer 0x57, and dispatches state 0x60.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b815",
+          "symbol": "mg_b12_patrol_left_and_barrage",
+          "signature": "void mg_b12_patrol_left_and_barrage(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Cycles sprite via 0xBC11(3), steps X 0x0328 left every 4 frames until transition to state 2, and spawns barrage shots.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b830",
+          "symbol": "mg_b12_patrol_right_and_barrage",
+          "signature": "void mg_b12_patrol_right_and_barrage(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Cycles sprite via 0xBC11(3), steps X 0x0328 right every 4 frames until X=0x30 (state 3), and spawns barrage shots.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b89b",
+          "symbol": "mg_b12_fire_pattern_barrage",
+          "signature": "void mg_b12_fire_pattern_barrage(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Steps barrage sequence index 0x55 every 16 frames to spawn projectiles at Y=0x70 or 0x90 until timer 0x56 hits 64.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b8ba",
+          "symbol": "mg_b12_run_four_sprite_drift_and_bank6",
+          "signature": "void mg_b12_run_four_sprite_drift_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs four-sprite drift and state dispatch at 0xB8C0, then restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b8c0",
+          "symbol": "mg_b12_drift_four_sprites_and_dispatch",
+          "signature": "void mg_b12_drift_four_sprites_and_dispatch(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Every 8 frames, offsets sprite Y slots 0x0351-0x0353 and 0x0355, then dispatches boss state 0x60 via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b8e5",
+          "symbol": "mg_b12_pick_boss_vert_state_b8e5",
+          "signature": "void mg_b12_pick_boss_vert_state_b8e5(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets boss state 0x60 to 1 or 2 by comparing actor Y 0x0348 against player X 0x35 and vertical bounds 0x18-0xD6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b902",
+          "symbol": "mg_b12_step_boss_up_and_check_stops",
+          "signature": "void mg_b12_step_boss_up_and_check_stops(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Moves actor Y 0x0348 up by 2, animates sprite via 0xBC11(0), and sets state 0x60 to 3 if Y matches table 0xB976.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b922",
+          "symbol": "mg_b12_step_boss_down_and_fire",
+          "signature": "void mg_b12_step_boss_down_and_fire(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_A": "cpu_a",
+            "LAB_b972": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Moves actor Y 0x0348 down by 2, animating sprite 0x0308 and spawning projectiles when Y wraps or aligns with 0xB976.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b92a",
+          "symbol": "mg_b12_hold_stop_and_fire_projectile",
+          "signature": "void mg_b12_hold_stop_and_fire_projectile(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Fires projectiles and animates sprite 0x0308 while actor Y 0x0348 matches table 0xB976, or resets state 0x60.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b967",
+          "symbol": "mg_b12_cycle_boss_sprite_4e_to_50",
+          "signature": "void mg_b12_cycle_boss_sprite_4e_to_50(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements boss sprite ID 0x0308 and wraps from 0x4E back to 0x50.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b97d",
+          "symbol": "mg_b12_run_four_shots_and_bank6",
+          "signature": "void mg_b12_run_four_shots_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates four boss shot timers via 0xB983 and restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b983",
+          "symbol": "mg_b12_tick_four_shots_and_dispatch",
+          "signature": "void mg_b12_tick_four_shots_and_dispatch(void)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates 4 projectile sprite timers at 0x0310/0x55-0x58 and dispatches boss state 0x60 via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b999",
+          "symbol": "mg_b12_step_remaining_shot_slots",
+          "signature": "void mg_b12_step_remaining_shot_slots(s8 shot_timer,u8 slot_index)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "in_Y": "cpu_y",
+            "LAB_b9b3": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances projectile sprite animation across remaining slots 0x0310+slot_index..3 and dispatches state 0x60 via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b9c0",
+          "symbol": "mg_b12_pick_boss_vert_state_b9c0",
+          "signature": "void mg_b12_pick_boss_vert_state_b9c0(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets boss state 0x60 to 1 or 2 by comparing actor Y 0x0348 against player X 0x35 and vertical bounds 0x48-0xC6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b9de",
+          "symbol": "mg_b12_step_boss_up_to_ba4a_stops",
+          "signature": "void mg_b12_step_boss_up_to_ba4a_stops(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Moves actor Y 0x0348 up by 2, switches to sprite 0x48 and state 3 on table 0xBA4A stop match, or animates via 0xBC11(2).",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ba03",
+          "symbol": "mg_b12_advance_boss_y_and_aim_shot",
+          "signature": "void mg_b12_advance_boss_y_and_aim_shot(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances actor Y 0x0348 by 2 against stop table 0xBA4A or aims and fires a tracked projectile with SFX 0x17.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ba0b",
+          "symbol": "mg_b12_aim_and_fire_quad_shot",
+          "signature": "void mg_b12_aim_and_fire_quad_shot(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Every 32 frames, aims at the player and spawns a projectile in 0x0310-0x0313 with SFX 0x17 when angle is in 4..12.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ba4f",
+          "symbol": "mg_b12_compute_aim_direction_to_player",
+          "signature": "u8 mg_b12_compute_aim_direction_to_player(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "LAB_ba7a": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes signed X/Y deltas between actor (0x0328, 0x0348) and player (0x0320+8, 0x0340) and returns an aim angle from table 0xBAB6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bbb6",
+          "symbol": "mg_b12_spawn_boss_projectile",
+          "signature": "void mg_b12_spawn_boss_projectile(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Allocates a free projectile slot in 0x0310-0x0315, plays SFX 7, positions it from 0xBC09, and packs its direction nibble into 0x61-0x63.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bbe1",
+          "symbol": "mg_b12_init_projectile_slot_at_offset",
+          "signature": "void mg_b12_init_projectile_slot_at_offset(s8 x_offset,u8 parent_slot)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Positions projectile slot 0x8B horizontally relative to parent_slot, sets sprite 0x28, and packs direction nibble 0x8A into 0x61-0x63.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc11",
+          "symbol": "mg_b12_cycle_boss_sprite_from_table",
+          "signature": "void mg_b12_cycle_boss_sprite_from_table(u8 table_index)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Every 8 frames, increments boss sprite ID 0x0308 and wraps it using limit/reset bounds from table 0xBC29.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc31",
+          "symbol": "mg_b12_run_twin_turrets_and_bank6",
+          "signature": "void mg_b12_run_twin_turrets_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates twin turret tracking and firing via 0xBC37 and restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc37",
+          "symbol": "mg_b12_update_twin_turret_aim_and_pos",
+          "signature": "void mg_b12_update_twin_turret_aim_and_pos(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "LAB_bc5f": "step_a",
+            "LAB_bcb7": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Tracks player X 0x35 for sprite slots 8-9 within 0xBCCB bounds and selects firing direction from 0xBCCB every 16 frames.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc7f",
+          "symbol": "mg_b12_set_sprite_slot_id",
+          "signature": "void mg_b12_set_sprite_slot_id(u8 sprite_id,u8 slot_index)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes a metasprite ID directly into the sprite ID table at 0x0300 + slot_index.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_02.prg/bank02_intro_menus_and_cutscenes.c",
+      "lineCount": 616,
+      "codeSloc": 447,
+      "symbolCount": 17,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x00009956",
+          "symbol": "mg_b12_b2_noop_stub",
+          "signature": "void mg_b12_b2_noop_stub(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Bank-2 stub that calls the fixed-bank vec_irq_noop routine and returns.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ac54",
+          "symbol": "mg_b12_b2_call_2020_twice",
+          "signature": "void mg_b12_b2_call_2020_twice(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Invokes the external 0x2020 subroutine twice in succession and returns.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b013",
+          "symbol": "mg_b12_run_boss_state_b013_and_bank6",
+          "signature": "void mg_b12_run_boss_state_b013_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Executes boss/cutscene state dispatch at 0xB019 and restores UNROM bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b019",
+          "symbol": "mg_b12_dispatch_boss_state_b019",
+          "signature": "void mg_b12_dispatch_boss_state_b019(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches boss/cutscene state 0x60 through the inline jump table at 0xB019 via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b022",
+          "symbol": "mg_b12_tick_intro_trigger_and_vram_anim",
+          "signature": "void mg_b12_tick_intro_trigger_and_vram_anim(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks sprite frame/position trigger to advance state 0x60 with SFX 0x7D, and periodically queues a 21-byte VRAM packet at 0x0740.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b094",
+          "symbol": "mg_b12_tick_new_game_intro_sequence",
+          "signature": "void mg_b12_tick_new_game_intro_sequence(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Streams 6 intro packets every 4 frames and initializes Snake's starting health (0x96), rank (1), and room mode (3) at step 16.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b0ca",
+          "symbol": "mg_b12_stream_six_packets_and_sprites",
+          "signature": "void mg_b12_stream_six_packets_and_sprites(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loops through 6 packet offsets (0-10 step 2) calling 0xB0E5 and update_bank3_sprite_graphics before restoring bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b0e3",
+          "symbol": "mg_b12_load_counted_packet_by_index",
+          "signature": "void mg_b12_load_counted_packet_by_index(s8 packet_index)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads a bank-2 packet by unscaled index into the 0x0740 VRAM queue and copies its 0xFF-terminated payload.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b0e5",
+          "symbol": "mg_b12_load_counted_packet_by_offset",
+          "signature": "void mg_b12_load_counted_packet_by_offset(u8 table_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads a bank-2 packet by pre-doubled table_offset into 0x0740 and copies its 0xFF-terminated payload.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b105",
+          "symbol": "mg_b12_copy_ff_terminated_payload",
+          "signature": "void mg_b12_copy_ff_terminated_payload(u8 start_offset)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decodes a destination pointer from g_zp_ptr0 at start_offset and copies 0xFF-terminated bytes into 0x0702 or target memory.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bcdf",
+          "symbol": "mg_b12_queue_menu_clear_vram_packets",
+          "signature": "void mg_b12_queue_menu_clear_vram_packets(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "When dialog/menu mode 0x07E0 is below 4, queues two 14-byte zeroed VRAM clear packets at 0x0740 and 0x0752 using 0xBECF coordinates.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bd7a",
+          "symbol": "mg_b12_handle_menu_cursor_input",
+          "signature": "void mg_b12_handle_menu_cursor_input(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "LAB_bd90": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Handles Up/Down/A/B joypad1 edge inputs for the 3-option menu cursor 0x4B with selection/move sound effects.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be0f",
+          "symbol": "mg_b12_build_menu_vram_row_packets",
+          "signature": "void mg_b12_build_menu_vram_row_packets(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_be63": "step_a",
+            "LAB_be40": "step_b",
+            "LAB_be57": "step_c"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Builds three 4-byte VRAM transfer packets at 0x0740 for menu mode 0 or looks up mode-indexed nametable coordinates in 0xBECF.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be73",
+          "symbol": "mg_b12_flush_menu_vram_step_and_exit",
+          "signature": "void mg_b12_flush_menu_vram_step_and_exit(u8 ppu_addr_hi)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues three 4-byte VRAM packets using ppu_addr_hi, advances menu step 0x07E0, and restores display/state when step reaches 10.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf97",
+          "symbol": "mg_b12_check_room_trigger_zone_and_bank6",
+          "signature": "void mg_b12_check_room_trigger_zone_and_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks if player is in (0x60..0xAF, 0x88) with action != 0x0D to play sound 0x1D via switch_bank6_and_play_sound and set room init mode 0x2C",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bfbe",
+          "symbol": "mg_b12_step_cutscene_scroll_and_return",
+          "signature": "void mg_b12_step_cutscene_scroll_and_return(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates sprite X 0x0320 from player Y 0x36 + 5, clears room init mode 0x2C at 0x58, decrements 0x36, and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bfd0",
+          "symbol": "mg_b12_tick_ending_or_title_anim_timer",
+          "signature": "void mg_b12_tick_ending_or_title_anim_timer(void)",
+          "localRenames": {
+            "LAB_bfe3": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments timer 0x51 to animate sprite 0x0300 via table 0xBFFC, transitions game mode 0x10 to 6 on wrap, and selects bank 6.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    }
+  ]
+}

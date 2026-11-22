@@ -1,0 +1,1883 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "shardId": "core_runtime",
+  "rewriteTier": "D4_CleanSource",
+  "compilerFlags": [
+    "-std=gnu11",
+    "-fsigned-char",
+    "-O1",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-parameter"
+  ],
+  "isZeroDecompilerTellsVerified": true,
+  "isZeroWarningsVerified": true,
+  "generatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "updatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "fileCount": 5,
+  "symbolCount": 118,
+  "files": [
+    {
+      "relativePath": "src/core/core_game_state_and_cutscenes.c",
+      "lineCount": 1092,
+      "codeSloc": 610,
+      "symbolCount": 48,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000c104",
+          "symbol": "main_game_state_tick",
+          "signature": "void main_game_state_tick(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments the global frame counter, checks pause triggers in active states, and dispatches the top-level game state.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c128",
+          "symbol": "mg_fxa_call_bank3_b999",
+          "signature": "void mg_fxa_call_bank3_b999(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to UNROM bank 3, invokes routine 0xB999, and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c131",
+          "symbol": "mg_fxb_enter_attract_demo_mode",
+          "signature": "void mg_fxb_enter_attract_demo_mode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Cycles the attract-mode demo sequence index, enables demo mode, enters the transition screen, and advances to the next game mode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c14b",
+          "symbol": "enter_transceiver_or_pause_screen",
+          "signature": "void enter_transceiver_or_pause_screen(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering, loads screen layout 0x82 via the bank loader, re-enables display, and invokes the overlay UI setup.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c163",
+          "symbol": "mg_fxa_update_title_cursor_sprite",
+          "signature": "void mg_fxa_update_title_cursor_sprite(void)",
+          "localRenames": {
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates the title screen cursor sprite position from option 0x1E, ticks the state timer, and advances game mode if X is zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c17d",
+          "symbol": "mg_fxb_update_attract_demo_mode",
+          "signature": "void mg_fxb_update_attract_demo_mode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks attract-mode demo state and resets game mode to 0 if the title exit flag is set.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c184",
+          "symbol": "mg_fxa_reset_to_game_mode_0",
+          "signature": "void mg_fxa_reset_to_game_mode_0(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Transitions the game state machine back to top-level mode 0 by calling 0xC43D.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c189",
+          "symbol": "game_over_and_continue_handler",
+          "signature": "void game_over_and_continue_handler(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Handles game-over music trigger, death timer countdown, and transition to continue or reset state.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c1d6",
+          "symbol": "mg_fxa_dispatch_submode_c1d6",
+          "signature": "void mg_fxa_dispatch_submode_c1d6(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the current game submode in 0x11 through the inline jump table at 0xC1D6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c1e1",
+          "symbol": "mg_fxa_start_new_or_continue_game",
+          "signature": "void mg_fxa_start_new_or_continue_game(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes either a new game or a continued game based on menu selection 0x1E and resets the cutscene step.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c1eb",
+          "symbol": "mg_fxa_start_continue_game",
+          "signature": "void mg_fxa_start_continue_game(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes continued game state via 0xD758 and resets the cutscene step counter.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c1f1",
+          "symbol": "mg_fxa_start_room_bgm_and_mode",
+          "signature": "void mg_fxa_start_room_bgm_and_mode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates the room background music via 0xC546 and advances to the next top-level game mode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c1f7",
+          "symbol": "mg_fxb_tick_demo_and_pause",
+          "signature": "void mg_fxb_tick_demo_and_pause(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Polls pause toggle and, while unpaused, counts down the demo state timer to update music and runs the active frame handler.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c20d",
+          "symbol": "mg_fxa_dispatch_submode_c20d",
+          "signature": "void mg_fxa_dispatch_submode_c20d(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the current game submode in 0x11 through the inline jump table at 0xC20D.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c21e",
+          "symbol": "mg_fxa_load_screen_and_next_submode",
+          "signature": "void mg_fxa_load_screen_and_next_submode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Streams the screen layout at 0xD3CF, clears the CHR stream page index, and advances the game submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c229",
+          "symbol": "mg_fxb_load_gameover_or_next_chr",
+          "signature": "void mg_fxb_load_gameover_or_next_chr(u8 chr_page)",
+          "localRenames": {
+            "in_Z": "cpu_zero",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears PPU mask shadow via 0xC49B and either loads a CHR page and advances submode or loads room 0xF5 layout.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c23f",
+          "symbol": "mg_fxb_start_room_alert_hud",
+          "signature": "void mg_fxb_start_room_alert_hud(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues the room CHR stream and stream 6, clears the entity buffer, advances submode, and queues alert overlay streams.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c253",
+          "symbol": "mg_fxa_play_menu_input_sfx",
+          "signature": "void mg_fxa_play_menu_input_sfx(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Plays menu confirm or select sound effects via audio trigger when A or Select buttons are newly pressed.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c26e",
+          "symbol": "mg_fxb_queue_alert_overlay_streams",
+          "signature": "void mg_fxb_queue_alert_overlay_streams(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues two XOR-selected PPU tile streams driven by alert channel flags at 0x98.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c299",
+          "symbol": "mg_fxb_setup_radio_screen_banks",
+          "signature": "void mg_fxb_setup_radio_screen_banks(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues PPU tile stream 0x14, invokes bank 5 and bank 3 screen setup routines, restores bank 6, and advances game submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c2b3",
+          "symbol": "mg_fxb_check_reset_on_a_button",
+          "signature": "void mg_fxb_check_reset_on_a_button(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks if the A button was newly pressed on joypad 1 and resets the main game state to mode 0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c2bd",
+          "symbol": "mg_fxa_dispatch_submode_c2bd",
+          "signature": "void mg_fxa_dispatch_submode_c2bd(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the current game submode in 0x11 through the inline jump table at 0xC2BD.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c2f5",
+          "symbol": "mg_fxb_tick_demo_or_intro_substate",
+          "signature": "void mg_fxb_tick_demo_or_intro_substate(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to bank 4 to run screen state update, then queues stream 9, initializes PPU/HUD state, and sets game mode 4 when submode hits 0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c313",
+          "symbol": "mg_fxb_init_ending_or_special_screen",
+          "signature": "void mg_fxb_init_ending_or_special_screen(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering, uploads room 0xF0 layout and bank 0 screen data, sets palette/stream 0x12, and clears the entity buffer.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c33c",
+          "symbol": "mg_fxb_init_room_entities_and_boss",
+          "signature": "void mg_fxb_init_room_entities_and_boss(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes room boss state, collectible/objective objects, scripted room spawns, and room hazard actors.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c348",
+          "symbol": "mg_fxa_dispatch_submode_c348",
+          "signature": "void mg_fxa_dispatch_submode_c348(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the current game submode in 0x11 through the inline jump table at 0xC348.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c353",
+          "symbol": "mg_fxb_enter_room_setup",
+          "signature": "void mg_fxb_enter_room_setup(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "LAB_c409": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resets player/world timers on full transition or updates boss, hazard, objective, and pickup spawns on partial room transitions.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c365",
+          "symbol": "mg_fxa_resume_gameplay_mode",
+          "signature": "void mg_fxa_resume_gameplay_mode(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Restores active gameplay mode 5, clears temporary weapon and room reload flags, resumes room music, and triggers bank 0 alert setup if activ",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c42b",
+          "symbol": "mg_fxa_set_timer_and_next_submode",
+          "signature": "void mg_fxa_set_timer_and_next_submode(u8 delay_frames)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets the low state timer byte in 0x2A and increments the game submode counter by one.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c42d",
+          "symbol": "mg_fxa_advance_game_submode",
+          "signature": "void mg_fxa_advance_game_submode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments the global game submode counter in 0x11 by one.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c430",
+          "symbol": "mg_fxa_next_game_mode_with_timer",
+          "signature": "void mg_fxa_next_game_mode_with_timer(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances to the next top-level game mode, sets the state timer to 0x80, and clears the title exit flag and submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c434",
+          "symbol": "mg_fxa_advance_game_mode",
+          "signature": "void mg_fxa_advance_game_mode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances to the next top-level game mode and resets the title exit flag and submode counter.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c43d",
+          "symbol": "mg_fxa_enter_game_mode",
+          "signature": "u8 mg_fxa_enter_game_mode(u8 target_mode)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Transitions to the specified top-level game mode with a 0x50-frame timer, resets submode and title exit flags, and returns zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c445",
+          "symbol": "mg_fxa_tick_state_timer",
+          "signature": "u8 mg_fxa_tick_state_timer(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements the 16-bit state countdown timer in 0x2A-0x2B and returns nonzero while active or on low-byte wrap.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c458",
+          "symbol": "mg_fxa_reset_cutscene_advance_submode",
+          "signature": "void mg_fxa_reset_cutscene_advance_submode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resets the cutscene step counter in 0x07CE to zero and advances the game submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c460",
+          "symbol": "mg_fxa_dispatch_cutscene_step",
+          "signature": "void mg_fxa_dispatch_cutscene_step(void)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the active cutscene step in 0x07CE via inline jump table, or advances submode when the step wraps from 0xFF.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c486",
+          "symbol": "mg_fxb_begin_cutscene_chr_load",
+          "signature": "void mg_fxb_begin_cutscene_chr_load(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering via PPU mask shadow, resets CHR stream page index, queues the room CHR stream, and advances cutscene step.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c493",
+          "symbol": "mg_fxb_cutscene_chr_or_room_load",
+          "signature": "void mg_fxb_cutscene_chr_or_room_load(u8 chr_page)",
+          "localRenames": {
+            "in_Z": "cpu_zero",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering via 0xC49B and either sets the CHR page and advances cutscene step or loads the room nametable layout.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c49b",
+          "symbol": "mg_fxa_blank_ppu_mask_shadow",
+          "signature": "void mg_fxa_blank_ppu_mask_shadow(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears the PPU mask shadow register in 0xFE to blank rendering on the next NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c4a4",
+          "symbol": "mg_fxb_step_cutscene_chr_or_room",
+          "signature": "void mg_fxb_step_cutscene_chr_or_room(u8 chr_page)",
+          "localRenames": {
+            "in_Z": "cpu_zero",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears PPU mask shadow via 0xC49B and either sets CHR page and increments cutscene step or loads room-specific bank graphics.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c4ac",
+          "symbol": "mg_fxb_cutscene_chr_or_tileset_load",
+          "signature": "void mg_fxb_cutscene_chr_or_tileset_load(u8 chr_page)",
+          "localRenames": {
+            "in_Z": "cpu_zero",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering via 0xC49B and either records the CHR page and advances cutscene step or uploads the room tileset chunked.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c4ba",
+          "symbol": "mg_fxb_cutscene_decompress_room",
+          "signature": "void mg_fxb_cutscene_decompress_room(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering, resets vertical PPU scroll to 0xF8, decompresses the current room layout, restores bank 6, and advances cutscene step.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c4cd",
+          "symbol": "mg_fxb_advance_cutscene_palette",
+          "signature": "void mg_fxb_advance_cutscene_palette(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering via PPU mask shadow, triggers the cutscene palette/fade step from 0x07CE - 5, and increments cutscene step.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c4de",
+          "symbol": "mg_fxa_cutscene_upload_attr_step",
+          "signature": "void mg_fxa_cutscene_upload_attr_step(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Blanks the PPU mask shadow, uploads the RAM 0x0700 attribute row via 0xC653, and advances the cutscene step.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c4e9",
+          "symbol": "mg_fxb_finish_room_transition",
+          "signature": "void mg_fxb_finish_room_transition(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues tile stream 5, resets actor and room tables via bank 4 on normal transitions, clears alert sound, enables display, and ends cutscene.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c546",
+          "symbol": "mg_fxa_update_room_bgm",
+          "signature": "void mg_fxa_update_room_bgm(void)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "cVar3": "signed_delta",
+            "code_r0xc5d3": "step_a",
+            "LAB_c5b3": "step_b"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects and triggers room, alert, or transition background music based on transition state, demo flags, and active alert status.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c5d3",
+          "symbol": "mg_fxa_select_default_area_bgm",
+          "signature": "void mg_fxa_select_default_area_bgm(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects default area BGM track 0x69 or 0x45 from room metadata flags and triggers playback when the track changes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c5e1",
+          "symbol": "mg_fxa_play_bgm_if_changed",
+          "signature": "void mg_fxa_play_bgm_if_changed(u8 track_id)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates the requested BGM track shadow in 0xEF and triggers audio playback when the track changes and demo rules permit.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "src/core/core_oam_and_metasprites.c",
+      "lineCount": 305,
+      "codeSloc": 227,
+      "symbolCount": 7,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000ca5f",
+          "symbol": "mg_fxb_draw_metasprite_to_oam",
+          "signature": "void mg_fxb_draw_metasprite_to_oam(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "LAB_cb0e": "step_a",
+            "LAB_cae9": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decodes a metasprite descriptor from zero-page 0x88 into OAM shadow sprite entries using single-sprite or 2-column layout rules.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ca9e",
+          "symbol": "mg_fxa_emit_metasprite_to_oam",
+          "signature": "void mg_fxa_emit_metasprite_to_oam(u8 oam_offset,s8 tile_attr_seed)",
+          "localRenames": {
+            "oam_offset_00": "oam_offset_cur",
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "in_Y": "cpu_y",
+            "LAB_cae9": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Renders a multi-tile metasprite sequence into the 0x0200 OAM shadow buffer and updates the OAM write cursor in 0x84.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000cb33",
+          "symbol": "mg_fxa_write_oam_sprite_attr",
+          "signature": "void mg_fxa_write_oam_sprite_attr(u8 oam_offset,u8 meta_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes palette and flip attributes from metasprite data at 0x88 and writes the attribute byte to the OAM shadow buffer.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000cb50",
+          "symbol": "mg_fxb_emit_grid_metasprite",
+          "signature": "u8 mg_fxb_emit_grid_metasprite(u8 table_offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Populates a rectangular grid of OAM shadow sprite entries from a metasprite descriptor pointer and advances the OAM write cursor.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000cbad",
+          "symbol": "mg_fxa_finish_oam_sprite_entry",
+          "signature": "u8 mg_fxa_finish_oam_sprite_entry(void)",
+          "localRenames": {
+            "in_A": "cpu_a",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Finalizes a single OAM sprite entry's attributes via 0xCB33, advances the OAM cursor by four bytes, and returns 0x8E.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d2e2",
+          "symbol": "build_oam_sprite_list",
+          "signature": "s8 build_oam_sprite_list(void)",
+          "localRenames": {
+            "sVar2": "signed_lo",
+            "bVar1": "temp_byte",
+            "cVar4": "signed_flag",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Iterates over 32 sprite slots in 0x0300-0x0360 and populates the OAM shadow buffer.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d37b",
+          "symbol": "mg_fxa_stash_zp_8e_8b",
+          "signature": "u8 mg_fxa_stash_zp_8e_8b(u8 val_8e,u8 val_8b)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Stores two byte arguments into zero-page scratch locations 0x8E and 0x8B and returns the first value.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "src/core/core_ppu_and_vram.c",
+      "lineCount": 594,
+      "codeSloc": 366,
+      "symbolCount": 21,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000c961",
+          "symbol": "mg_fxb_queue_room_chr_stream",
+          "signature": "void mg_fxb_queue_room_chr_stream(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects a PPU tile stream offset based on room bank flags and queues the room's CHR or palette transfer.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c97d",
+          "symbol": "mg_fxb_load_room_layout_chunked",
+          "signature": "void mg_fxb_load_room_layout_chunked(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads the current room's bank and data pointer, uploads a chunked nametable slice, and restores PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c983",
+          "symbol": "mg_fxb_load_room_layout_immediate",
+          "signature": "void mg_fxb_load_room_layout_immediate(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads the current room's bank and data pointer, immediately streams the nametable data to PPU_DATA, and restores PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c989",
+          "symbol": "load_room_bank_and_pointer",
+          "signature": "void load_room_bank_and_pointer(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to the PRG bank for the current room and loads its room data pointer into zero-page 0x80.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c9b5",
+          "symbol": "mg_fxa_load_special_room_chr_slice",
+          "signature": "void mg_fxa_load_special_room_chr_slice(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM bank 0 to upload a chunked nametable slice for special rooms, or marks 0x07CF as 0xFF for standard rooms.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c9eb",
+          "symbol": "mg_fxb_upload_room_tileset_chunked",
+          "signature": "void mg_fxb_upload_room_tileset_chunked(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects the room tileset bank and pointer, uploads a chunked nametable slice to PPU_DATA, and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c9f7",
+          "symbol": "mg_fxb_upload_room_tileset_immediate",
+          "signature": "void mg_fxb_upload_room_tileset_immediate(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects the room tileset bank and pointer, streams all tileset bytes immediately to PPU_DATA, and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ca03",
+          "symbol": "select_room_tileset_bank",
+          "signature": "s8 select_room_tileset_bank(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to the tileset PRG bank for the current room and returns the doubled tileset table offset.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ca21",
+          "symbol": "load_zp80_ptr_from_bank_table",
+          "signature": "void load_zp80_ptr_from_bank_table(u8 table_offset)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads a 16-bit pointer from the active bank's 0x8001 pointer table into zero-page 0x80.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d390",
+          "symbol": "mg_fxb_init_gameplay_hud_and_audio",
+          "signature": "void mg_fxb_init_gameplay_hud_and_audio(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Silences audio channels, clears the 0x0300 entity buffer, initializes gameplay PPU/HUD streams, and invokes bank 1 initialization.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d3c0",
+          "symbol": "mg_fxa_ppu_stream_default_layout",
+          "signature": "void mg_fxa_ppu_stream_default_layout(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Streams the built-in compressed PPU tile layout at 0xD444+0x32 to PPU_DATA and re-enables NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d3cf",
+          "symbol": "mg_fxa_ppu_stream_screen_reset",
+          "signature": "void mg_fxa_ppu_stream_screen_reset(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering, resets scroll and queue cursor, streams the compressed PPU layout at 0xD444+8, and re-enables NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d3d1",
+          "symbol": "mg_fxa_ppu_stream_indexed_layout",
+          "signature": "void mg_fxa_ppu_stream_indexed_layout(u8 layout_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering, resets scroll, streams the compressed PPU nametable layout at 0xD444[layout_offset], and re-enables NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d492",
+          "symbol": "update_bank3_sprite_graphics",
+          "signature": "void update_bank3_sprite_graphics(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to UNROM bank 3 to run sprite updates and restores the previous PRG bank.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d4a4",
+          "symbol": "queue_ppu_tile_stream",
+          "signature": "void queue_ppu_tile_stream(s8 stream_id)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "LAB_d4e5": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Copies a PPU tile update stream from the bank-0 table into the 0x0740 NMI transfer queue.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d50a",
+          "symbol": "mg_fxa_vram_queue_push_byte",
+          "signature": "void mg_fxa_vram_queue_push_byte(u8 value)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Appends a single byte to the 0x0740 NMI VRAM transfer queue and increments the queue cursor.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d50c",
+          "symbol": "mg_fxa_vram_queue_write_at",
+          "signature": "void mg_fxa_vram_queue_write_at(u8 value,u8 queue_index)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes a byte to a specific index in the 0x0740 VRAM transfer queue and sets the cursor to the following slot.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d513",
+          "symbol": "ppu_upload_zp80_stream_immediate",
+          "signature": "void ppu_upload_zp80_stream_immediate(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering, streams nametable/attribute bytes from zero-page 0x80 to PPU_DATA until zero terminator, and re-enables NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d545",
+          "symbol": "mg_fxb_ppu_upload_inline_stream",
+          "signature": "void mg_fxb_ppu_upload_inline_stream(void)",
+          "localRenames": {
+            "unaff_retaddr": "caller_ret_addr",
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering, streams inline PPU address and data bytes from after the return address to PPU_DATA until zero terminator, and re-enable",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d57a",
+          "symbol": "mg_fxb_upload_inline_ppu_wrapper",
+          "signature": "void mg_fxb_upload_inline_ppu_wrapper(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Forwards directly to the inline PPU data stream uploader at 0xD545.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d5a6",
+          "symbol": "ppu_upload_chunked_nametable_slice",
+          "signature": "void ppu_upload_chunked_nametable_slice(void)",
+          "localRenames": {
+            "uVar2": "next_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering and uploads a 96-byte nametable slice to PPU_DATA while preserving multi-frame cursor state.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "src/core/core_unrom_and_math.c",
+      "lineCount": 453,
+      "codeSloc": 208,
+      "symbolCount": 27,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000c61e",
+          "symbol": "mg_fxa_ppu_upload_menu_text_block",
+          "signature": "void mg_fxa_ppu_upload_menu_text_block(s8 entry_index)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Uploads a null-terminated PPU text or attribute block indexed by entry_index from table 0xC5FF, or runs default layout 0xD3C0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c653",
+          "symbol": "mg_fxa_ppu_upload_status_attr_row",
+          "signature": "void mg_fxa_ppu_upload_status_attr_row(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Uploads null-terminated attribute data from RAM 0x0700 to PPU nametable attribute memory at 0x23C0 and re-enables NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c673",
+          "symbol": "clear_entity_state_buffer",
+          "signature": "void clear_entity_state_buffer(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Zeroes the 128-byte entity state buffer at RAM 0x0300-0x037F.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c67f",
+          "symbol": "mg_fxa_clear_zp_actor_tables",
+          "signature": "void mg_fxa_clear_zp_actor_tables(void)",
+          "localRenames": {
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Zeroes 66 bytes of zero-page actor and alert state starting at address 0x0098.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c689",
+          "symbol": "mul_u8_u16_shift_add",
+          "signature": "u8 mul_u8_u16_shift_add(u8 multiplicand,u8 passthrough_y)",
+          "localRenames": {
+            "bVar5": "flag_byte",
+            "cVar4": "signed_flag",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "in_C": "cpu_carry"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Performs a 16-step shift-and-add multiplication storing the result across zero-page 0x80-0x82.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c6b7",
+          "symbol": "inline_jump_table_dispatch",
+          "signature": "void inline_jump_table_dispatch(s8 table_index,u8 arg_x,u8 arg_y)",
+          "localRenames": {
+            "unaff_retaddr_00": "caller_ret_hi",
+            "unaff_retaddr": "caller_ret_addr"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Reads a 16-bit target address from the inline pointer table after the JSR return address and jumps to it.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c6d5",
+          "symbol": "add_u8_to_zp_u16",
+          "signature": "void add_u8_to_zp_u16(u8 addend,u8 zp_addr)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Adds an 8-bit unsigned value to a 16-bit little-endian integer in zero page with carry propagation.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c6df",
+          "symbol": "mg_fxa_sub_u8_from_zp_u16",
+          "signature": "void mg_fxa_sub_u8_from_zp_u16(u8 subtrahend,u8 zp_addr)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Subtracts an 8-bit unsigned value from a 16-bit little-endian integer in zero page with borrow propagation.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c6eb",
+          "symbol": "mg_fxa_zero_sprite_ram_via_ptr0",
+          "signature": "void mg_fxa_zero_sprite_ram_via_ptr0(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Zeroes the 128-byte sprite and actor attribute buffer at 0x0300-0x037F using zero-page pointer 0x80.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c932",
+          "symbol": "unrom_select_bank_0",
+          "signature": "void unrom_select_bank_0(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM PRG bank 0 via bus-conflict-safe write to ROM address 0xFFD0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c936",
+          "symbol": "unrom_select_bank_1",
+          "signature": "void unrom_select_bank_1(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM PRG bank 1 via bus-conflict-safe write to ROM address 0xFFD1.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c93a",
+          "symbol": "unrom_select_bank_2",
+          "signature": "void unrom_select_bank_2(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM PRG bank 2 via bus-conflict-safe write to ROM address 0xFFD2.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c93e",
+          "symbol": "unrom_select_bank_3",
+          "signature": "void unrom_select_bank_3(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM PRG bank 3 via bus-conflict-safe write to ROM address 0xFFD3.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c942",
+          "symbol": "unrom_select_bank_4",
+          "signature": "void unrom_select_bank_4(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM PRG bank 4 via bus-conflict-safe write to ROM address 0xFFD4.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c946",
+          "symbol": "unrom_select_bank_5",
+          "signature": "void unrom_select_bank_5(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM PRG bank 5 via bus-conflict-safe write to ROM address 0xFFD5.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c94a",
+          "symbol": "unrom_select_bank_6",
+          "signature": "void unrom_select_bank_6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM PRG bank 6 (audio and shared tables) via bus-conflict-safe write to ROM address 0xFFD6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c94c",
+          "symbol": "unrom_select_bank_index",
+          "signature": "void unrom_select_bank_index(u8 bank_offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects an UNROM PRG bank by index and resets the tracked active bank shadow.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c958",
+          "symbol": "unrom_restore_active_bank",
+          "signature": "void unrom_restore_active_bank(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Restores the UNROM PRG bank stored in zero-page 0x27.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000fbea",
+          "symbol": "switch_bank6_and_play_sound",
+          "signature": "void switch_bank6_and_play_sound(u8 sound_id)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to UNROM bank 6 and invokes the audio trigger routine for the requested sound ID.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f5ac",
+          "symbol": "switch_bank6_play_sound_and_restore_bank2",
+          "signature": "u8 switch_bank6_play_sound_and_restore_bank2(u8 sound_id)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clean-room D3 bank/signature adapter for 0x0000f5ac.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000fbf5",
+          "symbol": "switch_bank6_and_queue_ppu_stream",
+          "signature": "void switch_bank6_and_queue_ppu_stream(u8 stream_id)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clean-room D3 bank/signature adapter for 0x0000fbf5.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ee2a",
+          "symbol": "trampoline_bank4_resolve_room_transition",
+          "signature": "void trampoline_bank4_resolve_room_transition(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clean-room D3 bank/signature adapter for 0x0000ee2a.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000099a8",
+          "symbol": "audio_play_sound_or_bgm",
+          "signature": "void audio_play_sound_or_bgm(u8 sound_id)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clean-room D3 bank/signature adapter for 0x000099a8.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000a765",
+          "symbol": "mg_b034_try_spawn_alert_guard_default",
+          "signature": "void mg_b034_try_spawn_alert_guard_default(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clean-room D3 bank/signature adapter for 0x0000a765.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bb28",
+          "symbol": "mg_b034_upload_bank00_ppu_stream_bb3a_ret",
+          "signature": "u8 mg_b034_upload_bank00_ppu_stream_bb3a_ret(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clean-room D3 bank/signature adapter for 0x0000bb28.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b83a",
+          "symbol": "mg_b034_bank03_dispatch_actor_default",
+          "signature": "void mg_b034_bank03_dispatch_actor_default(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clean-room D3 bank/signature adapter for 0x0000b83a.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bbe1",
+          "symbol": "mg_b034_bank04_dispatch_actor_default",
+          "signature": "void mg_b034_bank04_dispatch_actor_default(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clean-room D3 bank/signature adapter for 0x0000bbe1.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "src/core/core_vectors_boot_and_input.c",
+      "lineCount": 358,
+      "codeSloc": 203,
+      "symbolCount": 15,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000c001",
+          "symbol": "vec_reset",
+          "signature": "void vec_reset(void)",
+          "localRenames": {
+            "uStack0000": "saved_acc",
+            "sVar3": "signed_hi",
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "LAB_c04e": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Hardware reset vector that waits for PPU warmup, clears RAM, initializes PPU/APU, switches to bank 6, and starts audio.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c06c",
+          "symbol": "vec_nmi_handler",
+          "signature": "u8 vec_nmi_handler(u8 saved_a)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_C": "cpu_carry",
+            "in_V": "cpu_overflow",
+            "in_N": "cpu_neg",
+            "in_Z": "cpu_zero",
+            "in_D": "cpu_decimal",
+            "in_I": "cpu_irq_mask",
+            "in_B": "cpu_brk"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "NMI interrupt handler that runs OAM DMA, updates PPU mask and scroll, polls joypads, ticks audio, and dispatches the main state.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c0b7",
+          "symbol": "vec_irq_noop",
+          "signature": "void vec_irq_noop(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Empty IRQ vector stub that returns immediately.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c0b8",
+          "symbol": "ppu_init_hardware_and_nmi",
+          "signature": "void ppu_init_hardware_and_nmi(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes APU channels, disables frame IRQ, enables NMI in PPU_CTRL, and sets the 5-frame blanking delay.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c0c9",
+          "symbol": "ppu_enable_nmi_and_delay",
+          "signature": "void ppu_enable_nmi_and_delay(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Enables NMI and pattern table bits in PPU_CTRL and sets the 5-frame display delay counter.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c0d7",
+          "symbol": "ppu_apply_scroll_and_ctrl",
+          "signature": "u8 ppu_apply_scroll_and_ctrl(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resets PPU address latch to nametable 0, writes shadow scroll coordinates to PPU_SCROLL, and restores PPU_CTRL.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000c0f7",
+          "symbol": "ppu_disable_rendering_and_nmi",
+          "signature": "void ppu_disable_rendering_and_nmi(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Zeroes PPU_ADDR, PPU_MASK, and PPU_CTRL to safely disable rendering and NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000fcb4",
+          "symbol": "mg_fxb_reset_ram_for_demo",
+          "signature": "void mg_fxb_reset_ram_for_demo(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears gameplay zero-page and RAM buffers and enables NMI via 0xFCC9.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000fcb8",
+          "symbol": "mg_fxb_init_new_game_from_title",
+          "signature": "void mg_fxb_init_new_game_from_title(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears RAM via 0xFCC9, disables demo mode, and loads the selected title option mode into 0x19.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000fcc9",
+          "symbol": "mg_fxb_clear_ram_and_enable_nmi",
+          "signature": "void mg_fxb_clear_ram_and_enable_nmi(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Disables rendering, zeroes zero-page 0x22-0xEF and RAM pages 0x0300-0x06FF, and re-enables PPU NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ff00",
+          "symbol": "read_joypads_edge_triggered",
+          "signature": "void read_joypads_edge_triggered(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Polls both NES joypads, masks held inputs, and records newly pressed button edges in 0xF5 and 0xF6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ff26",
+          "symbol": "read_joypads_raw_state",
+          "signature": "void read_joypads_raw_state(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Polls both NES joypads and stores raw held button bitmasks in 0x15 and 0x16.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ff32",
+          "symbol": "poll_joypad_shift_registers",
+          "signature": "u8 poll_joypad_shift_registers(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Strobes hardware joypad ports 0x4016/0x4017 and shifts 8 bits per controller into zero-page 0x84 and 0x85.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ff5d",
+          "symbol": "handle_pause_start_select_trigger",
+          "signature": "void handle_pause_start_select_trigger(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks Start/Select edge bits in 0xF5 to toggle pause/transceiver mode or play pause sound effect.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ff91",
+          "symbol": "mg_fxa_set_timer_256_frames",
+          "signature": "void mg_fxa_set_timer_256_frames(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets the 16-bit state timer in 0x2A-0x2B to 0x0100 (256 frames).",
+          "isZeroTellsVerified": true
+        }
+      ]
+    }
+  ]
+}

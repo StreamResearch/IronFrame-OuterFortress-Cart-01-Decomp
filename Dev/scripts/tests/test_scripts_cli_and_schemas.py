@@ -75,7 +75,8 @@ class TestCliCommonAndScripts(unittest.TestCase):
 
             for script in (
                 "gen_d4_globals_and_lifts.py", "build_and_verify_d5.py", "build_and_verify_d4.py",
-                "reexport_stage3.py", "verify_track_d5.py", "coalesce_d4_modules.py", "materialize_decomp_tiers.py",
+                "reexport_stage3.py", "verify_track_d5.py", "coalesce_d4_modules.py",
+                "materialize_decomp_tiers.py", "craftsmanship_d4_normalizer.py",
             ):
                 res = _run_py(script, "--data-dir", str(empty_data))
                 self.assertEqual(res.returncode, 2, f"{script} expected rc=2, got {res.returncode}: {res.stdout} {res.stderr}")

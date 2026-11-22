@@ -7,16 +7,16 @@
   "containerTier": "Tier R (3-Folder Research)",
   "ecosystemTier": "ResearchTrack",
   "appArchetype": "LAB",
-  "version": "0.2.0",
-  "activeMilestone": "0.2.0",
+  "version": "0.3.0",
+  "activeMilestone": "0.3.0",
   "goalMajorVersion": "1.0.0",
-  "stateChangedDate": "2026-11-20",
-  "lastVersionDate": "2026-11-20",
+  "stateChangedDate": "2026-11-22",
+  "lastVersionDate": "2026-11-22",
   "productionSubpath": null,
   "supersededBy": null,
   "tasklistDetailLevel": 3,
-  "openTaskCount": 5,
-  "completedTaskCount": 9,
+  "openTaskCount": 4,
+  "completedTaskCount": 10,
   "openReportCount": 0,
   "isPublicRepo": true,
   "requireHumanReviewBeforePush": true,
@@ -37,6 +37,6 @@
     "isInspecterVerified": true,
     "isTessaSynced": true
   },
-  "notes": "v0.2.0 (D3_Mapped) coalesced all 499 functions into 26 cohesive domain C modules with 0 remaining raw tokens, materialized D1_Raw/D2_Structured/D3_Mapped tiers, passed 18/18 offline unittest, 14/14 verify_track_d5 (8/8 synthetic), 26/26 Pass 1 + 10/10 Pass 2 parity, 8/8 D5 byte-match CRC32=25ba3d04, and reCart.Decomp validated .decomp. Retaining requireHumanReviewBeforePush=true.",
-  "updatedAtUtc": "2026-11-20T09:17:04.313Z"
+  "notes": "v0.3.0 (D4_CleanSource / D4a Subsystem Parity) normalized all 26 modules (507 symbols across 34 C/header files) to 0 decompiler tells and 0 warnings under -Wall -Wextra -Wno-unused-parameter, preserved D1_Raw..D4_CleanSource (36 files in Corpus/readable/), emitted 5 zero-body d4_rewrites/*.json shards, passed 20/20 offline unittest (-W error), 15/15 verify_track_d5 (9/9 synthetic), 26/26 Pass 1 + 10/10 Pass 2 D4a subsystem parity, 8/8 D5 byte-match CRC32=25ba3d04, and 47-entry strict v0.3.0 .decomp. Retaining requireHumanReviewBeforePush=true.",
+  "updatedAtUtc": "2026-11-22T11:48:04.828Z"
 }

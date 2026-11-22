@@ -1,6 +1,6 @@
 # @module: IronFrame.Dev.scripts.build_and_verify_d4
 # @purpose: Stage D4 Zig freestanding archive builder and native host parity harness verifier
-# @depends-on: argparse, json, os, pathlib, re, subprocess, sys, tempfile, coalesce_d4_modules, nes_cli_common
+# @depends-on: argparse, json, os, pathlib, re, subprocess, sys, tempfile, craftsmanship_d4_helpers, gen_d4_globals_and_lifts, nes_cli_common
 # @exports: PASS1_FLAGS, TARGET_LINK_FUNCS, generate_globals_defs, generate_host_stubs, run_pass1_archive, run_pass2_host, main
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from coalesce_d4_modules import extract_func_blocks  # noqa: E402
+from craftsmanship_d4_helpers import STRICT_D4_FLAGS, count_d4_craftsmanship_tells, extract_d4_func_blocks  # noqa: E402
 from nes_cli_common import (  # noqa: E402
     GAME_ID, detect_host_zig_target, missing_media_payload, resolve_paths,
     resolve_zig_executable, utc_now_iso, write_json_log,
@@ -28,11 +28,7 @@ from nes_cli_common import (  # noqa: E402
 FUNC_DECL_RE = re.compile(r"^\s*([A-Za-z_][\w\s\*]*?)\s+([A-Za-z_]\w*)\s*\(([^;]*)\)\s*;")
 EXTERN_DECL_RE = re.compile(r"^\s*extern\s+(.+?);\s*(?:/\*.*?\*/\s*)?$")
 UNBOUNDED_ARR_RE = re.compile(r"\[\s*\]\s*$")
-_GHIDRA_CRAFT_RE = re.compile(
-    r"/\*\s*WARNING:|//\s*Function:|\(void\s*\*\)\s*0x0\b|\(\*\(code\s*\*\)\s*\(uintptr_t\)"
-    r"|\b(?:uVar|iVar|puVar|piVar|pcVar|pbVar|psVar|pvVar|lVar|fVar|dVar|local_|unaff_|in_|extraout_)[0-9A-Za-z_]*\b"
-)
-PASS1_FLAGS = ["-std=gnu11", "-fsigned-char", "-O1", "-ffreestanding", "-fno-builtin"]
+PASS1_FLAGS = STRICT_D4_FLAGS
 TARGET_LINK_FUNCS = frozenset(
     "mg_fxa_enter_game_mode mg_fxa_advance_game_mode mg_fxa_tick_state_timer inline_jump_table_dispatch "
     "unrom_select_bank_0 unrom_select_bank_6 unrom_restore_active_bank read_joypads_edge_triggered "
@@ -98,7 +94,7 @@ def _build_host_target_tu(c_files: list[Path], dst_c: Path) -> tuple[list[Path],
     hdr = '#include "metalgear_types.h"\n#include "metalgear_globals.h"\n#include "metalgear_functions.h"\n\n'
     blocks, defined = [], set()
     for cf in c_files:
-        for _addr, name, blk in extract_func_blocks(cf.read_text(encoding="utf-8", errors="replace")):
+        for _addr, name, blk in extract_d4_func_blocks(cf.read_text(encoding="utf-8", errors="replace")):
             if name in TARGET_LINK_FUNCS and name not in defined:
                 defined.add(name)
                 blocks.append(blk)
@@ -166,8 +162,8 @@ def run_pass2_host(zig: Path, env: dict[str, str], host_target: str, c_files: li
     generate_host_stubs(inc_dir / "metalgear_functions.h", inc_dir / "ghidra_compat.h", defined_syms, stubs_c)
     runner = host_dir / ("d4_parity_runner.exe" if "windows" in host_target else "d4_parity_runner")
     rc, errs, wrns, err = _run_zig(zig, env, [
-        "cc", "-target", host_target, "-std=gnu11", "-fsigned-char", "-O1", "-I", str(inc_dir), "-I", str(harness_dir),
-        "-Wno-int-to-pointer-cast", "-Wno-pointer-to-int-cast", *(str(p) for p in [*linked_tus, globals_c, stubs_c, *harness_c]), "-o", str(runner),
+        "cc", "-target", host_target, *STRICT_D4_FLAGS, "-I", str(inc_dir), "-I", str(harness_dir),
+        *(str(p) for p in [*linked_tus, globals_c, stubs_c, *harness_c]), "-o", str(runner),
     ])
     if rc != 0:
         return False, 0, 0, [{"name": "host_link", "isPassed": False, "detail": err[:800]}], errs, wrns, err.splitlines()[:15]
@@ -205,7 +201,7 @@ def _run_offline_synthetic(zig: Path, zig_ver: str, host_target: str, out_dir: P
         target = _probe_target(zig, env, work)
         inc.mkdir(parents=True, exist_ok=True)
         (inc / "metalgear_globals.h").write_text("#pragma once\n#include <stdint.h>\nextern uint8_t g_fixed_tbl_ff99[97], g_vram_transfer_queue[64], g_snd_pause_backup[7];\n" + "\n".join(f"extern uint8_t {g};" for g in _SYNTH_U8) + "\n", encoding="utf-8")
-        (inc / "metalgear_functions.h").write_text("#pragma once\n#include <stdint.h>\ntypedef uint8_t byte;\n" + _SYNTH_FUNCS.replace("; ", ";\n") + "\n", encoding="utf-8")
+        (inc / "metalgear_functions.h").write_text("#pragma once\n#include <stdint.h>\ntypedef uint8_t u8;\ntypedef int8_t s8;\ntypedef uint8_t byte;\n" + _SYNTH_FUNCS.replace("; ", ";\n") + "\n", encoding="utf-8")
         globals_c, stubs_c = work / "synth_globals.c", work / "synth_stubs.c"
         generate_globals_defs(inc / "metalgear_globals.h", globals_c)
         generate_host_stubs(inc / "metalgear_functions.h", inc / "none.h", set(), stubs_c)
@@ -252,7 +248,7 @@ def main() -> int:
     work_dir = args.out_dir.resolve() if args.out_dir else paths.work_dir
     report_dir = args.out_dir.resolve() if args.out_dir else paths.schemas_dir
     env, c_files = _zig_env(work_dir), sorted(paths.readable_dir.rglob("*.c"))
-    tell_count = sum(len(_GHIDRA_CRAFT_RE.findall(p.read_text(encoding="utf-8", errors="replace"))) for p in c_files)
+    tell_count, _tell_detail = count_d4_craftsmanship_tells(paths.readable_dir)
     globals_c = work_dir / "build" / "le16" / "globals_defs.c"
     generate_globals_defs(paths.readable_dir / "include" / "metalgear_globals.h", globals_c)
     target, compiled_c, p1_errs, p1_wrns, p1_diags = run_pass1_archive(zig, env, c_files, paths.readable_dir, globals_c, work_dir)
@@ -261,8 +257,8 @@ def main() -> int:
     else:
         parity_ok, t_pass, t_tot, tests, p2_errs, p2_wrns, p2_diags = run_pass2_host(zig, env, host_target, c_files, paths.readable_dir, globals_c, extracted_dir, work_dir)
     tot_errs, tot_wrns = p1_errs + p2_errs, p1_wrns + p2_wrns
-    s4_ok = tot_errs == 0 and tot_wrns == 0 and parity_ok and compiled_c == len(c_files) and len(c_files) > 0
-    d4_report = _build_d4_report(target, host_target, zig_ver, PASS1_FLAGS, len(c_files), compiled_c, "work/build/le16/libmetal_gear_d4.a", tot_errs, tot_wrns, tell_count, s4_ok, t_pass, t_tot, tests)
+    s4_ok = tot_errs == 0 and tot_wrns == 0 and tell_count == 0 and parity_ok and compiled_c == len(c_files) and len(c_files) > 0
+    d4_report = _build_d4_report(target, host_target, zig_ver, STRICT_D4_FLAGS, len(c_files), compiled_c, "work/build/le16/libmetal_gear_d4.a", tot_errs, tot_wrns, tell_count, s4_ok, t_pass, t_tot, tests)
     s4_report = {"schemaVersion": 2, "gameId": GAME_ID, "generatedAtUtc": d4_report["generatedAtUtc"], "isPassed": s4_ok, "compilerErrorCount": tot_errs, "compilerWarningCount": tot_wrns, "assertionsPassedCount": t_pass, "assertionsTotalCount": t_tot, "checks": tests}
     report_dir.mkdir(parents=True, exist_ok=True)
     (report_dir / "d4_build_report.json").write_text(json.dumps(d4_report, indent=2) + "\n", encoding="utf-8")

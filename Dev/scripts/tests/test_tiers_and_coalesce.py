@@ -1,12 +1,13 @@
 # @module: IronFrame.Dev.scripts.tests.test_tiers_and_coalesce
-# @purpose: Offline unit tests for D3 symbol overrides, cohesive coalescing, and multi-tier materialization
-# @depends-on: json, pathlib, subprocess, sys, tempfile, unittest, coalesce_d4_modules, materialize_decomp_tiers
-# @exports: TestTiersAndCoalesce
+# @purpose: Offline unit tests for D3/D4 symbol overrides, AST craftsmanship rules, rewrite shards, and tier materialization
+# @depends-on: json, pathlib, shutil, subprocess, sys, tempfile, unittest, coalesce_d4_modules, craftsmanship_d4_ast_cleaner, craftsmanship_d4_helpers, export_decomp_bundle, materialize_decomp_tiers
+# @exports: TestTiersAndCoalesce, TestD4Craftsmanship
 
 from __future__ import annotations
 
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -19,6 +20,9 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 import coalesce_d4_modules as coal  # noqa: E402
+import craftsmanship_d4_ast_cleaner as ast_cl  # noqa: E402
+import craftsmanship_d4_helpers as cd4h  # noqa: E402
+import export_decomp_bundle as edb  # noqa: E402
 import materialize_decomp_tiers as mdt  # noqa: E402
 
 BANKS = ("BANK_00.prg", "BANK_01.prg", "BANK_02.prg", "BANK_03.prg", "BANK_04.prg", "BANK_05.prg", "BANK_06.prg", "PRG_FIXED_07.prg")
@@ -93,6 +97,8 @@ class TestTiersAndCoalesce(unittest.TestCase):
             self.assertEqual(rep["tiers"]["D1_Raw"]["binaryCount"], 8)
             self.assertEqual(rep["tiers"]["D2_Structured"]["cFileCount"], 2)
             self.assertEqual(rep["tiers"]["D3_Mapped"]["cFileCount"], 3)
+            self.assertEqual(rep["tiers"]["D4_CleanSource"]["cFileCount"], 3)
+            self.assertEqual(rep["tiers"]["D4_CleanSource"]["tellCount"], 0)
             self.assertEqual(coal.scan_raw_symbols(tpath / "syn" / "tiers" / "D3_Mapped"), [])
 
             empty_dir = tpath / "empty_data"
@@ -122,6 +128,72 @@ class TestTiersAndCoalesce(unittest.TestCase):
             self.assertTrue(rep["tiers"]["D2_Structured"]["preserved"])
             self.assertIn("D2_KEEP_MARKER", (d2_dir / "src/core/core_00.c").read_text(encoding="utf-8"))
             self.assertTrue((d2_dir / "compile_commands.json").is_file())
+
+
+class TestD4Craftsmanship(unittest.TestCase):
+    def test_ast_cleaner_clears_all_six_tell_classes(self) -> None:
+        raw = "\n".join([
+            "/**\n * Steps one actor frame.\n * @address 0x00008000 (PRG_FIXED_07.prg)\n * @callers none\n */",
+            "// Function: mg_fxa_sample_tick @ 0x00008000",
+            "/* WARNING: Unknown calling convention */",
+            "byte mg_fxa_sample_tick(byte slot) {",
+            "  undefined1 bStack0000;",
+            "  byte in_A; byte bVar1; sbyte cVar1; byte unaff_retaddr_00;",
+            "  bStack0000 = slot;",
+            "  cVar1 = (sbyte)in_A;",
+            "  if ((bVar1 = (&g_wram_0741)[slot], -1 < (char)cVar1 && bVar1 < 4)) {",
+            "    g_zp_ptr0 = CONCAT11(bVar1, unaff_retaddr_00);",
+            "    (*((uint8_t *)&(g_zp_ptr0) + 1)) = (byte)(CARRY1(bVar1, 1) | in_A & 3 ^ cVar1 & 7);",
+            "    in_A = (byte)(short)(&g_zp_ptr0 + slot);",
+            "    in_A = in_A + 1;",
+            "    while (true) { if (bVar1) goto joined_r0xe733; halt_baddata(); }",
+            "  }",
+            "joined_r0xe733:",
+            "  return (byte)in_A;",
+            "}",
+        ])
+        cleaned, info = ast_cl.clean_function_block(raw, {"g_zp_ptr0": 0x0080}, {"g_vram_transfer_queue"})
+        src = "/* @module: IronFrame.NES.Test */\n" + cleaned + "\n"
+        self.assertEqual(cd4h.find_d4_craftsmanship_tells(src), {}, cleaned)
+        self.assertEqual(len(cd4h.extract_d4_func_blocks(src)), 1)
+        self.assertIn("* @symbol mg_fxa_sample_tick", src)
+        self.assertIn("g_vram_transfer_queue[(u8)((slot) + 0x01u)]", src)
+        self.assertIn("0x0080u", src)
+        self.assertNotIn("bStack0000", src)
+        self.assertNotIn("joined_r0x", src)
+        self.assertEqual(info["symbol"], "mg_fxa_sample_tick")
+
+    def test_rewrites_shards_cleanroom_and_normalizer_cli(self) -> None:
+        rdir = PROJECT_ROOT / "Dev" / "schemas" / "d4_rewrites"
+        ok, meta = cd4h.validate_d4_rewrites_dir(rdir)
+        self.assertTrue(ok, meta)
+        for shard in rdir.glob("*.json"):
+            self.assertEqual(edb.validate_cleanroom_bytes(f"Dev/schemas/d4_rewrites/{shard.name}", shard.read_bytes(), strict=True), [], shard.name)
+            txt = shard.read_text(encoding="utf-8")
+            self.assertNotIn('"cBody"', txt)
+            self.assertNotIn('"functionBody"', txt)
+        with tempfile.TemporaryDirectory(prefix="norm_cli_") as tmp:
+            tpath = Path(tmp)
+            self.assertFalse(cd4h.is_clangd_clean(tpath))
+            res = subprocess.run([sys.executable, "-B", str(SCRIPTS_DIR / "craftsmanship_d4_normalizer.py"), "--offline-synthetic", "--out-dir", str(tpath / "syn_d4"), "--rewrites-dir", str(tpath / "syn_rew"), "--log-dir", str(tpath / "logs")], capture_output=True, text=True, check=False)
+            self.assertEqual(res.returncode, 0, res.stderr)
+            self.assertEqual(json.loads(res.stdout)["tellCount"], 0)
+            self.assertEqual(cd4h.count_d4_craftsmanship_tells(tpath / "syn_d4")[0], 0)
+            miss = subprocess.run([sys.executable, "-B", str(SCRIPTS_DIR / "craftsmanship_d4_normalizer.py"), "--data-dir", str(tpath / "empty"), "--log-dir", str(tpath / "logs")], capture_output=True, text=True, check=False)
+            self.assertEqual(miss.returncode, 2)
+            self.assertEqual(json.loads(miss.stdout)["errorCode"], "MISSING_CORPUS_MEDIA")
+        syn_log = PROJECT_ROOT / "Dev" / "logs" / "craftsmanship_d4_normalizer_synthetic.log"
+        before_mtime = syn_log.stat().st_mtime_ns if syn_log.is_file() else None
+        no_out = subprocess.run([sys.executable, "-B", str(SCRIPTS_DIR / "craftsmanship_d4_normalizer.py"), "--offline-synthetic"], capture_output=True, text=True, check=False)
+        self.assertEqual(no_out.returncode, 0, no_out.stderr)
+        no_out_data = json.loads(no_out.stdout)
+        syn_dir = Path(no_out_data["outDir"]).resolve()
+        try:
+            self.assertTrue(str(syn_dir).startswith(str(Path(tempfile.gettempdir()).resolve())), syn_dir)
+            self.assertEqual(no_out_data["tellCount"], 0)
+            self.assertEqual(syn_log.stat().st_mtime_ns if syn_log.is_file() else None, before_mtime)
+        finally:
+            shutil.rmtree(syn_dir, ignore_errors=True)
 
 
 if __name__ == "__main__":

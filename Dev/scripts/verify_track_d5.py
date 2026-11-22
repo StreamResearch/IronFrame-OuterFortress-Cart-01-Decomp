@@ -1,6 +1,6 @@
 # @module: IronFrame.Dev.scripts.verify_track_d5
 # @purpose: Unified Tier R Stage D0-D5 / S0-S4 integrity, schemas, SLOC, and hygiene verifier
-# @depends-on: argparse, hashlib, json, pathlib, re, subprocess, sys, zlib, asm6502_d5, coalesce_d4_modules, nes_cli_common
+# @depends-on: argparse, hashlib, json, pathlib, re, subprocess, sys, zlib, asm6502_d5, coalesce_d4_modules, craftsmanship_d4_helpers, nes_cli_common
 # @exports: main
 
 from __future__ import annotations
@@ -21,6 +21,7 @@ if str(SCRIPT_DIR) not in sys.path:
 
 from asm6502_d5 import OPCODES, assemble_text  # noqa: E402
 from coalesce_d4_modules import scan_raw_symbols  # noqa: E402
+from craftsmanship_d4_helpers import count_d4_craftsmanship_tells, is_clangd_clean, validate_d4_rewrites_dir  # noqa: E402
 from nes_cli_common import (  # noqa: E402
     GAME_ID,
     crc32_hex,
@@ -72,9 +73,11 @@ def _check_manifest(paths: Any, checks: list[dict[str, Any]]) -> dict[str, Any]:
         return {}
     gates = m.get("gates") or {}
     tier_cur = m.get("currentDecompTier")
-    d_req = ("D0", "D1", "D2", "D3") if tier_cur in ("D3", "D4", "D5") else ("D0", "D1", "D2")
+    d_req = ("D0", "D1", "D2", "D3", "D4") if tier_cur in ("D4", "D5") else (("D0", "D1", "D2", "D3") if tier_cur == "D3" else ("D0", "D1", "D2"))
     d_ok = all((gates.get(t) or {}).get("passed") is True for t in d_req)
-    pres_ok = (m.get("preservedTiers") == ["D1_Raw", "D2_Structured", "D3_Mapped"]) if tier_cur in ("D3", "D4", "D5") else True
+    exp_pres = ["D1_Raw", "D2_Structured", "D3_Mapped", "D4_CleanSource"] if tier_cur in ("D4", "D5") else ["D1_Raw", "D2_Structured", "D3_Mapped"]
+    pres_ok = (m.get("preservedTiers") == exp_pres) if tier_cur in ("D3", "D4", "D5") else True
+    par_ok = (m.get("d4ParityTier") in ("D4a", "D4b")) if tier_cur in ("D4", "D5") else True
     s_ok = all((gates.get(t) or {}).get("passed") is True for t in ("S0", "S1", "S2", "S3", "S4"))
     met = m.get("metrics") or {}
     ws_ok = (paths.dev_dir / str(m.get("workspaceFile") or "")).is_file()
@@ -83,7 +86,7 @@ def _check_manifest(paths: Any, checks: list[dict[str, Any]]) -> dict[str, Any]:
         and tier_cur in ("D2", "D3", "D4", "D5") and m.get("goalDecompTier") == "D5"
         and m.get("currentStudyTier") == "S4" and m.get("goalStudyTier") == "S5"
         and met.get("failedFunctions") == 0 and met.get("functionsTotal") == 499 and met.get("functionsNamed") == 499
-        and met.get("globalsTotal") == 2324 and met.get("globalsMapped") == 2324 and d_ok and pres_ok and s_ok and ws_ok
+        and met.get("globalsTotal") == 2324 and met.get("globalsMapped") == 2324 and d_ok and pres_ok and par_ok and s_ok and ws_ok
     )
     _rec(checks, "manifest_honest_state", ok, f"D={m.get('currentDecompTier')}/{m.get('goalDecompTier')}, S={m.get('currentStudyTier')}/{m.get('goalStudyTier')}, fn={met.get('functionsNamed')}, g={met.get('globalsMapped')}, ws={ws_ok}")
     return m
@@ -142,8 +145,9 @@ def _check_schemas(paths: Any, checks: list[dict[str, Any]]) -> list[tuple[str, 
 
     d4, s4, d5 = _load_json(sc / "d4_build_report.json"), _load_json(sc / "s4_verify_report.json"), _load_json(sc / "d5_byte_match.json")
     v2_clean = all(isinstance(r, dict) and r.get("schemaVersion") == 2 and r.get("gameId") == GAME_ID and not _has_legacy_v1(r) for r in (d4, s4, d5))
+    d4_strict = d4.get("isZeroWarningsVerified") is True and d4.get("isZeroDecompilerTellsVerified") is True and d4.get("craftsmanshipTellCount") == 0
     rep_ok = (
-        v2_clean and d4.get("isPassed") is True and d4.get("compilerErrorCount") == 0 and d4.get("compilerWarningCount") == 0
+        v2_clean and d4_strict and d4.get("isPassed") is True and d4.get("compilerErrorCount") == 0 and d4.get("compilerWarningCount") == 0
         and int(d4.get("assertionsPassedCount", 0)) >= 10 and int(d4.get("compiledFileCount", 0)) >= 26
         and d4.get("compiledFileCount") == d4.get("totalReadableFiles")
         and s4.get("isPassed") is True and s4.get("compilerErrorCount") == 0 and s4.get("compilerWarningCount") == 0
@@ -151,6 +155,8 @@ def _check_schemas(paths: Any, checks: list[dict[str, Any]]) -> list[tuple[str, 
         and d5.get("matchedBinaryCount") == 8 and d5.get("mismatchedBytes") == 0 and str(d5.get("crc32Hex", "")).lower() == _EXPECTED_ROM_CRC32
     )
     _rec(checks, "d4_s4_d5_reports_v2", rep_ok, f"v2Clean={v2_clean}, d4Pass={d4.get('isPassed') if isinstance(d4, dict) else None}, d5Crc={d5.get('crc32Hex') if isinstance(d5, dict) else None}")
+    rew_ok, rew_det = validate_d4_rewrites_dir(sc / "d4_rewrites")
+    _rec(checks, "d4_craftsmanship_rewrites", rew_ok, str(rew_det))
     return entries
 
 
@@ -181,7 +187,7 @@ def _check_sloc_and_git(paths: Any, checks: list[dict[str, Any]]) -> None:
     _rec(checks, "git_cleanroom_hygiene", not leaks, f"leaks={sorted(set(leaks))[:5]}")
 
 
-def _check_corpus_artifacts(paths: Any, entries: list[tuple[str, int | None, str, str]], tools_dir: Path | None, checks: list[dict[str, Any]]) -> None:
+def _check_corpus_artifacts(paths: Any, entries: list[tuple[str, int | None, str, str]], tools_dir: Path | None, checks: list[dict[str, Any]], tier_cur: str | None = None) -> None:
     bad_ent = [
         rel for rel, sz, sha, crc in entries
         if not (fp := paths.standalone_dir / rel).is_file() or (sz is not None and fp.stat().st_size != sz)
@@ -189,18 +195,20 @@ def _check_corpus_artifacts(paths: Any, entries: list[tuple[str, int | None, str
     ]
     _rec(checks, "corpus_standalone_files", len(entries) == 17 and not bad_ent, f"entries={len(entries)}, bad={bad_ent[:3]}")
     c_files = sorted(paths.readable_dir.rglob("*.c"))
-    frags = [p.name for p in c_files if _FRAG_RE.search(p.name)]
-    raw_c = scan_raw_symbols(paths.readable_dir)
+    frags, raw_c = [p.name for p in c_files if _FRAG_RE.search(p.name)], scan_raw_symbols(paths.readable_dir)
     failed_m = sum(1 for p in c_files if "DECOMPILE FAILED" in p.read_text(encoding="utf-8", errors="replace"))
     compat = paths.readable_dir / "include" / "ghidra_compat.h"
     rec_inc = compat.is_file() and bool(re.search(r'^\s*#include\s+"[^"]*_types\.h"', compat.read_text(encoding="utf-8"), re.M))
-    _rec(checks, "corpus_readable_c_tree", len(c_files) == 26 and not frags and not raw_c and failed_m == 0 and compat.is_file() and not rec_inc and (paths.readable_dir / "compile_commands.json").is_file(), f"cFiles={len(c_files)}/26, frags={len(frags)}, raw={len(raw_c)}, failed={failed_m}")
-    tiers_dir, d3_dir = paths.corpus_root / "tiers", paths.corpus_root / "tiers" / "D3_Mapped"
+    tells, _ = count_d4_craftsmanship_tells(paths.readable_dir)
+    cl_ok = is_clangd_clean(paths.readable_dir)
+    _rec(checks, "corpus_readable_c_tree", len(c_files) == 26 and not frags and not raw_c and failed_m == 0 and tells == 0 and cl_ok and compat.is_file() and not rec_inc, f"cFiles={len(c_files)}/26, tells={tells}, clangdClean={cl_ok}, raw={len(raw_c)}")
+    tiers_dir, d3_dir, d4_dir = paths.corpus_root / "tiers", paths.corpus_root / "tiers" / "D3_Mapped", paths.corpus_root / "tiers" / "D4_CleanSource"
     d1_ok = all((tiers_dir / "D1_Raw" / b / "functions.json").is_file() for b in _BANKS_8)
     d2_cnt = sum(1 for _ in (tiers_dir / "D2_Structured").rglob("*.c")) if (tiers_dir / "D2_Structured").is_dir() else 0
     d3_c = list(d3_dir.rglob("*.c")) if d3_dir.is_dir() else []
     d3_raw = scan_raw_symbols(d3_dir) if d3_dir.is_dir() else ["missing"]
-    _rec(checks, "corpus_tiers_d1_to_d3", d1_ok and d2_cnt == 68 and len(d3_c) == 26 and not d3_raw, f"d1={d1_ok}, d2={d2_cnt}/68, d3={len(d3_c)}/26, d3Raw={len(d3_raw)}")
+    d4_ok = (d4_dir / "src/core").is_dir() and count_d4_craftsmanship_tells(d4_dir)[0] == 0
+    _rec(checks, "corpus_tiers_d1_to_d3", d1_ok and d2_cnt == 68 and len(d3_c) == 26 and not d3_raw and d4_ok, f"d1={d1_ok}, d2={d2_cnt}/68, d3={len(d3_c)}/26, d4={d4_ok}")
 
     arch = paths.work_dir / "build" / "le16" / "libmetal_gear_d4.a"
     runner = paths.work_dir / "build" / "host" / ("d4_parity_runner.exe" if sys.platform == "win32" else "d4_parity_runner")
@@ -227,7 +235,7 @@ def _check_corpus_artifacts(paths: Any, entries: list[tuple[str, int | None, str
         if str(rd_tools) not in sys.path:
             sys.path.insert(0, str(rd_tools))
         from decomp.tier_verifier import verify_track
-        cli_res = verify_track(paths.project_root, run_clangd_check=False)
+        cli_res = verify_track(paths.project_root, target_tier=("D4a" if tier_cur == "D4" else None), run_clangd_check=False)
         _rec(checks, "rd_optional_tier_verifier", bool(cli_res.get("passed")), f"errors={cli_res.get('errors')}")
     else:
         _rec(checks, "rd_optional_tier_verifier", True, "optional R&D tools or repo Corpus absent; skipped")
@@ -252,11 +260,11 @@ def main() -> int:
     raw_st, orig_st, syms_st = assemble_text(_SELFTEST_ASM)
     st_ok = len(OPCODES) == 56 and sum(len(m) for m in OPCODES.values()) == 151 and orig_st == 0x8000 and raw_st.hex().upper() == _SELFTEST_HEX and syms_st.get("end_lbl") == 0x802B
     _rec(checks, "d5_asm6502_selftest", st_ok, f"mnem={len(OPCODES)}/56, bytes={len(raw_st)}, end=${syms_st.get('end_lbl', 0):04X}")
-    _check_manifest(paths, checks)
+    man = _check_manifest(paths, checks)
     entries = _check_schemas(paths, checks)
     _check_sloc_and_git(paths, checks)
     if not args.offline_synthetic:
-        _check_corpus_artifacts(paths, entries, args.tools_dir, checks)
+        _check_corpus_artifacts(paths, entries, args.tools_dir, checks, man.get("currentDecompTier"))
 
     passed_n = sum(1 for c in checks if c["isPassed"])
     summary = {

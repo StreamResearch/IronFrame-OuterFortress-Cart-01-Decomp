@@ -1,0 +1,2435 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "shardId": "core_gameplay",
+  "rewriteTier": "D4_CleanSource",
+  "compilerFlags": [
+    "-std=gnu11",
+    "-fsigned-char",
+    "-O1",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-parameter"
+  ],
+  "isZeroDecompilerTellsVerified": true,
+  "isZeroWarningsVerified": true,
+  "generatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "updatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "fileCount": 5,
+  "symbolCount": 136,
+  "files": [
+    {
+      "relativePath": "src/core/core_actor_ai.c",
+      "lineCount": 1234,
+      "codeSloc": 888,
+      "symbolCount": 34,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000da42",
+          "symbol": "mg_fxb_check_actor_dir_collision",
+          "signature": "u8 mg_fxb_check_actor_dir_collision(u8 dir_index)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "dir_index_00": "dir_index_cur",
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Maps a direction index through the actor collision table, switches to bank 6, and tests background tile solidity.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000da6a",
+          "symbol": "mg_fxb_step_projectile_from_bank6",
+          "signature": "u8 mg_fxb_step_projectile_from_bank6(u8 proj_slot)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "proj_slot_00": "proj_slot_cur"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to PRG bank 6 to run projectile collision/movement at 0xF1ED for a slot and restores bank 0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000da88",
+          "symbol": "mg_fxb_backup_and_clear_actors",
+          "signature": "void mg_fxb_backup_and_clear_actors(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Copies the four primary actor sprite slots to backup slots, clears active actor states and alert flag, and invokes bank 0 alert cleanup.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dab8",
+          "symbol": "mg_fxb_update_all_actors",
+          "signature": "void mg_fxb_update_all_actors(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks the global alert timer and iterates over all 8 actor slots to spawn reinforcements or dispatch each active actor's AI behavior.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dae3",
+          "symbol": "mg_fxb_dispatch_actor_slot_behavior",
+          "signature": "void mg_fxb_dispatch_actor_slot_behavior(s8 actor_type,s8 actor_slot)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Routes an actor slot to its type-specific AI handler via the inline jump table or invokes enemy firing when actor type is 0xF0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000db05",
+          "symbol": "mg_fxb_dispatch_bank3_actor_state",
+          "signature": "void mg_fxb_dispatch_bank3_actor_state(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to PRG bank 3 to invoke the actor behavior dispatcher and restores the previously active PRG bank.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000db10",
+          "symbol": "mg_fxb_dispatch_bank4_actor_state",
+          "signature": "void mg_fxb_dispatch_bank4_actor_state(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to PRG bank 4 to invoke the actor behavior dispatcher and restores the previously active PRG bank.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000db19",
+          "symbol": "mg_fxa_check_special_room_tile",
+          "signature": "u8 mg_fxa_check_special_room_tile(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks whether the current room ID and sampled tile ID in 0x8F match the special lookup tables at 0xE630.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000db3c",
+          "symbol": "mg_fxb_pathfind_actor_to_player",
+          "signature": "void mg_fxb_pathfind_actor_to_player(s8 actor_slot)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "cVar4": "signed_flag",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Evaluates squared distances and tile/room collision across four cardinal directions for an actor slot and dispatches movement toward the bes",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dbe0",
+          "symbol": "mg_fxb_calc_actor_dist_sq",
+          "signature": "void mg_fxb_calc_actor_dist_sq(s8 dir_index,u8 actor_slot)",
+          "localRenames": {
+            "bVar5": "flag_byte",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes the 16-bit squared distance from an actor's stepped position in a candidate direction to the player in zero-page 0x80-0x82.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dc3f",
+          "symbol": "mg_fxa_actor_ai_noop_stub",
+          "signature": "void mg_fxa_actor_ai_noop_stub(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "No-op actor handler stub that returns immediately.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dc57",
+          "symbol": "mg_fxb_update_actor_ai_state",
+          "signature": "void mg_fxb_update_actor_ai_state(u8 actor_slot)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x",
+            "LAB_dcaa": "step_a",
+            "LAB_dc6b": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates an actor's alert transition, hit-reaction sprite animation, path sync flag, and dispatches by AI substate at 0xA8+slot.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dce8",
+          "symbol": "mg_fxa_return_noop",
+          "signature": "void mg_fxa_return_noop(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Single-instruction return stub that performs no operation.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dce9",
+          "symbol": "mg_fxa_step_actor_patrol_script",
+          "signature": "u8 mg_fxa_step_actor_patrol_script(u8 actor_idx)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances an actor's patrol script command and timer from bank table 0x8048, entering a wait state or returning actor status.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dcf1",
+          "symbol": "mg_fxb_step_actor_patrol_script",
+          "signature": "u8 mg_fxb_step_actor_patrol_script(u8 actor_slot)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Executes an actor's patrol script bytecode on even frames, updating direction, animation frame, pause/alert opcodes, or firing enemy shots.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dd6e",
+          "symbol": "mg_fxa_update_actor_walk_sprite",
+          "signature": "void mg_fxa_update_actor_walk_sprite(u8 facing_dir,u8 actor_idx)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects and stores the animated walking sprite ID for an actor based on direction, frame counter, and actor type.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000de0c",
+          "symbol": "mg_fxa_grant_actor_health_drop",
+          "signature": "void mg_fxa_grant_actor_health_drop(s8 actor_idx,u8 drop_offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Applies a health pickup value from table 0xDE2B, sets room init mode to 3, and returns the actor to state 1.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000de33",
+          "symbol": "mg_fxa_enter_actor_alert_spin",
+          "signature": "void mg_fxa_enter_actor_alert_spin(s8 actor_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Transitions an actor into state 6 and resets its alert event flag, animation index, and step timer.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000de40",
+          "symbol": "mg_fxa_tick_actor_alert_anim",
+          "signature": "u8 mg_fxa_tick_actor_alert_anim(u8 actor_idx,u8 current_state)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Animates an actor's alert or exclamation overlay sprites until its countdown expires, then restores state 1.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000deb9",
+          "symbol": "mg_fxb_dispatch_actor_dir_step",
+          "signature": "void mg_fxb_dispatch_actor_dir_step(u8 step_flags)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x",
+            "in_N": "cpu_neg"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches an actor movement step by direction bits via the inline jump table, or sets room init mode 8 in room 0xC7 when negative.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dec8",
+          "symbol": "mg_fxa_move_actor_down_clamped",
+          "signature": "void mg_fxa_move_actor_down_clamped(u8 actor_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments an actor's Y coordinate in 0x0348 up to the lower screen limit of 0xF1.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ded3",
+          "symbol": "mg_fxa_move_actor_up_clamped",
+          "signature": "void mg_fxa_move_actor_up_clamped(u8 actor_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements an actor's Y coordinate in 0x0348 if it is greater than zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dedc",
+          "symbol": "mg_fxa_move_actor_right_clamped",
+          "signature": "void mg_fxa_move_actor_right_clamped(u8 actor_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments an actor's X coordinate in 0x0328 up to the right screen limit of 0xA8.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dee7",
+          "symbol": "mg_fxa_move_actor_left_clamped",
+          "signature": "void mg_fxa_move_actor_left_clamped(u8 actor_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements an actor's X coordinate in 0x0328 if it is greater than zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000defb",
+          "symbol": "mg_fxa_start_actor_pause_state",
+          "signature": "void mg_fxa_start_actor_pause_state(s8 actor_idx)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Transitions an actor to pause state 2 and sets a randomized look counter and duration timer from the frame counter.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000df0f",
+          "symbol": "mg_fxa_tick_actor_pause_look",
+          "signature": "void mg_fxa_tick_actor_pause_look(u8 actor_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks an actor's pause-and-look timer, cycles idle facing sprites, and transitions back to state 1 when complete.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000df44",
+          "symbol": "mg_fxb_start_actor_chase_step",
+          "signature": "void mg_fxb_start_actor_chase_step(s8 actor_slot)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes an actor's patrol script, selects a chase direction toward the player, sets AI substate 4, and triggers alert or footstep SFX.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000df72",
+          "symbol": "mg_fxa_set_actor_script_from_table",
+          "signature": "void mg_fxa_set_actor_script_from_table(s8 actor_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Assigns an actor's script offset in 0xB0 from lookup table 0xDF7A using its sub-index.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000df7e",
+          "symbol": "mg_fxb_update_actor_chase_step",
+          "signature": "void mg_fxb_update_actor_chase_step(s8 actor_slot)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "cVar3": "signed_delta",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements an actor's step timer and advances movement in its current direction if clear, or transitions to substate 5 when blocked.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000dfad",
+          "symbol": "mg_fxb_choose_actor_chase_dir",
+          "signature": "u8 mg_fxb_choose_actor_chase_dir(u8 actor_slot)",
+          "localRenames": {
+            "cVar4": "signed_flag",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x",
+            "in_Z": "cpu_zero"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes Manhattan deltas between the player and an actor slot, stores the longer axis step count, and returns the cardinal chase direction.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e01e",
+          "symbol": "mg_fxb_start_actor_patrol_wait",
+          "signature": "void mg_fxb_start_actor_patrol_wait(s8 actor_slot)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs actor pathfinding toward the player and sets a bounded wait timer in substate 4.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e038",
+          "symbol": "mg_fxb_tick_actor_alert_or_fire",
+          "signature": "u8 mg_fxb_tick_actor_alert_or_fire(u8 actor_slot)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "actor_slot_00": "actor_slot_cur",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Gates actor firing frequency by frame counter and weapon sprite state before invoking enemy shot firing and projectile stepping.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e05b",
+          "symbol": "mg_fxb_update_actor_attack_shot",
+          "signature": "s8 mg_fxb_update_actor_attack_shot(s8 actor_slot)",
+          "localRenames": {
+            "sStack0000": "saved_acc",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Fires an enemy shot for an actor slot via 0xE07A and steps the corresponding enemy projectile slot if active.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e07a",
+          "symbol": "mg_fxa_update_actor_projectile",
+          "signature": "void mg_fxa_update_actor_projectile(u8 actor_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Spawns and advances an aimed actor projectile sprite toward the player's current coordinates.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "src/core/core_gameplay_loop_and_rooms.c",
+      "lineCount": 776,
+      "codeSloc": 484,
+      "symbolCount": 28,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000d647",
+          "symbol": "mg_fxb_tick_demo_mode_state",
+          "signature": "void mg_fxb_tick_demo_mode_state(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Polls attract-mode demo inputs and jumps to the current game submode handler via the inline jump table.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d657",
+          "symbol": "mg_fxb_start_attract_demo_sequence",
+          "signature": "void mg_fxb_start_attract_demo_sequence(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears RAM, initializes HUD and timers, sets starting player coordinates and room from the active demo table, and advances submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d68b",
+          "symbol": "mg_fxb_setup_demo_room_entities",
+          "signature": "void mg_fxb_setup_demo_room_entities(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes room entities and boss state for the attract-mode demo and increments game submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d691",
+          "symbol": "mg_fxb_tick_paused_or_active_frame",
+          "signature": "void mg_fxb_tick_paused_or_active_frame(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks pause button toggle and invokes the main frame update routine at 0xD7CE.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d698",
+          "symbol": "mg_fxb_tick_attract_demo_input",
+          "signature": "u8 mg_fxb_tick_attract_demo_input(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks Start/Select abort during attract-mode demo and replays timed joypad inputs from the active demo sequence script.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d6b5",
+          "symbol": "mg_fxa_apply_demo_joypad_input",
+          "signature": "void mg_fxa_apply_demo_joypad_input(s8 script_offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads scripted demo input for player 1 from zero-page pointer 0x80 and clears player 2 joypad state.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d72c",
+          "symbol": "mg_fxb_toggle_gameplay_pause",
+          "signature": "void mg_fxb_toggle_gameplay_pause(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Toggles the pause flag when Start is pressed during unfrozen non-demo gameplay and plays the pause sound effect.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d752",
+          "symbol": "mg_fxa_init_new_game_state",
+          "signature": "void mg_fxa_init_new_game_state(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes rank, health, starting room, and player coordinates for a new game and clears gameplay zero-page work bytes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d758",
+          "symbol": "mg_fxa_init_continue_game_state",
+          "signature": "void mg_fxa_init_continue_game_state(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes player health, spawn room, and coordinates for a continued game while preserving current rank and card flags.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d7ce",
+          "symbol": "mg_fxa_dispatch_room_init_mode",
+          "signature": "void mg_fxa_dispatch_room_init_mode(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the room initialization mode in 0x2C through the inline jump table at 0xD7CE.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d7ed",
+          "symbol": "gameplay_frame_tick",
+          "signature": "void gameplay_frame_tick(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Main active gameplay tick handling pause triggers, radio/transceiver mode, and all entity/world updates.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d80a",
+          "symbol": "mg_fxb_run_gameplay_simulation_tick",
+          "signature": "void mg_fxb_run_gameplay_simulation_tick(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Executes one full gameplay simulation step covering attacks, projectiles, damage, guard vision, actors, bosses, objectives, pickups, health ",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d871",
+          "symbol": "mg_fxb_tick_demo_gameplay_frame",
+          "signature": "void mg_fxb_tick_demo_gameplay_frame(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Steps periodic player movement in bank 6 for attract-mode demo and runs one gameplay simulation tick.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d877",
+          "symbol": "mg_fxb_run_cutscene_and_restore_bank6",
+          "signature": "void mg_fxb_run_cutscene_and_restore_bank6(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the cutscene/ending handler and restores PRG bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d87d",
+          "symbol": "mg_fxa_call_bank4_bcb8",
+          "signature": "void mg_fxa_call_bank4_bcb8(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to UNROM bank 4, invokes routine 0xBCB8, and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d886",
+          "symbol": "mg_fxb_load_transceiver_or_bank3_gfx",
+          "signature": "void mg_fxb_load_transceiver_or_bank3_gfx(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Invokes bank 5 transceiver setup when CHR page is 0xFF, or uploads bank 3 tile data from 0x910A otherwise.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d8a6",
+          "symbol": "mg_fxb_update_transceiver_or_exit",
+          "signature": "void mg_fxb_update_transceiver_or_exit(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs bank 5 transceiver UI updates while active, or clears overlay state, uploads PPU return stream, and switches to mode 8 on Select.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d8e2",
+          "symbol": "mg_fxa_queue_hud_and_bank2_digits",
+          "signature": "void mg_fxa_queue_hud_and_bank2_digits(s8 digit_steps)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x",
+            "in_Z": "cpu_zero",
+            "LAB_bfd0": "step_a",
+            "LAB_bfb6": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates HUD health and rank tiles, switches to UNROM bank 2, and formats a 4-digit readout into the 0x0740 VRAM queue.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d8eb",
+          "symbol": "mg_fxa_trampoline_bank3_d8eb",
+          "signature": "void mg_fxa_trampoline_bank3_d8eb(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects UNROM bank 3 via 0xC93E and transfers control into the swapped bank.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d8f1",
+          "symbol": "mg_fxa_call_bank0_b3fc",
+          "signature": "void mg_fxa_call_bank0_b3fc(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to UNROM bank 0, invokes routine 0xB3FC, and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d8fa",
+          "symbol": "mg_fxb_tick_gameplay_and_score_hud",
+          "signature": "void mg_fxb_tick_gameplay_and_score_hud(s8 bcd_steps)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs one gameplay simulation tick, switches to bank 2, converts a counter to 4 BCD digits, and queues the HUD digit VRAM update.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d903",
+          "symbol": "mg_fxa_call_bank5_be6a",
+          "signature": "void mg_fxa_call_bank5_be6a(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to UNROM bank 5, invokes routine 0xBE6A, and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d90e",
+          "symbol": "mg_fxb_inc_zp80_ptr",
+          "signature": "void mg_fxb_inc_zp80_ptr(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments the 16-bit pointer stored in zero-page 0x80 by 1.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d920",
+          "symbol": "mg_fxb_dec_zp88_ptr_nonzero",
+          "signature": "u8 mg_fxb_dec_zp88_ptr_nonzero(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements the 16-bit counter at zero-page 0x88 by 1 and returns the bitwise OR of its bytes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d930",
+          "symbol": "mg_fxb_decompress_room_layout",
+          "signature": "void mg_fxb_decompress_room_layout(u8 room_id)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decompresses the current room's 8x6 metatile grid from bank 5/4 into 0x0400-0x06FF and populates the 48-byte room attribute table at 0x0700.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000d9d1",
+          "symbol": "mg_fxb_expand_room_metatile",
+          "signature": "void mg_fxb_expand_room_metatile(u8 metatile_id)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Expands a 4x4 room metatile from PRG bank 4 into the room layout buffer at zero-page 0x88.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000da17",
+          "symbol": "mg_fxa_copy_4bytes_to_zp88",
+          "signature": "void mg_fxa_copy_4bytes_to_zp88(u8 offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Copies four bytes from the source pointer at 0x82 into the destination pointer at 0x88 starting at the given offset.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000da25",
+          "symbol": "mg_fxa_load_room_data_ptr",
+          "signature": "void mg_fxa_load_room_data_ptr(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads the 16-bit room data pointer for the current room ID from the active bank's pointer table into zero-page 0x80.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "src/core/core_objectives_and_items.c",
+      "lineCount": 670,
+      "codeSloc": 581,
+      "symbolCount": 8,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000f6ba",
+          "symbol": "mg_fxa_check_room_hostage_flag",
+          "signature": "void mg_fxa_check_room_hostage_flag(void)",
+          "localRenames": {
+            "bVar5": "flag_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "uVar2": "next_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Looks up the current room in the 24-entry hostage table and clears 0x65 if that room's rescue bit is already set.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f74c",
+          "symbol": "mg_fxb_update_prisoners_and_objectives",
+          "signature": "void mg_fxb_update_prisoners_and_objectives(void)",
+          "localRenames": {
+            "bVar5": "flag_byte",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_f77c": "step_a",
+            "LAB_f80f": "step_b",
+            "LAB_f86d": "step_c"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Animates prisoner sprites, updates rescued-prisoner and destroyed-target bitfields, and triggers radio messages or rank progress.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f89d",
+          "symbol": "mg_fxa_count_hostages_and_check_rank",
+          "signature": "void mg_fxa_count_hostages_and_check_rank(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "cVar3": "signed_delta",
+            "bVar4": "idx_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Counts rescued hostages across 0x72-0x74 into 0x97 and triggers rank-up audio when rescue thresholds are met.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f923",
+          "symbol": "mg_fxa_spawn_room_item_sprites",
+          "signature": "void mg_fxa_spawn_room_item_sprites(void)",
+          "localRenames": {
+            "cVar3": "signed_delta",
+            "bVar5": "flag_byte",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar4": "idx_byte",
+            "LAB_f992": "step_a",
+            "LAB_f9c7": "step_b"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Populates item and key pickup sprites from bank table 0x884E according to the current room and progression flags.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f9e7",
+          "symbol": "mg_fxb_check_item_pickup",
+          "signature": "void mg_fxb_check_item_pickup(void)",
+          "localRenames": {
+            "bVar5": "flag_byte",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_faa5": "step_a",
+            "LAB_fa5a": "step_b",
+            "LAB_faaa": "step_c",
+            "LAB_fac8": "step_d",
+            "LAB_fae0": "step_e"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Detects player overlap with room pickup sprites and grants equipment, ammo, rations, cards, or triggers pickup messages and SFX.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000fb29",
+          "symbol": "mg_fxa_collect_supply_item",
+          "signature": "void mg_fxa_collect_supply_item(u8 item_id)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Applies a collected ration or ammo pickup, updating player health or weapon stock clamped to the current rank maximum.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000fb98",
+          "symbol": "mg_fxb_dispatch_cutscene_or_ending",
+          "signature": "void mg_fxb_dispatch_cutscene_or_ending(void)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects PRG bank 2 or 0 based on substate 0x6B and jumps through the inline pointer table for cutscene or ending handling.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000fbbe",
+          "symbol": "mg_fxb_load_pause_menu_graphics",
+          "signature": "void mg_fxb_load_pause_menu_graphics(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Uploads bank 3 pause/equipment menu graphics to PPU_DATA and queues stream 0x13 when CHR stream page is 0xFF.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "src/core/core_player_and_doors.c",
+      "lineCount": 1983,
+      "codeSloc": 1571,
+      "symbolCount": 40,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000e16f",
+          "symbol": "mg_fxb_tick_player_and_world_state",
+          "signature": "void mg_fxb_tick_player_and_world_state(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "cVar3": "signed_delta"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates special gas/equipment room checks, bank 3 and bank 0 environment hooks, delayed actor spawns, and RC missile steering or player acti",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e233",
+          "symbol": "mg_fxb_update_player_action_and_sprite",
+          "signature": "void mg_fxb_update_player_action_and_sprite(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x",
+            "LAB_e249": "step_a",
+            "LAB_e22f": "step_b",
+            "LAB_e210": "step_c"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks screen edge exits, updates shield/weapon auxiliary sprite 1 and player OAM sprite coords, and dispatches player action state 0x3C.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e3a6",
+          "symbol": "mg_fxa_check_room_tile_trigger_sfx",
+          "signature": "void mg_fxa_check_room_tile_trigger_sfx(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "LAB_e3c9": "step_a",
+            "LAB_e402": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks whether the player stands on a special room trigger tile and plays sound effect 0x0E or 0x0D.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e407",
+          "symbol": "mg_fxa_step_player_one_pixel",
+          "signature": "void mg_fxa_step_player_one_pixel(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances the player's coordinates by one pixel in the current facing direction and increments step counter 0x3C.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e435",
+          "symbol": "mg_fxb_update_player_movement",
+          "signature": "void mg_fxb_update_player_movement(u8 move_tile)",
+          "localRenames": {
+            "uVar2": "next_byte",
+            "bVar1": "temp_byte",
+            "in_Y": "cpu_y",
+            "LAB_e46b": "step_a",
+            "LAB_e49f": "step_b",
+            "joined_r0xe733": "step_c"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Reads player D-pad input, updates player position and facing direction, handles special room boundaries, and tests front tile collisions.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e46e",
+          "symbol": "mg_fxb_apply_player_dir_step",
+          "signature": "void mg_fxb_apply_player_dir_step(s8 dir_index,u8 anim_tile)",
+          "localRenames": {
+            "anim_tile_00": "anim_tile_cur",
+            "uVar1": "byte_val",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets player facing direction and sprite tile, checks front collision or door/hazard interactions, and nudges player coordinates on free tile",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e49a",
+          "symbol": "mg_fxb_step_player_blocked_push",
+          "signature": "void mg_fxb_step_player_blocked_push(void)",
+          "localRenames": {
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs hazard tile checks and pushes player coordinates 1 pixel in the current facing direction.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e4c2",
+          "symbol": "mg_fxa_probe_entity_tile_collision",
+          "signature": "u8 mg_fxa_probe_entity_tile_collision(s8 dir_index,u8 entity_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Probes two directional bounding points against the room tile map using 0xE55F and returns the resulting collision code.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e4c8",
+          "symbol": "mg_fxb_probe_player_front_tiles",
+          "signature": "u8 mg_fxb_probe_player_front_tiles(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Probes two tile positions ahead of the player based on facing direction and returns the matching collision or interaction code.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e55f",
+          "symbol": "mg_fxa_sample_room_tile_collision",
+          "signature": "u8 mg_fxa_sample_room_tile_collision(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Samples the room layout tile at the pixel coordinates in zero-page 0x80 and returns its collision classification.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e5bf",
+          "symbol": "mg_fxb_handle_player_hazard_tile",
+          "signature": "void mg_fxb_handle_player_hazard_tile(u8 anim_tile)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_Y": "cpu_y",
+            "LAB_e609": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks if the player stands on a hazard tile in special rooms, decrements player health periodically with sound, and updates animation state",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e640",
+          "symbol": "mg_fxa_apply_sprite_nudge_offset",
+          "signature": "void mg_fxa_apply_sprite_nudge_offset(u8 threshold)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Stores the threshold in 0x81 and nudges player sprite slot 0 X position by one pixel on active frames.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e660",
+          "symbol": "mg_fxa_tick_player_punch_anim",
+          "signature": "void mg_fxa_tick_player_punch_anim(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances the player punch animation timer, toggles the fist sprite X offset, and updates player sprite state.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e692",
+          "symbol": "mg_fxb_check_room_screen_edge_exit",
+          "signature": "void mg_fxb_check_room_screen_edge_exit(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "LAB_e6c0": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Detects when the player crosses a screen boundary or special exit, adjusts entry coordinates, loads the adjacent room via bank 4, and sets m",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e77f",
+          "symbol": "mg_fxa_place_overlay_sprite_slot1",
+          "signature": "void mg_fxa_place_overlay_sprite_slot1(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Configures sprite slot 1 with tile 0x39 at fixed Y 0x5C and X set to player Y minus 0x10.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e7fe",
+          "symbol": "mg_fxb_update_guard_vision_and_alert",
+          "signature": "void mg_fxb_update_guard_vision_and_alert(void)",
+          "localRenames": {
+            "cVar2": "signed_step",
+            "bVar5": "flag_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_e814": "step_a",
+            "LAB_e83c": "step_b",
+            "LAB_e877": "step_c",
+            "LAB_e843": "step_d",
+            "LAB_e869": "step_e",
+            "LAB_e858": "step_f",
+            "LAB_e7d6": "step_g"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Scans enemy line-of-sight along axes toward the player to trigger alert mode, or ticks down the alert timer and resumes room BGM.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e968",
+          "symbol": "mg_fxa_trigger_actor_alert",
+          "signature": "void mg_fxa_trigger_actor_alert(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Activates alert mode for the detecting actor in 0x88, displays the alert marker sprite, and triggers alert BGM.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e96a",
+          "symbol": "mg_fxb_trigger_guard_alert_spot",
+          "signature": "void mg_fxb_trigger_guard_alert_spot(u8 actor_slot)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Displays the exclamation alert sprite above a spotting guard, triggers alert mode and reinforcement cleanup, and plays alert BGM.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000e9c1",
+          "symbol": "mg_fxa_scan_actors_trigger_alert",
+          "signature": "void mg_fxa_scan_actors_trigger_alert(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Scans the first four actor slots for an active enemy when not already alerted and triggers alert mode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ea03",
+          "symbol": "mg_fxb_update_player_damage_and_blink",
+          "signature": "void mg_fxb_update_player_damage_and_blink(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_ea54": "step_a",
+            "LAB_ea90": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates periodic hazard/gas health drain, player post-hit invulnerability blink timer, and actor/hazard collision checks.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ea38",
+          "symbol": "mg_fxb_check_player_actor_overlap",
+          "signature": "void mg_fxb_check_player_actor_overlap(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_ea54": "step_a",
+            "LAB_ea90": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Tests bounding-box overlap between the player and active actor slots to apply contact damage, alert triggers, or damage SFX.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000eb17",
+          "symbol": "mg_fxb_load_room_door_table_ptr",
+          "signature": "void mg_fxb_load_room_door_table_ptr(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to PRG bank 1 to load the current room's door and transition pointer into zero-page 0x88, then restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000eb3b",
+          "symbol": "mg_fxa_check_player_door_entry",
+          "signature": "void mg_fxa_check_player_door_entry(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "LAB_eb6c": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Periodically checks player tile collision and room flags to handle door entry and room transition triggers.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000eb5a",
+          "symbol": "mg_fxb_check_player_door_or_wall",
+          "signature": "void mg_fxb_check_player_door_or_wall(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "LAB_eb6c": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks special room flags or loads the room door pointer and probes the tile at the player's position before dispatching directional handlin",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000eb9b",
+          "symbol": "mg_fxb_open_vertical_door",
+          "signature": "void mg_fxb_open_vertical_door(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "cVar3": "signed_delta"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Searches the room door list for a matching vertical door at the player's position, queues VRAM tile clear writes, and opens the door.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ebc7",
+          "symbol": "mg_fxb_clear_init_mode_and_push",
+          "signature": "void mg_fxb_clear_init_mode_and_push(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears room init mode 0x2C and pushes the player 1 pixel in their facing direction after hazard checks.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ebce",
+          "symbol": "mg_fxa_load_zp8c_8d_from_ptr88",
+          "signature": "void mg_fxa_load_zp8c_8d_from_ptr88(s8 end_offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Reads a two-byte pair backwards from the pointer in 0x88 into zero-page scratch registers 0x8C and 0x8D.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ebd9",
+          "symbol": "mg_fxa_advance_door_scan_cursor",
+          "signature": "s8 mg_fxa_advance_door_scan_cursor(s8 entry_offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments door loop index 0x91, decrements remaining count 0x90, and returns the entry offset advanced by 7.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ec39",
+          "symbol": "mg_fxa_set_door_exit_trigger",
+          "signature": "void mg_fxa_set_door_exit_trigger(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets room transition state 0x39 using the matched door index with bit 6 set and clears room init mode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ec44",
+          "symbol": "mg_fxa_advance_door_pos_by_32",
+          "signature": "void mg_fxa_advance_door_pos_by_32(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Adds 32 to the 16-bit value in zero-page 0x8C-0x8D with carry propagation.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ec52",
+          "symbol": "mg_fxa_sub_28_from_zp8d",
+          "signature": "void mg_fxa_sub_28_from_zp8d(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Subtracts 0x1C (28) from zero-page scratch byte 0x8D.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ec5a",
+          "symbol": "mg_fxa_add_28_to_zp8d",
+          "signature": "void mg_fxa_add_28_to_zp8d(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Adds 0x1C (28) to zero-page scratch byte 0x8D.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ec62",
+          "symbol": "mg_fxb_open_horizontal_door",
+          "signature": "void mg_fxb_open_horizontal_door(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "cVar3": "signed_delta",
+            "bVar4": "idx_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Searches the room door list for a matching horizontal door at the player's position, queues VRAM tile clear writes, and opens the door.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ecc5",
+          "symbol": "mg_fxb_finalize_door_vram_update",
+          "signature": "void mg_fxb_finalize_door_vram_update(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Adjusts the door VRAM destination address, records it in the transfer queue, plays door SFX if triggered, and clears room transition state.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ecde",
+          "symbol": "mg_fxa_scan_horizontal_doors",
+          "signature": "void mg_fxa_scan_horizontal_doors(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "cVar5": "signed_idx",
+            "LAB_ed24": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Scans horizontal door records in 0x88 against player position and direction and triggers transition if unlocked.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ece4",
+          "symbol": "mg_fxb_open_elevator_or_gate",
+          "signature": "void mg_fxb_open_elevator_or_gate(u8 door_table_idx)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "cVar5": "signed_idx",
+            "in_Y": "cpu_y",
+            "LAB_ed24": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Searches the room door list for a matching left/right gate or elevator at the player's position and queues VRAM tile updates.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ed72",
+          "symbol": "mg_fxb_probe_door_after_step",
+          "signature": "void mg_fxb_probe_door_after_step(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances the player's Y tile probe coordinate by 2 and invokes the door/gate matcher at index 3.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ed82",
+          "symbol": "mg_fxa_check_door_unlock_state",
+          "signature": "u8 mg_fxa_check_door_unlock_state(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Verifies whether a matched door record is unlocked by checking room init mode, bit 3 flags, and player action state.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000eda8",
+          "symbol": "mg_fxb_handle_room_door_or_elevator",
+          "signature": "void mg_fxb_handle_room_door_or_elevator(u8 door_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte",
+            "in_Y": "cpu_y",
+            "LAB_edb9": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Matches a player-triggered door or teleport entry against required card/direction, updates coordinates, and transitions via bank 4.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ee22",
+          "symbol": "mg_fxa_add_stride_5",
+          "signature": "s8 mg_fxa_add_stride_5(s8 base_offset,s8 step_count)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes an offset by adding a stride of 5 bytes for the specified number of iterations.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "src/core/core_weapons_and_bosses.c",
+      "lineCount": 1366,
+      "codeSloc": 1090,
+      "symbolCount": 26,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000ee33",
+          "symbol": "mg_fxb_try_player_attack",
+          "signature": "void mg_fxb_try_player_attack(void)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks room eligibility, player state, and A-button input before finding a free weapon slot and dispatching player attack.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ee7a",
+          "symbol": "mg_fxa_spawn_weapon_slot_7a",
+          "signature": "void mg_fxa_spawn_weapon_slot_7a(void)",
+          "localRenames": {
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Finds a free slot in 0x5D-0x5F to deploy an item from stock 0x7A, decrements stock, and plays sound 0x26.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ee9f",
+          "symbol": "mg_fxa_deploy_item_7b",
+          "signature": "void mg_fxa_deploy_item_7b(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Activates slot 0x52 using item stock 0x7B when available, updates inventory flag bit 2, and plays sound 0x26.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000eebc",
+          "symbol": "mg_fxa_fire_equipped_weapon_sfx",
+          "signature": "void mg_fxa_fire_equipped_weapon_sfx(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks weapon cooldowns and ammo counters in 0x7C and 0x7F and plays the corresponding firing sound effect.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000eef9",
+          "symbol": "mg_fxb_try_place_landmine",
+          "signature": "void mg_fxb_try_place_landmine(void)",
+          "localRenames": {
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Allocates an available mine slot if the player has mines remaining, decrements inventory, spawns the mine, and plays placement SFX.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ef1f",
+          "symbol": "mg_fxa_fire_bullet_with_silencer_sfx",
+          "signature": "void mg_fxa_fire_bullet_with_silencer_sfx(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Fires a player projectile every 8 frames when button A is held and plays either silenced or standard gunshot audio.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ef55",
+          "symbol": "mg_fxa_play_weapon_or_empty_sfx",
+          "signature": "void mg_fxa_play_weapon_or_empty_sfx(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Plays sound effect 0x11 when flag 0x79 is nonzero or sound effect 0x24 otherwise.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ef60",
+          "symbol": "mg_fxb_spawn_player_projectile",
+          "signature": "void mg_fxb_spawn_player_projectile(void)",
+          "localRenames": {
+            "pbVar1": "byte_ptr",
+            "bVar3": "mask_byte",
+            "bVar2": "step_byte",
+            "LAB_ef82": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Finds a free player weapon slot, computes directional spawn coordinates and sprite ID, plays gunshot SFX if unsuppressed, and stores project",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f082",
+          "symbol": "mg_fxb_update_player_weapons_and_bombs",
+          "signature": "void mg_fxb_update_player_weapons_and_bombs(void)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "cVar2": "signed_step",
+            "cVar1": "signed_val",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_f0c3": "step_a",
+            "LAB_f0a8": "step_b",
+            "LAB_f0dd": "step_c"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks active enemy projectiles, explosive fuse timers, mine detonation checks, and active player weapon slots 2-7.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f0e6",
+          "symbol": "mg_fxa_step_projectile_movement",
+          "signature": "void mg_fxa_step_projectile_movement(u8 direction)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "bVar3": "mask_byte",
+            "LAB_f11c": "step_a",
+            "LAB_f178": "step_b"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances the active projectile sprite by direction and speed, despawning it when it leaves screen bounds.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f162",
+          "symbol": "mg_fxa_despawn_current_projectile",
+          "signature": "void mg_fxa_despawn_current_projectile(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "LAB_f178": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Deactivates the projectile indexed by zero-page 0x85 and clears its status nibble in 0x4E or 0x61.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f164",
+          "symbol": "mg_fxa_despawn_projectile_slot",
+          "signature": "void mg_fxa_despawn_projectile_slot(u8 slot_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x",
+            "LAB_f178": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Deactivates the specified projectile slot, resets associated player weapon flags, and clears its status nibble.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f199",
+          "symbol": "mg_fxb_step_active_projectile",
+          "signature": "u8 mg_fxb_step_active_projectile(u8 dir_index)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_f1c6": "step_a",
+            "LAB_f178": "step_b",
+            "LAB_f2af": "step_c",
+            "LAB_f2b1": "step_d",
+            "LAB_f231": "step_e"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances a player or enemy projectile, checks screen bounds and tile solidity, tests actor/player hitboxes, and applies damage.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f1ed",
+          "symbol": "mg_fxb_check_projectile_collision",
+          "signature": "u8 mg_fxb_check_projectile_collision(u8 proj_slot)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x",
+            "LAB_f2af": "step_a",
+            "LAB_f2b1": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Tests projectile tile solidity and checks hitbox overlap against the player or actors, applying damage on impact.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f252",
+          "symbol": "mg_fxb_check_explosive_actor_hits",
+          "signature": "s8 mg_fxb_check_explosive_actor_hits(s8 hit_result,s8 weapon_slot)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "LAB_f2af": "step_a",
+            "LAB_f2b1": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks an explosive or boss-targeting weapon slot against actor slots 8-15, destroys hit targets or damages bosses, and updates room clear s",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f2cc",
+          "symbol": "mg_fxb_check_projectile_hit_slot",
+          "signature": "u8 mg_fxb_check_projectile_hit_slot(u8 proj_slot,u8 target_slot)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Tests whether a projectile sprite overlaps a target actor or player hitbox and deactivates the projectile on impact.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f335",
+          "symbol": "mg_fxb_update_enemy_projectiles",
+          "signature": "void mg_fxb_update_enemy_projectiles(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "LAB_f35c": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Iterates over enemy projectile slots 0x10-0x15 during active boss fights and steps each active projectile using its packed direction nibble.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f365",
+          "symbol": "mg_fxa_queue_hud_health_and_rank",
+          "signature": "void mg_fxa_queue_hud_health_and_rank(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Builds and queues PPU tile updates in 0x0740 for the HUD health gauge and player rank indicator.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f3d8",
+          "symbol": "mg_fxb_init_room_boss_encounter",
+          "signature": "void mg_fxb_init_room_boss_encounter(void)",
+          "localRenames": {
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte",
+            "bVar1": "temp_byte",
+            "in_Z": "cpu_zero",
+            "LAB_f451": "step_a",
+            "LAB_f429": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes boss encounter state, health, and sprite coordinates for boss rooms, or selects bank 2 for room 0x76.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f469",
+          "symbol": "mg_fxb_update_boss_encounter",
+          "signature": "void mg_fxb_update_boss_encounter(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "in_Z": "cpu_zero",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks if the current room has an active boss, applies pending weapon hits, and dispatches boss AI in PRG bank 2.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f4ac",
+          "symbol": "mg_fxa_is_room_item_uncollected",
+          "signature": "u8 mg_fxa_is_room_item_uncollected(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks whether the current room is in the 10-entry item table and returns 1 if its collection bit is still clear.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f4d7",
+          "symbol": "mg_fxb_apply_boss_damage",
+          "signature": "void mg_fxb_apply_boss_damage(s8 hit_kind,u8 weapon_index)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "in_Y": "cpu_y",
+            "LAB_f4ff": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements boss hit count and HP using the weapon damage table and triggers boss defeat handling and explosion SFX on zero HP.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f507",
+          "symbol": "mg_fxa_store_weapon_or_aux_state",
+          "signature": "void mg_fxa_store_weapon_or_aux_state(u8 state_val)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Stores the given state value into 0x55 when scratch flag 0x87 equals 3, or into 0x44 otherwise.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f5b7",
+          "symbol": "mg_fxb_init_room_hazards_bank0",
+          "signature": "void mg_fxb_init_room_hazards_bank0(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to PRG bank 0 to initialize room hazard actors and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f5c0",
+          "symbol": "mg_fxa_spawn_room_boss_or_prop",
+          "signature": "void mg_fxa_spawn_room_boss_or_prop(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes boss or multi-sprite room props in OAM shadow tables 0x0308-0x035F when entering matching special rooms.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000f642",
+          "symbol": "mg_fxb_dispatch_room_gimmick_tick",
+          "signature": "void mg_fxb_dispatch_room_gimmick_tick(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches to PRG bank 0 and dispatches room-specific gimmick updates such as traps or special hazards based on room ID.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    }
+  ]
+}

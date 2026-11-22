@@ -1,0 +1,985 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "shardId": "overlays_b05_b06",
+  "rewriteTier": "D4_CleanSource",
+  "compilerFlags": [
+    "-std=gnu11",
+    "-fsigned-char",
+    "-O1",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-parameter"
+  ],
+  "isZeroDecompilerTellsVerified": true,
+  "isZeroWarningsVerified": true,
+  "generatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "updatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "fileCount": 4,
+  "symbolCount": 57,
+  "files": [
+    {
+      "relativePath": "overlays/BANK_05.prg/bank05_ending_sequence.c",
+      "lineCount": 315,
+      "codeSloc": 182,
+      "symbolCount": 13,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000be6a",
+          "symbol": "mg_b56_ending_sequence_dispatch",
+          "signature": "void mg_b56_ending_sequence_dispatch(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the active ending cutscene phase indexed by 0x0060 through the inline jump table.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be87",
+          "symbol": "mg_b56_ending_init_sequence",
+          "signature": "void mg_b56_ending_init_sequence(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resets ending frame counter 0x0055, advances sequence step 0x0060, triggers audio commands 0x86 and 0x81, and jumps to 0xC313.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be9a",
+          "symbol": "mg_b56_ending_animate_explosion",
+          "signature": "void mg_b56_ending_animate_explosion(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues 4-frame animated tile bursts into 0x0740 every 4 frames for 48 steps, then triggers sound/screen transition and advances the ending s",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bed5",
+          "symbol": "mg_b56_ending_open_transceiver",
+          "signature": "void mg_b56_ending_open_transceiver(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Selects Big Boss frequency 0x0D, initializes the transceiver screen layout, decrements play substate 0x002C, and optionally plays ring sound",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bee7",
+          "symbol": "mg_b56_ending_wait_before_scan",
+          "signature": "void mg_b56_ending_wait_before_scan(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Refreshes the transceiver frequency HUD while waiting 256 frames before resetting dialog state, playing sound 0x86, and advancing the ending",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000beff",
+          "symbol": "mg_b56_ending_play_first_call",
+          "signature": "void mg_b56_ending_play_first_call(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Streams ending transceiver message 0x9B via the dialog printer and resets counters with sound 0x79 before advancing the ending step.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf17",
+          "symbol": "mg_b56_ending_delay_and_clear",
+          "signature": "void mg_b56_ending_delay_and_clear(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Waits 64 frames via 0x0055 before clearing the transceiver dialog box and advancing the ending step when clearing completes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf28",
+          "symbol": "mg_b56_ending_sweep_freq_to_78",
+          "signature": "void mg_b56_ending_sweep_freq_to_78(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Updates the transceiver frequency HUD and increments frequency 0x0046 every 4 frames until reaching 0x4E, then plays sound 0x86 and advances",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf3b",
+          "symbol": "mg_b56_ending_play_second_call",
+          "signature": "void mg_b56_ending_play_second_call(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Streams ending transceiver message 0x1F via the dialog printer and advances the ending sequence step with sound 0x79 upon completion.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf3f",
+          "symbol": "mg_b56_ending_start_epilogue_bgm",
+          "signature": "void mg_b56_ending_start_epilogue_bgm(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resets dialog state counters, triggers audio commands 0x86 and 0x65, and advances the ending sequence step.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf4f",
+          "symbol": "mg_b56_ending_play_final_call",
+          "signature": "void mg_b56_ending_play_final_call(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Streams ending transceiver message 0x0F via the dialog printer and triggers audio command 0x85 before advancing the ending step.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf60",
+          "symbol": "mg_b56_ending_fadeout_tick",
+          "signature": "void mg_b56_ending_fadeout_tick(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Throttles the ending palette fadeout to every 8th frame before falling through to upload fade steps and reset to the title screen.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf67",
+          "symbol": "mg_b56_ending_fadeout_step",
+          "signature": "void mg_b56_ending_fadeout_step(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Uploads 16-byte fading palette rows to PPU 0x3F00 across three steps and resets game mode and room state at step 0x1E.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_05.prg/bank05_transceiver_ui.c",
+      "lineCount": 527,
+      "codeSloc": 408,
+      "symbolCount": 11,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000b658",
+          "symbol": "mg_b56_transceiver_state_dispatch",
+          "signature": "void mg_b56_transceiver_state_dispatch(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Refreshes the transceiver frequency display on odd frames and dispatches the transceiver substate via the inline jump table.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b66e",
+          "symbol": "mg_b56_transceiver_clear_and_reply",
+          "signature": "void mg_b56_transceiver_clear_and_reply(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears transceiver dialog rows via 0xB81F and resets dialog mode to 0 with substate 1 once row clearing finishes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b686",
+          "symbol": "mg_b56_transceiver_auto_call_wait",
+          "signature": "void mg_b56_transceiver_auto_call_wait(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Polls for incoming room calls or button press while waiting, then clears the transceiver dialog box and returns to substate 0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b6bb",
+          "symbol": "mg_b56_transceiver_match_call",
+          "signature": "void mg_b56_transceiver_match_call(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_b72d": "step_a",
+            "LAB_b78e": "step_b",
+            "LAB_b755": "step_c"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Scans the current room's transceiver call table to match frequency, alert, or story triggers, sets dialog message ID 0x0047, and plays sound",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b79a",
+          "symbol": "mg_b56_transceiver_stream_dialog",
+          "signature": "void mg_b56_transceiver_stream_dialog(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "bVar3": "mask_byte",
+            "code_r0xc76d": "step_a",
+            "code_r0xc7ee": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Streams dialog characters from the active message pointer into the 0x0740 VRAM queue, handles page-wait prompts, and signals dialog completi",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b7ea",
+          "symbol": "mg_b56_transceiver_wait_confirm",
+          "signature": "void mg_b56_transceiver_wait_confirm(void)",
+          "localRenames": {
+            "in_Z": "cpu_zero"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances the cutscene auto-advance timer when Z is set or blinks the transceiver prompt cursor sprite while polling for A-button confirmatio",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b81f",
+          "symbol": "mg_b56_transceiver_clear_dialog_row",
+          "signature": "void mg_b56_transceiver_clear_dialog_row(u8 row_step)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues a 24-byte blank row transfer to clear the transceiver dialog window and advances or resets dialog step 0x07E0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b83a",
+          "symbol": "mg_b56_transceiver_fill_vram_tail",
+          "signature": "void mg_b56_transceiver_fill_vram_tail(u8 fill_value)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes VRAM queue length metadata and fills trailing buffer slots 0x0743..0x075A with fill_value before incrementing dialog mode 0x07E0",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b8d0",
+          "symbol": "mg_b56_transceiver_update_freq_hud",
+          "signature": "void mg_b56_transceiver_update_freq_hud(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Converts the active transceiver frequency byte in 0x0046 to two decimal tile digits and queues them into the 0x0740 VRAM buffer.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b8f9",
+          "symbol": "mg_b56_transceiver_init_screen",
+          "signature": "void mg_b56_transceiver_init_screen(void)",
+          "localRenames": {
+            "cStack0000": "saved_acc",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears entity sprites, uploads the 15-row transceiver frame and vertical border columns to PPU nametable memory, re-enables NMI, and plays r",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b95e",
+          "symbol": "mg_b56_transceiver_draw_border_col",
+          "signature": "u8 mg_b56_transceiver_draw_border_col(void)",
+          "localRenames": {
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes 11 vertical border tile bytes (0x9E) directly to PPU_DATA for the transceiver frame and returns 0x9E.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_06.prg/bank06_audio_engine.c",
+      "lineCount": 482,
+      "codeSloc": 331,
+      "symbolCount": 14,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x00008188",
+          "symbol": "mg_b56_elevator_check_room_entry",
+          "signature": "void mg_b56_elevator_check_room_entry(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "in_C": "cpu_carry"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks if the player's horizontal tile matches an elevator shaft in the current room and initializes elevator ride coordinates and mode 8.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00008d34",
+          "symbol": "mg_b56_actor_spawn_alert_icon",
+          "signature": "void mg_b56_actor_spawn_alert_icon(u8 actor_slot)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears HUD refresh and cursor slot, and if actor state 0xC0+actor_slot is unset, plays sound 0x06 and spawns sprite 0xC0 at the actor's coor",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009202",
+          "symbol": "mg_b56_audio_write_pulse_regs",
+          "signature": "void mg_b56_audio_write_pulse_regs(u8 channel_idx,u8 apu_reg_offset)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes volume/duty (or mute 0x30 when paused/flagged) and period low/high registers to an APU Pulse channel.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000920b",
+          "symbol": "mg_b56_audio_write_pulse_active",
+          "signature": "void mg_b56_audio_write_pulse_active(u8 channel_idx,u8 apu_reg_offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Unconditionally writes active channel duty/volume shadow and period low/high registers to the target APU Pulse channel.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000922b",
+          "symbol": "mg_b56_audio_sync_pause_mute",
+          "signature": "void mg_b56_audio_sync_pause_mute(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Synchronizes pause state 0x0025 with shadow 0x00EA, backing up and muting APU channels on pause or restoring channel registers on resume.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000927c",
+          "symbol": "mg_b56_audio_restore_pulse2",
+          "signature": "void mg_b56_audio_restore_pulse2(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Restores APU Pulse 2 sweep (if track 0x81 is active) and hardware registers from channel 1 state when Pulse 2 is active.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009295",
+          "symbol": "mg_b56_audio_backup_pause_state",
+          "signature": "void mg_b56_audio_backup_pause_state(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Snapshots active SFX channel state bytes into 0x03F8-0x03FE and sets pause marker 0x03FF to 0x31.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009322",
+          "symbol": "mg_b56_audio_ramp_dmc_dac",
+          "signature": "void mg_b56_audio_ramp_dmc_dac(void)",
+          "localRenames": {
+            "LAB_931e": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Softly ramps the APU DMC DAC level up or down toward silence in 0x00EB and clears triangle linear control when ramp finishes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000933c",
+          "symbol": "audio_engine_frame_tick",
+          "signature": "void audio_engine_frame_tick(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances audio frame timers/envelopes and updates all 6 APU sound channels.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009382",
+          "symbol": "mg_b56_audio_update_channel",
+          "signature": "void mg_b56_audio_update_channel(u8 channel_idx)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks a single audio channel's attenuation, note duration timer, vibrato, and volume envelope, dispatching sequence parsing when the timer h",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000093ef",
+          "symbol": "mg_b56_audio_step_volume_env",
+          "signature": "void mg_b56_audio_step_volume_env(u8 channel_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances a channel's software volume envelope sequence, handling loop opcodes (0xFE) and end markers (0xFF), and writes the attenuated APU v",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000940d",
+          "symbol": "mg_b56_audio_apply_attenuation",
+          "signature": "void mg_b56_audio_apply_attenuation(u8 volume,u8 channel_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Stores volume in 0x03E6, subtracts global attenuation 0x03C2 when fade is active (clamping at 0), and writes the result to APU control.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009449",
+          "symbol": "mg_b56_audio_check_note_release",
+          "signature": "void mg_b56_audio_check_note_release(u8 channel_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets release/slur bits 0x06 in channel flags 0x03AA when the remaining note timer falls below the gate threshold in 0x03B6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009484",
+          "symbol": "mg_b56_audio_step_vibrato",
+          "signature": "void mg_b56_audio_step_vibrato(u8 channel_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Applies 4-phase triangle-wave software vibrato modulation to Pulse 2 period low using parameters in 0x00F0 and 0x03A6-0x03A9.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_06.prg/bank06_audio_sequencer.c",
+      "lineCount": 720,
+      "codeSloc": 516,
+      "symbolCount": 19,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x000094ea",
+          "symbol": "mg_b56_audio_dispatch_seq_mode",
+          "signature": "void mg_b56_audio_dispatch_seq_mode(u8 channel_flags)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Shifts channel_flags bit 0 into carry to branch between SFX sequence parsing (0x9536) and BGM sequence parsing (0x94ED).",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000094ed",
+          "symbol": "mg_b56_audio_parse_seq_event",
+          "signature": "void mg_b56_audio_parse_seq_event(u8 channel_idx, u8 seq_offset)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Parses BGM and SFX sequence command opcodes, tempo/duty/sweep updates, and note events for the active audio channel.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000095e4",
+          "symbol": "mg_b56_audio_play_bgm_note",
+          "signature": "void mg_b56_audio_play_bgm_note(u8 channel_idx,u8 seq_offset)",
+          "localRenames": {
+            "cVar2": "signed_step",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decodes a BGM note pitch from the frequency table with octave shifting and detune, updates APU period/envelope registers, and advances the c",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000969a",
+          "symbol": "mg_b56_audio_advance_seq_ptr",
+          "signature": "void mg_b56_audio_advance_seq_ptr(u8 channel_idx,u8 byte_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances the 16-bit sequence pointer in 0x00D9 by byte_offset + 1 and stores it back into channel pointer tables 0x0398/0x039E.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000096e4",
+          "symbol": "mg_b56_audio_exec_control_opcode",
+          "signature": "void mg_b56_audio_exec_control_opcode(u8 opcode_low, u8 channel_idx, u8 seq_offset)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Executes sequence flow-control opcodes including loop-count repeats (0xFE), pattern subroutine calls/returns, and channel stop handlers.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000097dc",
+          "symbol": "mg_b56_audio_setup_note_timing",
+          "signature": "void mg_b56_audio_setup_note_timing(u8 channel_idx,u8 seq_offset)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes note duration from base tempo and sequence nibble, handles Noise channel percussion/DMC triggers, and computes gate duration for pi",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000985b",
+          "symbol": "mg_b56_audio_trigger_sfx_slot1",
+          "signature": "void mg_b56_audio_trigger_sfx_slot1(void)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Triggers sound/noise effect ID 1 via 0x99BB.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009860",
+          "symbol": "mg_b56_audio_trigger_sfx_slot2",
+          "signature": "void mg_b56_audio_trigger_sfx_slot2(void)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Triggers sound/noise effect ID 2 via 0x99BB.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009866",
+          "symbol": "mg_b56_audio_calc_gate_duration",
+          "signature": "u8 mg_b56_audio_calc_gate_duration(u8 gate_nibble,u8 channel_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Multiplies the channel's note duration 0x0380 by the lower nibble of gate_nibble and divides by 16 to compute the note gate cutoff.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009891",
+          "symbol": "mg_b56_audio_load_seq_ptr",
+          "signature": "void mg_b56_audio_load_seq_ptr(u8 channel_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Loads the 16-bit sequence pointer for channel_idx from 0x0398/0x039E into zero-page 0x00D9.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000989e",
+          "symbol": "mg_b56_audio_read_branch_ptr",
+          "signature": "void mg_b56_audio_read_branch_ptr(u8 channel_idx,u8 seq_offset)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Reads a 16-bit jump target from the active sequence stream at seq_offset + 1 and stores it in 0x0398/0x039E.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000098ab",
+          "symbol": "mg_b56_audio_check_sfx_override",
+          "signature": "u8 mg_b56_audio_check_sfx_override(u8 reg_value,u8 channel_idx)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Preserves reg_value while checking whether an active SFX channel overrides BGM Pulse 1/2 (setting carry if muted) and restores APU register ",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000098d8",
+          "symbol": "mg_b56_audio_reset_apu_channels",
+          "signature": "u8 mg_b56_audio_reset_apu_channels(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Toggles triangle channel off and back on via APU_STATUS and zeroes APU_TRI_LINEAR, returning 0x0F.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000993b",
+          "symbol": "mg_b56_audio_apu_write_delay",
+          "signature": "void mg_b56_audio_apu_write_delay(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Executes a 10-NOP timing delay subroutine between consecutive APU hardware register writes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009946",
+          "symbol": "mg_b56_audio_write_apu_ctrl",
+          "signature": "void mg_b56_audio_write_apu_ctrl(u8 ctrl_value,u8 apu_reg_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_C": "cpu_carry"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "ORs ctrl_value with the channel duty mask and writes it to the APU control register if not overridden by an active SFX channel.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009956",
+          "symbol": "mg_b56_audio_silence_all_channels",
+          "signature": "void mg_b56_audio_silence_all_channels(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears all 6 channel track IDs, global attenuation, and pause state, resets APU channels, and silences Pulse 1/2 and Noise with sweeps disab",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000099a8",
+          "symbol": "audio_trigger_sound_or_bgm",
+          "signature": "u8 audio_trigger_sound_or_bgm(u8 sound_id,u8 channel_flags)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "uVar3": "slot_byte",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "LAB_9a15": "step_a",
+            "LAB_9a7c": "step_b"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Triggers a BGM track or sound effect by ID, handles silence/fade commands, and initializes channel sequence state.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000099bb",
+          "symbol": "mg_b56_audio_init_track_channels",
+          "signature": "u8 mg_b56_audio_init_track_channels(u8 sound_id,u8 passthrough_y)",
+          "localRenames": {
+            "bStack0000": "saved_acc",
+            "uVar3": "slot_byte",
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "LAB_9a15": "step_a",
+            "LAB_9a7c": "step_b"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Enables global audio fade on 0x85 or initializes each channel descriptor from the sound table for sound_id subject to SFX priority.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00009a96",
+          "symbol": "mg_b56_audio_trigger_dmc_sample",
+          "signature": "u8 mg_b56_audio_trigger_dmc_sample(u8 sample_id,u8 saved_y)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Configures APU DMC control, address, and length registers from table 0xFC80 for sample_id and restarts the DMC channel.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    }
+  ]
+}

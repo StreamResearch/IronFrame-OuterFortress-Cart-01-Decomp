@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "gameId": "ironframe-outerfortress-cart-01",
-  "updatedAtUtc": "2026-11-20T08:39:46.042Z",
+  "updatedAtUtc": "2026-11-22T10:27:05Z",
   "localRenames": {
     "BYTE_ARRAY_8000_6486_": "lbl_demo_input_loop"
   },
@@ -145,6 +145,20 @@
       "cType": "uint8_t[256]",
       "addressHex": "0xb622",
       "programScope": "BANK_01.prg"
+    },
+    {
+      "rawSymbol": "_g_actor_soa_ram",
+      "mappedName": "g_actor_soa_ram",
+      "cType": "uint8_t[128]",
+      "addressHex": "0x0300",
+      "programScope": "resident"
+    },
+    {
+      "rawSymbol": "_g_apu_mmio_regs",
+      "mappedName": "g_apu_mmio_regs",
+      "cType": "uint8_t[24]",
+      "addressHex": "0x4000",
+      "programScope": "resident"
     }
   ],
   "functionCallOverrides": {
@@ -328,7 +342,7 @@
       "returnType": "void",
       "params": [
         {
-          "name": "arg0",
+          "name": "factor",
           "type": "byte"
         }
       ]
@@ -351,7 +365,7 @@
       "returnType": "void",
       "params": [
         {
-          "name": "arg0",
+          "name": "table_index",
           "type": "byte"
         }
       ]

@@ -1,12 +1,13 @@
 # @module: IronFrame.Dev.scripts.materialize_decomp_tiers
-# @purpose: Materialize Corpus/tiers/{D1_Raw,D2_Structured,D3_Mapped} and sync cohesive Corpus/readable/
-# @depends-on: argparse, importlib, json, os, re, shutil, stat, sys, tempfile, time, pathlib, typing, nes_cli_common, coalesce_d4_modules
+# @purpose: Materialize Corpus/tiers/{D1_Raw,D2_Structured,D3_Mapped,D4_CleanSource} and sync cohesive Corpus/readable/
+# @depends-on: argparse, importlib, json, os, re, shutil, stat, sys, tempfile, time, pathlib, typing, nes_cli_common, coalesce_d4_modules, craftsmanship_d4_helpers, craftsmanship_d4_normalizer
 # @exports: TIER_NAMES, materialize_tiers, main
 
 from __future__ import annotations
 
 import argparse
 import importlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -23,9 +24,11 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 import coalesce_d4_modules as coal  # noqa: E402
+import craftsmanship_d4_helpers as cd4h  # noqa: E402
+import craftsmanship_d4_normalizer as cdn  # noqa: E402
 import nes_cli_common as ncc  # noqa: E402
 
-TIER_NAMES = ("D1_Raw", "D2_Structured", "D3_Mapped")
+TIER_NAMES = ("D1_Raw", "D2_Structured", "D3_Mapped", "D4_CleanSource")
 _EXPECTED_BANKS = ("BANK_00.prg", "BANK_01.prg", "BANK_02.prg", "BANK_03.prg", "BANK_04.prg", "BANK_05.prg", "BANK_06.prg", "PRG_FIXED_07.prg")
 _FRAGMENT_RE = re.compile(r"_\d{2}\.c$")
 
@@ -55,10 +58,14 @@ def _clear_readonly_tree(root: Path) -> int:
 
 def _rewrite_tree_paths(tree_dir: Path) -> None:
     inc, compat = (tree_dir / "include").as_posix(), (tree_dir / "include" / "ghidra_compat.h").as_posix()
-    if (cl_p := tree_dir / ".clangd").is_file():
-        txt = re.sub(r"(?m)^(\s*- -I).*$", rf"\1{inc}", cl_p.read_text(encoding="utf-8", errors="replace"))
+    cl_p = tree_dir / ".clangd"
+    cl_txt = cl_p.read_text(encoding="utf-8", errors="replace") if cl_p.is_file() else ""
+    if cl_p.is_file():
+        txt = re.sub(r"(?m)^(\s*- -I).*$", rf"\1{inc}", cl_txt)
         cl_p.write_text(re.sub(r"(?m)^(\s*- ).*/include/ghidra_compat\.h$", rf"\1{compat}", txt), encoding="utf-8", newline="\n")
-    args = ["clang", "-target", "msp430-unknown-none-elf", "-ffreestanding", "-std=gnu11", f"-I{inc}", "-include", compat, "-c"]
+    strict = "Suppress:" not in cl_txt and "-Wall" in cl_txt and "-include" not in cl_txt
+    flags = [*cd4h.STRICT_D4_FLAGS, f"-I{inc}", "-c"] if strict else ["-ffreestanding", "-std=gnu11", f"-I{inc}", "-include", compat, "-c"]
+    args = ["clang", "-target", "msp430-unknown-none-elf", *flags]
     cdb = [{"directory": tree_dir.as_posix(), "file": p.as_posix(), "arguments": [*args, p.as_posix()]} for p in sorted(tree_dir.rglob("*.c"))]
     (tree_dir / "compile_commands.json").write_text(json.dumps(cdb, indent=2) + "\n", encoding="utf-8", newline="\n")
 
@@ -110,7 +117,7 @@ def _materialize_d2_structured(paths: ncc.TrackPaths, dst: Path, tools_dir: Path
     return {"path": str(dst), "cFileCount": c_cnt}
 
 
-def _materialize_d3_mapped(paths: ncc.TrackPaths, d2_dir: Path, d3_dir: Path) -> dict[str, Any]:
+def _materialize_d3_mapped(paths: ncc.TrackPaths, d2_dir: Path, d3_dir: Path, sync_readable: bool = True) -> dict[str, Any]:
     if not d2_dir.is_dir() or not any(d2_dir.rglob("*.c")):
         raise FileNotFoundError(str(d2_dir))
     ts = _heartbeat(0.0, "Coalescing D2_Structured -> D3_Mapped (26 cohesive modules)...", force=True)
@@ -119,49 +126,88 @@ def _materialize_d3_mapped(paths: ncc.TrackPaths, d2_dir: Path, d3_dir: Path) ->
     frags = [p.name for p in c_files if _FRAGMENT_RE.search(p.name)]
     if len(c_files) != 26 or frags or coal.scan_raw_symbols(d3_dir):
         raise ValueError(f"D3 validation failed: c={len(c_files)}, frags={frags}")
-    _rmtree_force(paths.readable_dir)
-    shutil.copytree(d3_dir, paths.readable_dir, ignore=shutil.ignore_patterns(".cache", "__pycache__"))
-    _rewrite_tree_paths(paths.readable_dir)
+    if sync_readable:
+        _rmtree_force(paths.readable_dir)
+        shutil.copytree(d3_dir, paths.readable_dir, ignore=shutil.ignore_patterns(".cache", "__pycache__"))
+        _rewrite_tree_paths(paths.readable_dir)
     _heartbeat(ts, f"D3_Mapped complete ({len(c_files)} cohesive modules, 0 raw tokens)\n", force=True)
-    return {"path": str(d3_dir), "cFileCount": len(c_files), "functionCount": res["functionCount"], "readableSynced": True}
+    return {"path": str(d3_dir), "cFileCount": len(c_files), "functionCount": res["functionCount"], "readableSynced": sync_readable}
+
+
+def _materialize_d4_clean(paths: ncc.TrackPaths, d3_dir: Path, d4_dir: Path, write_shards: bool = True) -> dict[str, Any]:
+    if not (d3_dir / "src" / "core").is_dir():
+        raise FileNotFoundError(str(d3_dir))
+    ts = _heartbeat(0.0, "Normalizing D3_Mapped -> D4_CleanSource (zero decompiler tells)...", force=True)
+    _rmtree_force(d4_dir)
+    res = cdn.normalize_d3_to_d4(d3_dir, d4_dir, paths.schemas_dir, heartbeat=False)
+    shards = cdn.write_d4_rewrites(paths.schemas_dir / "d4_rewrites", res["fileRecords"]) if write_shards else {}
+    tells, detail = cd4h.count_d4_craftsmanship_tells(d4_dir)
+    if tells != 0:
+        raise ValueError(f"D4 validation failed: tells={tells} detail={detail}")
+    _rmtree_force(paths.readable_dir)
+    shutil.copytree(d4_dir, paths.readable_dir, ignore=shutil.ignore_patterns(".cache", "__pycache__"))
+    _rewrite_tree_paths(paths.readable_dir)
+    _heartbeat(ts, f"D4_CleanSource complete ({res['cFiles']} modules, {res['symbolCount']} symbols, 0 tells)\n", force=True)
+    return {"path": str(d4_dir), "cFileCount": res["cFiles"], "symbolCount": res["symbolCount"], "tellCount": tells, "shards": shards, "readableSynced": True}
+
+
+def _load_syn_fixtures(scripts_dir: Path) -> Any | None:
+    fix_path = scripts_dir / "tests" / "synthetic_d4_fixtures.py"
+    if not fix_path.is_file():
+        return None
+    spec = importlib.util.spec_from_file_location("_syn_d4_fix", fix_path)
+    if spec is None or spec.loader is None:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
 
 def _materialize_synthetic(paths: ncc.TrackPaths, selected: list[str]) -> dict[str, Any]:
-    tiers_root, out = paths.corpus_root / "tiers", {}
-    if "D1_Raw" in selected:
-        d1 = tiers_root / "D1_Raw"
+    tiers_root, out, fix_mod = paths.corpus_root / "tiers", {}, _load_syn_fixtures(paths.scripts_dir)
+    d1 = (tiers_root / "D1_Raw") if "D1_Raw" in selected else None
+    d2 = (tiers_root / "D2_Structured") if any(t in selected for t in ("D2_Structured", "D3_Mapped", "D4_CleanSource")) else None
+    if d1 is not None:
         _rmtree_force(d1)
-        for b in _EXPECTED_BANKS:
-            (d1 / b / "funcs").mkdir(parents=True, exist_ok=True)
-            (d1 / b / "functions.json").write_text("[]\n", encoding="utf-8")
-            (d1 / b / "funcs" / "syn.c").write_text("void syn_fn(void) {}\n", encoding="utf-8")
-        out["D1_Raw"] = {"path": str(d1), "binaryCount": 8, "synthetic": True}
-    d2 = tiers_root / "D2_Structured"
-    if any(t in selected for t in ("D2_Structured", "D3_Mapped")):
+    if d2 is not None:
         _rmtree_force(d2)
-        (d2 / "include").mkdir(parents=True)
-        (d2 / "src" / "core").mkdir(parents=True)
-        (d2 / "overlays" / "BANK_03.prg").mkdir(parents=True)
-        (d2 / "include" / "ghidra_compat.h").write_text("#pragma once\n#include <stdint.h>\ntypedef uint8_t byte;\n", encoding="utf-8")
-        (d2 / "include" / "metalgear_types.h").write_text('#pragma once\n#include "ghidra_compat.h"\n', encoding="utf-8")
-        (d2 / "include" / "metalgear_functions.h").write_text('#pragma once\n#include "metalgear_types.h"\nvoid unrom_select_bank_0(void);\nvoid FUN_99a8(byte sound_id);\n', encoding="utf-8")
-        (d2 / "include" / "metalgear_globals.h").write_text('#pragma once\n#include "metalgear_types.h"\n', encoding="utf-8")
-        (d2 / "src" / "core" / "core_01.c").write_text(
-            '/** @address 0x0000c932 */\n// Function: unrom_select_bank_0 @ 0x0000c932\nvoid unrom_select_bank_0(void) {\n'
-            '  BYTE_ARRAY_ff99[0x37] = 0; DAT_0740 = 1; (&DAT_0740)[1] = DAT_0741; FUN_99a8(1); func_0x8120();\n}\n'
-            '/** @address 0x0000d647 */\n// Function: mg_fxb_tick_demo_mode_state @ 0x0000d647\nvoid mg_fxb_tick_demo_mode_state(void) {\n'
-            'BYTE_ARRAY_8000_6486_: _DAT_00db = 1; bRAM07e1 = uRAM00b9; _g_oam_cycle_flag = 0; register0x22 = 0;\n'
-            '  if (FUN_b622[0]) goto BYTE_ARRAY_8000_6486_; FUN_f5ac(1); func_0xc68b(0);\n}\n', encoding="utf-8",
-        )
-        (d2 / "overlays" / "BANK_03.prg" / "bank_03_01.c").write_text(
-            '/** @address 0x0000be73 */\n// Function: mg_b034_bank03_check_room_radio_triggers @ 0x0000be73\n'
-            'void mg_b034_bank03_check_room_radio_triggers(void) { g_ppu_ctrl = BYTE_ARRAY_bf00[0]; }\n', encoding="utf-8",
-        )
-        out["D2_Structured"] = {"path": str(d2), "cFileCount": 2, "synthetic": True}
-    if "D3_Mapped" in selected:
+    if fix_mod is not None:
+        fix_mod.write_synthetic_d1_d2(d1, d2, _EXPECTED_BANKS)
+    else:
+        for b in (_EXPECTED_BANKS if d1 is not None else ()):
+            (d1 / b).mkdir(parents=True, exist_ok=True)
+            (d1 / b / "functions.json").write_text("[]\n", encoding="utf-8")
+        if d2 is not None:
+            (d2 / "include").mkdir(parents=True, exist_ok=True)
+            (d2 / "include" / "ghidra_compat.h").write_text("/* @module: IronFrame.NES.Types */\n#pragma once\n#include <stdint.h>\ntypedef uint8_t u8;\n", encoding="utf-8")
+    if d1 is not None:
+        out["D1_Raw"] = {"path": str(d1), "binaryCount": len(_EXPECTED_BANKS), "synthetic": True}
+    if d2 is not None:
+        out["D2_Structured"] = {"path": str(d2), "cFileCount": len(list(d2.rglob("*.c"))), "synthetic": True}
+    if "D3_Mapped" in selected or "D4_CleanSource" in selected:
         d3 = tiers_root / "D3_Mapped"
-        res = coal.coalesce_tier_dir(d2, d3, paths.schemas_dir)
-        out["D3_Mapped"] = {"path": str(d3), "cFileCount": res["moduleCount"], "functionCount": res["functionCount"], "synthetic": True}
+        if fix_mod is not None:
+            res = coal.coalesce_tier_dir(d2, d3, paths.schemas_dir)
+            out["D3_Mapped"] = {"path": str(d3), "cFileCount": res["moduleCount"], "functionCount": res["functionCount"], "synthetic": True}
+        else:
+            _rmtree_force(d3)
+            shutil.copytree(d2 / "include", d3 / "include")
+            out["D3_Mapped"] = {"path": str(d3), "cFileCount": 0, "functionCount": 0, "synthetic": True}
+    if "D4_CleanSource" in selected:
+        d4 = tiers_root / "D4_CleanSource"
+        if fix_mod is not None:
+            res4 = cdn.normalize_d3_to_d4(tiers_root / "D3_Mapped", d4, paths.schemas_dir, heartbeat=False)
+            c_cnt, s_cnt = res4["cFiles"], res4["symbolCount"]
+        else:
+            _rmtree_force(d4)
+            shutil.copytree(tiers_root / "D3_Mapped" / "include", d4 / "include")
+            d4_posix = d4.resolve().as_posix()
+            flags_yaml = "\n".join(f"    - {f}" for f in ("-target", "msp430-unknown-none-elf", *cd4h.STRICT_D4_FLAGS, f"-I{d4_posix}/include"))
+            (d4 / ".clangd").write_text(f"CompileFlags:\n  Add:\n{flags_yaml}\n", encoding="utf-8")
+            (d4 / "compile_commands.json").write_text(json.dumps([{"directory": d4_posix, "file": f"{d4_posix}/include/ghidra_compat.h", "arguments": ["clang", *cd4h.STRICT_D4_FLAGS, "-c", f"{d4_posix}/include/ghidra_compat.h"]}], indent=2), encoding="utf-8")
+            c_cnt, s_cnt = 0, 0
+        tells, _ = cd4h.count_d4_craftsmanship_tells(d4)
+        out["D4_CleanSource"] = {"path": str(d4), "cFileCount": c_cnt, "symbolCount": s_cnt, "tellCount": tells, "synthetic": True}
     return out
 
 
@@ -169,7 +215,7 @@ def materialize_tiers(
     data_dir: Path | None = None, tools_dir: Path | None = None, tier: str = "all",
     offline_synthetic: bool = False, log_dir: Path | None = None,
 ) -> dict[str, Any]:
-    """Populate Corpus/tiers/{D1_Raw,D2_Structured,D3_Mapped} and sync cohesive Corpus/readable/."""
+    """Populate Corpus/tiers/{D1_Raw,D2_Structured,D3_Mapped,D4_CleanSource} and sync cohesive Corpus/readable/."""
     base_data = data_dir.resolve() if data_dir is not None else (Path(tempfile.mkdtemp(prefix="mgnes_tiers_syn_")) if offline_synthetic else None)
     paths = ncc.resolve_paths(data_dir=base_data)
     selected = list(TIER_NAMES) if tier == "all" else [tier]
@@ -182,10 +228,12 @@ def materialize_tiers(
     out: dict[str, Any] = {}
     if "D1_Raw" in selected:
         out["D1_Raw"] = _materialize_d1_raw(paths, tiers_root / "D1_Raw")
-    if "D2_Structured" in selected or "D3_Mapped" in selected:
+    if "D2_Structured" in selected or "D3_Mapped" in selected or "D4_CleanSource" in selected:
         out["D2_Structured"] = _materialize_d2_structured(paths, tiers_root / "D2_Structured", tools_dir)
-    if "D3_Mapped" in selected:
-        out["D3_Mapped"] = _materialize_d3_mapped(paths, tiers_root / "D2_Structured", tiers_root / "D3_Mapped")
+    if "D3_Mapped" in selected or "D4_CleanSource" in selected:
+        out["D3_Mapped"] = _materialize_d3_mapped(paths, tiers_root / "D2_Structured", tiers_root / "D3_Mapped", sync_readable=("D4_CleanSource" not in selected))
+    if "D4_CleanSource" in selected:
+        out["D4_CleanSource"] = _materialize_d4_clean(paths, tiers_root / "D3_Mapped", tiers_root / "D4_CleanSource", write_shards=(data_dir is None))
     rep = {"schemaVersion": 2, "gameId": ncc.GAME_ID, "isPassed": True, "mode": "live", "dataDir": str(paths.corpus_root), "tiers": out, "generatedAtUtc": ncc.utc_now_iso()}
     ncc.write_json_log(log_dir, "materialize_decomp_tiers", rep)
     return rep

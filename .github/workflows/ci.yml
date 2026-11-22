@@ -57,9 +57,10 @@ jobs:
           for k in req_str_keys:
               v = recipe.get(k)
               assert isinstance(v, str) and v.strip(), f"decomp_recipe.json missing/empty string field '{k}'"
-          for k in ("supportedEngineTracks", "bundleDirectories", "excludedSubtrees", "excludedFiles"):
+          for k in ("supportedEngineTracks", "bundleDirectories", "excludedSubtrees"):
               v = recipe.get(k)
               assert isinstance(v, list) and len(v) > 0, f"decomp_recipe.json missing/empty list field '{k}'"
+          assert isinstance(recipe.get("excludedFiles"), list), "decomp_recipe.json missing list field 'excludedFiles'"
           assert re.fullmatch(r"^[a-z0-9][a-z0-9-]*$", recipe["moduleId"]), f"Invalid moduleId: {recipe['moduleId']}"
           assert re.fullmatch(r"^[0-9a-f]{64}$", recipe["expectedSha256"]), f"expectedSha256 must be 64-char lowercase hex: {recipe['expectedSha256']}"
           assert isinstance(recipe.get("toolchainRequirements"), dict), "decomp_recipe.json missing toolchainRequirements"

@@ -1,0 +1,1260 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "shardId": "overlays_b03_b04",
+  "rewriteTier": "D4_CleanSource",
+  "compilerFlags": [
+    "-std=gnu11",
+    "-fsigned-char",
+    "-O1",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-Wall",
+    "-Wextra",
+    "-Wno-unused-parameter"
+  ],
+  "isZeroDecompilerTellsVerified": true,
+  "isZeroWarningsVerified": true,
+  "generatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "updatedAtUtc": "2026-11-22T11:08:34.411Z",
+  "fileCount": 6,
+  "symbolCount": 73,
+  "files": [
+    {
+      "relativePath": "overlays/BANK_03.prg/bank03_actors_and_fade.c",
+      "lineCount": 172,
+      "codeSloc": 111,
+      "symbolCount": 6,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x00008007",
+          "symbol": "mg_b034_bank03_fade_palette_to_room_a5",
+          "signature": "void mg_b034_bank03_fade_palette_to_room_a5(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Steps through 4 palette fade frames via 0x0740 every 16 frames, transitions into room 0xA5 in mode 8, and restores bank 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b83a",
+          "symbol": "mg_b034_bank03_dispatch_actor_state",
+          "signature": "void mg_b034_bank03_dispatch_actor_state(s8 slot_idx)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches a bank-3 actor slot via inline_jump_table_dispatch using its state byte at zero-page 0xA8+slot_idx.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b847",
+          "symbol": "mg_b034_bank03_advance_actor_sprite_state",
+          "signature": "void mg_b034_bank03_advance_actor_sprite_state(u8 slot_idx)",
+          "localRenames": {
+            "uVar1": "byte_val",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments the actor substate at zero-page 0xA8+slot and assigns sprite ID 0x31 for player action 0x11 or 0xCD otherwise.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b857",
+          "symbol": "mg_b034_bank03_check_actor_player_hit",
+          "signature": "void mg_b034_bank03_check_actor_player_hit(u8 slot_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "uVar2": "next_byte",
+            "bVar4": "idx_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks 8-pixel proximity between Snake and actor slot_idx, decrementing health with SFX 0x2A on hit and updating actor state and sprite.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b899",
+          "symbol": "mg_b034_bank03_tick_actor_anim_frames",
+          "signature": "void mg_b034_bank03_tick_actor_anim_frames(u8 slot_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements the actor animation timer in 0xB0+slot, updates sprite IDs at keyframe thresholds in 0xB8BD, and clears the sprite at 0xB0.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b8bc",
+          "symbol": "mg_b034_bank03_noop_stub",
+          "signature": "void mg_b034_bank03_noop_stub(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Empty bank-3 subroutine stub that returns immediately.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_03.prg/bank03_password_system.c",
+      "lineCount": 606,
+      "codeSloc": 352,
+      "symbolCount": 25,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000b8c3",
+          "symbol": "mg_b034_pw_unpack_to_game_state",
+          "signature": "void mg_b034_pw_unpack_to_game_state(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decodes the 24 password characters in 0xA8-0xBF into player rank, keycards, equipment, and progression flags in 0x6E-0x7F.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b966",
+          "symbol": "mg_b034_pw_decode_byte_with_key",
+          "signature": "u8 mg_b034_pw_decode_byte_with_key(u8 low_char,s8 key_char)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decodes an 8-bit password field by combining the low 5 bits of low_char with the shifted low 3 bits of key_char via XOR.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b973",
+          "symbol": "mg_b034_pw_decode_byte_bit4",
+          "signature": "u8 mg_b034_pw_decode_byte_bit4(u8 low_char,u8 mid_char,u8 high_char)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decodes an 8-bit password field from bits 4..0 of low_char, bits 4..3 of mid_char, and bit 4 of high_char.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b986",
+          "symbol": "mg_b034_pw_decode_byte_bit3",
+          "signature": "u8 mg_b034_pw_decode_byte_bit3(u8 low_char,u8 mid_char,u8 high_char)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decodes an 8-bit password field from bits 4..0 of low_char, bits 4..3 of mid_char, and bit 3 of high_char.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b999",
+          "symbol": "mg_b034_pw_dispatch_submode",
+          "signature": "void mg_b034_pw_dispatch_submode(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches the password entry screen phase via inline_jump_table_dispatch using g_game_submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b9aa",
+          "symbol": "mg_b034_pw_play_enter_sfx_and_clear",
+          "signature": "void mg_b034_pw_play_enter_sfx_and_clear(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Plays password screen entry SFX 0x6D, resets the screen via 0xD3CF, and advances g_game_submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b9af",
+          "symbol": "mg_b034_pw_clear_screen_next_submode",
+          "signature": "void mg_b034_pw_clear_screen_next_submode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Calls the fixed-bank screen reset routine at 0xD3CF and increments g_game_submode.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b9b5",
+          "symbol": "mg_b034_pw_init_entry_screen",
+          "signature": "void mg_b034_pw_init_entry_screen(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_A": "cpu_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Blanks rendering, draws password UI boxes, header prompt, and character selection grid, re-enables NMI, and resets entry cursors.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000b9f7",
+          "symbol": "mg_b034_pw_tick_entry_loop",
+          "signature": "void mg_b034_pw_tick_entry_loop(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Runs one password input frame by polling grid input, blinking the cursor, and advancing g_game_submode when 25 characters are entered.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ba0a",
+          "symbol": "mg_b034_pw_validate_input",
+          "signature": "void mg_b034_pw_validate_input(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Unpacks the entered password, verifies its 5-bit checksum and field bounds, and triggers acceptance SFX 0x3A or error message with SFX 0x3B.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ba50",
+          "symbol": "mg_b034_pw_wait_invalid_timer",
+          "signature": "void mg_b034_pw_wait_invalid_timer(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Counts down delay timer 0xA5 after an invalid password and returns to submode 0 via screen reset when it expires.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ba5b",
+          "symbol": "mg_b034_pw_wait_accept_and_start",
+          "signature": "void mg_b034_pw_wait_accept_and_start(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Counts down delay timer 0xA5 after an accepted password, plays SFX 0x85, clears the screen, and transitions to game mode 4.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000ba74",
+          "symbol": "mg_b034_pw_queue_invalid_message",
+          "signature": "void mg_b034_pw_queue_invalid_message(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resets the VRAM write cursor and queues the invalid-password message from 0xBAAD into the 0x0740 buffer for PPU 0x216C.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bab8",
+          "symbol": "mg_b034_pw_compute_checksum",
+          "signature": "u8 mg_b034_pw_compute_checksum(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sums the 24 password characters in zero-page 0xA8-0xBF with carry starting from seed 7 and returns the 5-bit checksum.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bac5",
+          "symbol": "mg_b034_pw_handle_grid_input",
+          "signature": "u8 mg_b034_pw_handle_grid_input(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Handles joypad-1 D-pad cursor movement across the 8x4 password grid and A-button character selection with sound effects.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bb45",
+          "symbol": "mg_b034_pw_commit_selected_char",
+          "signature": "void mg_b034_pw_commit_selected_char(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Saves the selected character index from 0xA7 into the current password slot at 0xA8+0xA6 and queues its tile at PPU address from 0xBBB3.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bb66",
+          "symbol": "mg_b034_pw_clear_grid_cursor",
+          "signature": "void mg_b034_pw_clear_grid_cursor(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues a blank tile (0x00) at the current password grid cursor PPU address before moving the cursor.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bb6a",
+          "symbol": "mg_b034_pw_blink_grid_cursor",
+          "signature": "void mg_b034_pw_blink_grid_cursor(void)",
+          "localRenames": {
+            "uVar1": "byte_val"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues a blinking cursor tile (0x7C or 0x00 based on frame counter bits) at the password grid position indexed by 0xA7.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc25",
+          "symbol": "mg_b034_pw_draw_char_grid",
+          "signature": "void mg_b034_pw_draw_char_grid(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Draws the 32-character password input grid directly to PPU nametable address 0x21E8.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc7f",
+          "symbol": "mg_b034_pw_display_generated_password",
+          "signature": "void mg_b034_pw_display_generated_password(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Encodes the active game state, computes its checksum into 0xC0, draws all 5 password groups, and enables NMI.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bca7",
+          "symbol": "mg_b034_pw_encode_from_game_state",
+          "signature": "void mg_b034_pw_encode_from_game_state(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Encodes player rank, keycards, equipment, and progression flags in 0x6E-0x7F into 24 5-bit password slots at 0xA8-0xBF.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bd4d",
+          "symbol": "mg_b034_pw_pack_hi_bits_4_3",
+          "signature": "void mg_b034_pw_pack_hi_bits_4_3(u8 src_a,u8 src_b,u8 pw_slot)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Packs bit 7 of src_a and bit 7 of src_b into bits 4 and 3 of password buffer slot 0xA8+pw_slot.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bd5f",
+          "symbol": "mg_b034_pw_pack_upper_bits",
+          "signature": "void mg_b034_pw_pack_upper_bits(u8 src_a,u8 src_b,u8 pw_slot)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Packs bits 6..5 of src_a and bits 7..5 of src_b into password buffer slot 0xA8+pw_slot.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bd77",
+          "symbol": "mg_b034_pw_pack_low5_bits",
+          "signature": "void mg_b034_pw_pack_low5_bits(u8 value,u8 pw_slot)",
+          "localRenames": {
+            "in_Y": "cpu_y"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Stores the lower 5 bits of value into password buffer slot 0xA8+pw_slot.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bd7e",
+          "symbol": "mg_b034_pw_draw_encoded_group",
+          "signature": "void mg_b034_pw_draw_encoded_group(s8 group_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Renders one 5-character encoded password group directly to PPU_DATA using character mapping table 0xBDC0.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_03.prg/bank03_ppu_boxes_and_vram.c",
+      "lineCount": 334,
+      "codeSloc": 231,
+      "symbolCount": 10,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000bdf6",
+          "symbol": "mg_b034_ppu_draw_bordered_box",
+          "signature": "void mg_b034_ppu_draw_bordered_box(u8 box_table_offset)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Draws a framed rectangular UI box directly to PPU_DATA using dimensions and coordinates from table 0xBE6B.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be35",
+          "symbol": "mg_b034_ppu_set_addr_zp90",
+          "signature": "u8 mg_b034_ppu_set_addr_zp90(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes the 16-bit PPU nametable address stored in zero-page 0x91 (high) and 0x90 (low) to PPU_ADDR.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be40",
+          "symbol": "mg_b034_ppu_draw_border_horiz",
+          "signature": "u8 mg_b034_ppu_draw_border_horiz(u8 corner_tile)",
+          "localRenames": {
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes a corner tile followed by zero-page 0x92 horizontal border tiles (0x7B) to PPU_DATA.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be49",
+          "symbol": "mg_b034_ppu_draw_border_vert",
+          "signature": "u8 mg_b034_ppu_draw_border_vert(u8 corner_tile)",
+          "localRenames": {
+            "cVar1": "signed_val"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Writes a corner tile followed by zero-page 0x93 vertical border tiles (0x9E) to PPU_DATA.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be57",
+          "symbol": "mg_b034_ppu_set_vram_inc_32",
+          "signature": "void mg_b034_ppu_set_vram_inc_32(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets the VRAM address increment-by-32 bit in g_ppu_ctrl_shadow and writes it to PPU_CTRL.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be60",
+          "symbol": "mg_b034_ppu_set_vram_inc_1",
+          "signature": "void mg_b034_ppu_set_vram_inc_1(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Clears the VRAM address increment-by-32 bit in g_ppu_ctrl_shadow to select +1 mode and writes PPU_CTRL.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be6a",
+          "symbol": "mg_b034_ppu_box_noop_stub",
+          "signature": "void mg_b034_ppu_box_noop_stub(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Empty PPU box-drawing helper stub that returns immediately.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be73",
+          "symbol": "mg_b034_bank03_check_room_radio_triggers",
+          "signature": "void mg_b034_bank03_check_room_radio_triggers(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "LAB_be89": "step_a",
+            "LAB_bef4": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks g_room_id against event tables in 0xBF00 to initiate codec calls or blink transceiver alert bars in the VRAM queue.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf44",
+          "symbol": "mg_b034_ppu_flush_vram_queue_from",
+          "signature": "u8 mg_b034_ppu_flush_vram_queue_from(u8 queue_offset)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte",
+            "in_Y": "cpu_y",
+            "LAB_bfb5": "step_a",
+            "LAB_bf6b": "step_b"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Processes queued VRAM transfer packets starting at queue_offset into PPU_ADDR and PPU_DATA until a zero terminator.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf67",
+          "symbol": "mg_b034_ppu_flush_vram_queue",
+          "signature": "u8 mg_b034_ppu_flush_vram_queue(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "cVar1": "signed_val",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte",
+            "LAB_bf6b": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Flushes all queued VRAM transfer commands starting from index 0 of 0x0740 to PPU_ADDR and PPU_DATA and resets the queue.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_04.prg/bank04_dialog_system.c",
+      "lineCount": 519,
+      "codeSloc": 381,
+      "symbolCount": 14,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000bcb8",
+          "symbol": "mg_b034_dialog_dispatch_phase",
+          "signature": "void mg_b034_dialog_dispatch_phase(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets dialog active flag 0x4C to 1 and dispatches the current dialog phase in 0x6B via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bcc7",
+          "symbol": "mg_b034_dialog_dispatch_speaker",
+          "signature": "void mg_b034_dialog_dispatch_speaker(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches dialog window layout or speaker variant in 0x48 via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bcd2",
+          "symbol": "mg_b034_dialog_advance_phase_and_reset",
+          "signature": "void mg_b034_dialog_advance_phase_and_reset(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Increments the dialog phase in 0x6B and resets g_dialog_menu_mode and g_status_bar_step to zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bcdc",
+          "symbol": "mg_b034_dialog_draw_box_frame_6step",
+          "signature": "void mg_b034_dialog_draw_box_frame_6step(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues 6 incremental VRAM packets from 0xBF87 to draw and attribute-mask the standard dialog box before advancing dialog phase.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bd74",
+          "symbol": "mg_b034_dialog_draw_box_frame_8step",
+          "signature": "void mg_b034_dialog_draw_box_frame_8step(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues 8 incremental VRAM packets from 0xBF87 to draw and attribute-mask an alternate dialog box before advancing dialog phase.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bdba",
+          "symbol": "mg_b034_dialog_tick_typewriter_and_prompt",
+          "signature": "void mg_b034_dialog_tick_typewriter_and_prompt(void)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x",
+            "code_r0xc74e": "step_a",
+            "code_r0xc7ee": "step_b"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Drives codec/dialog text streaming across PRG banks 0, 1, and 5, blinks continuation sprite 0xC5, and handles button-advance timing.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be27",
+          "symbol": "mg_b034_dialog_enter_text_mode",
+          "signature": "void mg_b034_dialog_enter_text_mode(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Switches g_dialog_menu_mode to 1 (text streaming) and resets g_status_bar_step to zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be42",
+          "symbol": "mg_b034_dialog_clear_4_rows",
+          "signature": "void mg_b034_dialog_clear_4_rows(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues one 20-byte blank dialog row into 0x0740 per frame using g_status_bar_step and enters text mode after 4 rows.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be6a",
+          "symbol": "mg_b034_dialog_advance_clear_step",
+          "signature": "void mg_b034_dialog_advance_clear_step(u8 end_marker)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Stores end_marker into 0x0758, advances g_status_bar_step, and enters dialog text mode at step 4.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be73",
+          "symbol": "mg_b034_dialog_enter_text_mode_if_zero",
+          "signature": "void mg_b034_dialog_enter_text_mode_if_zero(void)",
+          "localRenames": {
+            "in_Z": "cpu_zero"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Transitions g_dialog_menu_mode to 1 and resets g_status_bar_step when the CPU zero flag is set.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000be76",
+          "symbol": "mg_b034_dialog_clear_6_rows",
+          "signature": "void mg_b034_dialog_clear_6_rows(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues one 16-byte blank row into 0x0740 per frame using g_status_bar_step and enters dialog text mode at step 6.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000beac",
+          "symbol": "mg_b034_dialog_dispatch_close",
+          "signature": "void mg_b034_dialog_dispatch_close(void)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches dialog closing behavior in 0x48 via inline_jump_table_dispatch.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000beb7",
+          "symbol": "mg_b034_dialog_reset_state_on_close",
+          "signature": "void mg_b034_dialog_reset_state_on_close(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resets dialog phase and substate counters on close, playing SFX 0x31 when leaving cutscene substate 10.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bf42",
+          "symbol": "mg_b034_dialog_restore_bg_and_close",
+          "signature": "void mg_b034_dialog_restore_bg_and_close(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Queues saved background tiles and attributes from 0x042C/0x0700 over 8 steps to erase the dialog window and closes dialog state on step 7.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_04.prg/bank04_homing_actors.c",
+      "lineCount": 203,
+      "codeSloc": 120,
+      "symbolCount": 8,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000bb91",
+          "symbol": "mg_b034_tick_binoculars_room_peek",
+          "signature": "void mg_b034_tick_binoculars_room_peek(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "bVar3": "mask_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Draws binoculars reticle sprite 0x3A, resolves directional room peek via 0x8120 on D-pad input, and restores the original room after 64 fram",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bbe1",
+          "symbol": "mg_b034_bank04_dispatch_actor_state",
+          "signature": "void mg_b034_bank04_dispatch_actor_state(s8 slot_idx)",
+          "localRenames": {
+            "in_Y": "cpu_y",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches a bank-4 actor slot via inline_jump_table_dispatch using its state byte in 0xA8+slot_idx.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bbec",
+          "symbol": "mg_b034_init_homing_projectile",
+          "signature": "void mg_b034_init_homing_projectile(u8 slot_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Sets projectile actor slot_idx sprite ID to 0x9C, initializes its step timer to 8, and advances its state in 0xA8+slot_idx.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bbf8",
+          "symbol": "mg_b034_update_patrol_projectile",
+          "signature": "u8 mg_b034_update_patrol_projectile(u8 slot_idx)",
+          "localRenames": {
+            "cVar1": "signed_val",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Checks proximity to Snake and, on odd frames, steps the actor along its scripted path in 0xBCA7 while updating its directional sprite.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc33",
+          "symbol": "mg_b034_step_homing_projectile",
+          "signature": "void mg_b034_step_homing_projectile(u8 slot_idx)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "cVar2": "signed_step",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Decrements projectile lifetime timer and moves its X/Y coordinates and sprite ID using directional velocity table 0xBCA7.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc53",
+          "symbol": "mg_b034_set_projectile_dir_sprite",
+          "signature": "void mg_b034_set_projectile_dir_sprite(u8 dir_idx,u8 slot_idx)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Assigns the directional projectile sprite ID from table 0xBCA7+0x0D to actor slot_idx.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc62",
+          "symbol": "mg_b034_check_actor_proximity_trigger",
+          "signature": "void mg_b034_check_actor_proximity_trigger(s8 slot_idx)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes player-to-actor distance and switches actor slot_idx to state 2 with timer 0x10 when within 33 pixels on both axes.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x0000bc78",
+          "symbol": "mg_b034_calc_player_to_actor_delta",
+          "signature": "void mg_b034_calc_player_to_actor_delta(u8 slot_idx)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Computes signed quadrant bits in 0xB0+slot_idx and absolute Y/X distances between Snake and actor slot_idx.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    },
+    {
+      "relativePath": "overlays/BANK_04.prg/bank04_room_spawns_and_warps.c",
+      "lineCount": 356,
+      "codeSloc": 256,
+      "symbolCount": 10,
+      "isZeroTellsVerified": true,
+      "symbols": [
+        {
+          "addressHex": "0x0000801c",
+          "symbol": "mg_b034_spawn_room_actors_from_table",
+          "signature": "u8 mg_b034_spawn_room_actors_from_table(void)",
+          "localRenames": {
+            "bVar2": "step_byte",
+            "bVar1": "temp_byte",
+            "bVar3": "mask_byte",
+            "bVar4": "idx_byte"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Reads the spawn descriptor for g_room_id from 0x82CA, checks directional bounds, and populates enemy/object slots in 0x0308-0x0368.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000080f2",
+          "symbol": "mg_b034_bank04_check_dir_spawn_bounds",
+          "signature": "void mg_b034_bank04_check_dir_spawn_bounds(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "LAB_811a": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Compares scratch coordinates in zero-page 0x82-0x83 against directional screen bounds indexed by g_player_dir.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00008120",
+          "symbol": "mg_b034_resolve_room_transition",
+          "signature": "void mg_b034_resolve_room_transition(void)",
+          "localRenames": {
+            "bVar1": "temp_byte",
+            "in_C": "cpu_carry",
+            "LAB_814b": "step_a"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Evaluates special room warps and transition flags in 0x39 against bank-4 exit tables in 0x8A8E to update g_room_id.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x000081f7",
+          "symbol": "mg_b034_lookup_next_room_id",
+          "signature": "void mg_b034_lookup_next_room_id(void)",
+          "localRenames": {
+            "bVar1": "temp_byte"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resolves the next g_room_id from room adjacency tables in 0x8A8E using direction index 0x39, or sets 0xFF for rooms 0x80-0xCF.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00008227",
+          "symbol": "mg_b034_init_cutscene_player_sprite",
+          "signature": "void mg_b034_init_cutscene_player_sprite(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Initializes player sprite slot 0 with type 200 at coordinates (0x20, 0xC0) for the bank-4 ascent cutscene.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00008237",
+          "symbol": "mg_b034_tick_ending_ascent_cutscene",
+          "signature": "void mg_b034_tick_ending_ascent_cutscene(void)",
+          "localRenames": {
+            "uVar1": "byte_val",
+            "bVar2": "step_byte",
+            "bVar3": "mask_byte",
+            "LAB_82c3": "step_a"
+          },
+          "transformsApplied": [
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Ticks the 16-bit cutscene timer in 0x98-0x99, animates player sprite 200/201 rising upward, spawns trailing sprites, and resets submode on e",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00008a3f",
+          "symbol": "mg_b034_check_special_room_dir_warp",
+          "signature": "void mg_b034_check_special_room_dir_warp(void)",
+          "localRenames": {
+            "in_X": "cpu_x"
+          },
+          "transformsApplied": [
+            "dead_stack_elim",
+            "local_rename",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Dispatches directional warp logic via inline_jump_table_dispatch in rooms 0xDF and 0xE1, or clears 0x07C9 otherwise.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00008a58",
+          "symbol": "mg_b034_reset_transceiver_cursor",
+          "signature": "void mg_b034_reset_transceiver_cursor(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Resets the transceiver/warp state variable at 0x07C9 to zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00008a5f",
+          "symbol": "mg_b034_arm_or_reset_transceiver_cursor",
+          "signature": "void mg_b034_arm_or_reset_transceiver_cursor(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Arms 0x07C9 to 0x80 if it currently equals 2, otherwise resets it to zero.",
+          "isZeroTellsVerified": true
+        },
+        {
+          "addressHex": "0x00008a6d",
+          "symbol": "mg_b034_tick_transceiver_cursor_warp",
+          "signature": "void mg_b034_tick_transceiver_cursor_warp(void)",
+          "localRenames": {},
+          "transformsApplied": [
+            "dead_stack_elim",
+            "init_locals",
+            "pcode_and_ptrs",
+            "idiomatic_flow"
+          ],
+          "docstringSummary": "Advances 0x07C9 state and decrements g_room_id with SFX 0x3A when bit 7 of 0x07C9 is set.",
+          "isZeroTellsVerified": true
+        }
+      ]
+    }
+  ]
+}

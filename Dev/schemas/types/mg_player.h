@@ -111,23 +111,23 @@ typedef struct MgPlayerState {
     uint8_t spawn_y;      /* +0x04: ZP $36 Player Y coordinate on entry */
     uint8_t facing_state; /* +0x05: ZP $38 MgDirection / posture (0x0C init) */
     uint8_t pause_lock;   /* +0x06: ZP $49 blocks pause/equip when nonzero */
-    uint8_t input_lock;   /* +0x07: ZP $2F bit 7 blocks Select menu */
-    uint8_t status_flags; /* +0x08: ZP $78 player status flags (bit 5/6/7) */
-    uint8_t hurt_timer;   /* +0x09: ZP $51 invulnerability / damage state */
-    bool    is_dead;      /* +0x0A: True when health == 0 */
-    uint8_t reserved;     /* +0x0B: Alignment / future flag slot */
+    uint8_t input_lock;         /* +0x07: ZP $2F bit 7 blocks Select menu */
+    uint8_t player_status_mask; /* +0x08: ZP $78 player status flags (bit 5/6/7) */
+    uint8_t hurt_timer;         /* +0x09: ZP $51 invulnerability / damage state */
+    bool    is_dead;            /* +0x0A: True when health == 0 */
+    uint8_t reserved;           /* +0x0B: Alignment / future flag slot */
 } MgPlayerState; /* 0x0C (12 bytes) */
 
 /* Player weapons, keycards & equipment inventory (ZP $70-$77, $07E0) */
 typedef struct MgInventoryState {
-    uint8_t equipped_weapon; /* +0x00: ZP $6B active MgWeaponId */
-    uint8_t equipped_item;   /* +0x01: ZP $4B active equipment item */
-    uint8_t keycards;        /* +0x02: ZP $71 MgKeycardMask bitmask */
-    uint8_t item_flags_72;   /* +0x03: ZP $72 item/progression bitfield */
-    uint8_t item_flags_73;   /* +0x04: ZP $73 item/progression bitfield */
-    uint8_t item_flags_74;   /* +0x05: ZP $74 rescued POW / rank progress */
-    uint8_t gear_flags_75;   /* +0x06: ZP $75 MgEquipFlag / mission gear */
-    uint8_t status_flags_76; /* +0x07: ZP $76 uniform/cardboard/status flags */
+    uint8_t equipped_weapon;   /* +0x00: ZP $6B active MgWeaponId */
+    uint8_t equipped_item;     /* +0x01: ZP $4B active equipment item */
+    uint8_t keycards;          /* +0x02: ZP $71 MgKeycardMask bitmask */
+    uint8_t item_flags_zp72;   /* +0x03: ZP $72 item/progression bitfield */
+    uint8_t item_flags_zp73;   /* +0x04: ZP $73 item/progression bitfield */
+    uint8_t item_flags_zp74;   /* +0x05: ZP $74 rescued POW / rank progress */
+    uint8_t gear_flags_zp75;   /* +0x06: ZP $75 MgEquipFlag / mission gear */
+    uint8_t status_flags_zp76; /* +0x07: ZP $76 uniform/cardboard/status flags */
     uint8_t ammo_counts[8];  /* +0x08: Per-weapon ammo counts */
     uint8_t menu_state;      /* +0x10: $07E0 equipment/menu cursor & page */
     uint8_t rations_count;   /* +0x11: Carried ration count */
