@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "gameId": "ironframe-outerfortress-cart-01",
-  "generatedAtUtc": "2026-11-20T06:39:27.675Z",
+  "generatedAtUtc": "2026-11-23T06:46:37.810Z",
   "isPassed": true,
   "totalFunctionCount": 499,
   "namedFunctionCount": 499,
@@ -9,5 +9,35 @@
   "mappedGlobalCount": 2324,
   "definedStructCount": 22,
   "definedEnumCount": 22,
-  "unresolvedFieldCount": 0
+  "unresolvedFieldCount": 0,
+  "assertionsPassedCount": 5,
+  "assertionsTotalCount": 5,
+  "checks": [
+    {
+      "name": "rooms_metatiles_and_chr_tables",
+      "isPassed": true,
+      "detail": "rooms=256, chr=51, unresolved=0"
+    },
+    {
+      "name": "guards_weapons_and_password_tables",
+      "isPassed": true,
+      "detail": "patrols=123, dialogs=160, spawns=217, unresolved=0"
+    },
+    {
+      "name": "codec_and_bank06_audio_tables",
+      "isPassed": true,
+      "detail": "calls=116, msgs=72, snd=132, unresolved=0"
+    },
+    {
+      "name": "spec_spokes_cleanroom",
+      "isPassed": true,
+      "detail": "spokes=4/4, issues=[]"
+    },
+    {
+      "name": "schema_type_coverage",
+      "isPassed": true,
+      "detail": "funcs=499/499, globals=2324/2324, structs=22, enums=22"
+    }
+  ],
+  "notes": "Verified all 3 ROM table decoders and 4 clean-room specification spokes with unresolvedFieldCount=0."
 }

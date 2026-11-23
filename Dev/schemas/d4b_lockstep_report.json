@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 2,
+  "gameId": "ironframe-outerfortress-cart-01",
+  "generatedAtUtc": "2026-11-23T06:46:37.166Z",
+  "oracleType": "mesen",
+  "mismatchedFrames": 0,
+  "isPassed": true,
+  "assertionsPassedCount": 7,
+  "assertionsTotalCount": 7,
+  "checks": [
+    {
+      "name": "scene_1_boot_and_title",
+      "isPassed": true,
+      "detail": "frames=1..100 mismatched=0 digest=e83cf9a209d62203"
+    },
+    {
+      "name": "scene_2_intro_to_dock",
+      "isPassed": true,
+      "detail": "frames=101..220 mismatched=0 digest=57e0058e7548977a"
+    },
+    {
+      "name": "scene_3_dock_traversal",
+      "isPassed": true,
+      "detail": "frames=221..380 mismatched=0 digest=4a9f2a1a0e9004f0"
+    },
+    {
+      "name": "scene_4_transceiver_and_pause",
+      "isPassed": true,
+      "detail": "frames=381..520 mismatched=0 digest=6807e97dee50d796"
+    },
+    {
+      "name": "scene_5_combat_action",
+      "isPassed": true,
+      "detail": "frames=521..650 mismatched=0 digest=5c13c20f66adbfa9"
+    },
+    {
+      "name": "d4_clean_source_checkpoints",
+      "isPassed": true,
+      "detail": "passed=8/8"
+    },
+    {
+      "name": "recart_interpreter_oracle_witness",
+      "isPassed": true,
+      "detail": "frames=650 transitions=649 bootWram=f1e8ba9e sha=ce8f4c3a3562a378"
+    }
+  ],
+  "notes": "oracle=both, totalFrames=650, stackMasked=$0100-$01FF"
+}

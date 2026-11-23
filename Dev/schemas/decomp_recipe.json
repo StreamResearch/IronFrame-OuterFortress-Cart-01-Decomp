@@ -13,7 +13,7 @@
   "decompSchemaVersion": "1.0.0",
   "targetDecompTier": "D4",
   "goalDecompTier": "D5",
-  "packageVersion": "0.3.0",
+  "packageVersion": "0.4.0",
   "serialNumber": "NES-ME-USA",
   "expectedSha256": "79095355436222161cb3841ff9b5c7a572e77af11461935e433bd6e8dfd0f164",
   "sleighLanguageId": "6502:LE:16:default",

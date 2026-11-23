@@ -1,8 +1,8 @@
 # Findings — IronFrame OuterFortress (Cart) 01 Decomp (`NES-ME-USA`)
 
-> **Verification Ledger:** `0` Static Decompiler Failures (`499/499` indexed) · `26/26` Zero-Tell `D4_CleanSource` Modules (`507` Symbols, `0` Warnings under `-Wall -Wextra -Wno-unused-parameter`) · `8/8` PRG Banks `1:1` 6502 Assembly Match (`131,088` B, `CRC32=25BA3D04`) · `10/10` `D4a` Host Subsystem Parity Assertions
+> **Verification Ledger:** `0` Static Decompiler Failures (`499/499` indexed) · `26/26` Zero-Tell `D4_CleanSource` Modules (`507` Symbols, `0` Warnings under `-Wall -Wextra -Wno-unused-parameter`) · `8/8` PRG Banks `1:1` 6502 Assembly Match (`131,088` B, `CRC32=25BA3D04`) · `10/10` `D4a` Assertions · `650/650` `D4b` Lockstep Frames (`mismatchedFrames: 0` vs. Mesen 2.1.1 + `reCart` Witness + `8/8` Linked C Checkpoints) · `unresolvedFieldCount: 0` Across `4` Decoders & `4` Spokes
 
-This document records empirical reverse-engineering discoveries, UNROM bus-conflict mechanics, `BANK_06` sound-sequencer recovery, `D3_Mapped` cohesive coalescing, `D4_CleanSource` AST C11 normalization (`craftsmanship_d4_*`), strict C11 compilation verification, and `1:1` 6502 byte-matching results.
+This document records empirical reverse-engineering discoveries, UNROM bus-conflict mechanics, `BANK_06` sound-sequencer recovery, `D3_Mapped` cohesive coalescing, `D4_CleanSource` AST C11 normalization (`craftsmanship_d4_*`), `D4b` hardware timing lockstep (`NesBus`), Bank `1..4` / `BANK_06` decoder coverage, upstream validator alignment notes, and `1:1` 6502 byte-matching results.
 
 ---
 
@@ -48,7 +48,7 @@ In `v0.2.0` (`D3_Mapped`), [coalesce_d4_modules.py](../scripts/coalesce_d4_modul
   - Unrolled all `69` comma-operator `if (...)` conditions while preserving short-circuit `&&`/`||` semantics, parenthesized `55` bitwise `&` inside `|`/`^` expressions (`-Wbitwise-op-parentheses`), lowered `CONCAT11`/`CARRY1`/subpiece byte accesses/`(short)(&g_* + idx)` ROM offsets/`(&g_*)[idx]` scalar-as-array reads (backed by `g_actor_soa_ram[128]` at `$0300` and `g_apu_mmio_regs[24]` at `$4000`), wrapped computed int-to-pointer expressions via `(uintptr_t)(...)`, replaced `while (true)`/`LAB_*`/`joined_r0x*`/`halt_baddata`/Yoda comparisons, stripped Ghidra boilerplate (`WARNING:`, `// Function:`, `@callers`/`@callees none`), and injected `* @symbol` + module headers.
   - Replaced legacy P-code macros in `include/ghidra_compat.h` with fixed-width `s8..u64` typedefs (`#ifndef GHIDRA_COMPAT_FIXED_INTS`), removed all `.clangd` diagnostic suppressions and pointer-cast suppressions (`-Wno-int-to-pointer-cast`), synced `36` files into `Corpus/readable/`, and emitted `5` zero-body Standard 18 v2 shards in [d4_rewrites/](../schemas/d4_rewrites/) (`26` files / `507` symbols).
 - **Mapped Modular Host Parity Suite (`10/10` Passing, `D4a` Subsystem Parity):** Compiled `26/26` `D4_CleanSource` modules with `0` errors and `0` warnings under `-std=gnu11 -fsigned-char -O1 -ffreestanding -fno-builtin -Wall -Wextra -Wno-unused-parameter` (`isZeroWarningsVerified: true`, `isZeroDecompilerTellsVerified: true` in [d4_build_report.json](../schemas/d4_build_report.json)), linked against the four `<= 200`-line files under `Dev/scripts/d4_harness/` — [parity_harness.h](../scripts/d4_harness/parity_harness.h), [parity_runner_main.c](../scripts/d4_harness/parity_runner_main.c), [parity_rom_and_mapper_tests.c](../scripts/d4_harness/parity_rom_and_mapper_tests.c), and [parity_gameplay_and_audio_tests.c](../scripts/d4_harness/parity_gameplay_and_audio_tests.c).
-- **Parity Scope Boundary (`D4a` vs. `v0.4.0` `D4b`):** `v0.3.0` achieves **`D4a Subsystem Parity`** (`10/10` host assertions + freestanding zero-warning compilation), not full-frame RAM-oracle lockstep (`D4b`). Frame-by-frame `NesBus` WRAM/OAM/PPU/APU trace verification against reference execution oracles is scheduled for `v0.4.0`.
+- **Parity Scope Progression (`D4a` -> `v0.4.0` `D4b`):** `v0.3.0` established `D4a Subsystem Parity` (`10/10` host assertions + freestanding zero-warning compilation). In `v0.4.0`, [d4_harness/](../scripts/d4_harness/), [d4b_oracle_bridges.py](../scripts/d4b_oracle_bridges.py), and [run_d4b_lockstep.py](../scripts/run_d4b_lockstep.py) advance the repository to verified **`D4b Execution Parity`** (`mismatchedFrames: 0` across `650` frames / `5` gameplay scenes, detailed in Section 5 below).
 
 ---
 
@@ -61,8 +61,40 @@ In `v0.2.0` (`D3_Mapped`), [coalesce_d4_modules.py](../scripts/coalesce_d4_modul
 
 ---
 
-## 5. Related Manuals & Evidence Anchors
+## 5. `D4b` Multi-Scene Execution Parity & Hardware Timing Findings
 
-- [ARCHITECTURE.md](ARCHITECTURE.md) — UNROM bank topology, `$C6B7` dispatcher, `26` cohesive `D4_CleanSource` modules (`36` files in `Corpus/readable/`), and `8` synthesized adapters.
-- [SPECIFICATIONS.md](SPECIFICATIONS.md) — `22` structs, `22` enums, `2,324` globals (`2,344` externs), `D3`/`D4` schemas (`d4_rewrites/*.json`), and Standard 18 v2 verification JSON contracts.
-- [OPERATIONS.md](OPERATIONS.md) — Clean-room BYO-ROM layout, CLI overrides, tier materialization (`D1_Raw`–`D4_CleanSource`), `.decomp` packaging, and local verification commands.
+In `v0.4.0`, clean-room C11 [NesBus](../scripts/d4_harness/nes_bus.h) (`nes_bus.c`, `nes_ppu_apu.c`, `nes_cpu_ops.c`, `nes_cpu_exec.c`, `d4b_lockstep_scenes.c`) executed all `650` deterministic frames across `5` gameplay scenes against Mesen 2.1.1 (`--testRunner` Lua tracer) with **`mismatchedFrames: 0`** recorded in [d4b_lockstep_report.json](../schemas/d4b_lockstep_report.json) (`assertionsPassedCount: 7/7`), while simultaneously running `8/8` live `D4_CleanSource` linked C checkpoints and cross-checking the read-only `reCart.Core.dll` `InterpreterOracle` differential witness:
+
+| Scene / Witness Check (`d4b_lockstep_report.json`) | Frame Range | Verification Scope & Observed Result |
+| :--- | :--- | :--- |
+| `scene_1_boot_and_title` | `1..100` | Cold boot reset (`$C001`) through title idle (`mismatched=0`, digest `e83cf9a209d62203`) |
+| `scene_2_intro_to_dock` | `101..220` | Start pulses (`105..109`, `140..144`) through intro transition to dock (`mismatched=0`, digest `57e0058e7548977a`) |
+| `scene_3_dock_traversal` | `221..380` | Right (`260..320`) + Up (`325..385`) movement across dock (`mismatched=0`, digest `4a9f2a1a0e9004f0`) |
+| `scene_4_transceiver_and_pause` | `381..520` | Select (`410..414`, `460..464`) + Start (`485..489`, `505..509`) transceiver/pause (`mismatched=0`, digest `6807e97dee50d796`) |
+| `scene_5_combat_action` | `521..650` | Periodic Up + B bursts every 20 frames (`mismatched=0`, digest `5c13c20f66adbfa9`) |
+| `d4_clean_source_checkpoints` | `1, 100, 110, 220, 320, 380, 490, 650` | `8/8` live `D4_CleanSource` C subsystem checkpoints (`unrom_select_bank_0/6`, `mg_fxa_*`, `mg_b034_*`, `mg_b56_audio_*`) |
+| `recart_interpreter_oracle_witness` | `1..650` | Read-only `reCart.Core.dll` `InterpreterOracle`: `frames=650`, `transitions=649`, `nonZeroFinalBytes=431`, `bootWramCrc32=f1e8ba9e` (matching Mesen frame `1`), `finalWramCrc32=fbe7de47`, `sha=ce8f4c3a3562a378` |
+
+### Empirical RP2A03 / RP2C02 Lockstep Requirements
+- **NMI-Driven Main Loop & Zero Sprite-0 Usage:** Static analysis across all `8` PRG banks confirmed `0` Sprite-0 hit polling loops (`$2002` bit 6) and a pure NMI-driven main loop (`$C069: JMP $C069` + `$C06C` VBlank NMI).
+- **Exact PPU Frame & Odd-Frame Timing (`nes_ppu_apu.c`):** Bit-exact `PPU`/`WRAM` parity over `650` frames required scanline `241` dot `1` VBlank NMI edge triggering, scanline `261` dot `1` status flag clearing, the odd-frame dot-`339` pre-render skip when `(frame_count & 1) && (mask & 0x18)`, and capturing frame digests cleanly at scanline `240` (with resume-state checkpointing across instruction boundaries near dot `312` of scanline `239`).
+- **RP2A03 CPU & DMA Quirks (`nes_cpu_ops.c`, `nes_cpu_exec.c`, `nes_bus.c`):** Matching Mesen 2.1.1 required RP2A03 binary-only `ADC`/`SBC` (ignoring `P` decimal flag `D`), `JMP ($xxFF)` page-boundary low-byte wrap, `$4014` OAM DMA `513 + (cycles & 1)` cycle stalls, and DMC DMA 3–4 cycle stalls (`$4016` double-clocking when a DMC fetch coincides with controller read).
+- **`$0100-$01FF` Hardware Stack Masking:** Zero-masking the 6502 hardware stack page (`$0100-$01FF`) isolates deterministic gameplay WRAM/OAM/PPU/APU equivalence cleanly across C11 `NesBus`, Mesen 2.1.1, and `reCart.Core.dll` without raw memory dumps in tracked JSON reports.
+
+---
+
+## 6. Bank `1..4` / `BANK_06` Decoder Coverage & Upstream Validator Note
+
+- **Complete Clean-Room Decoder Coverage (`unresolvedFieldCount: 0`):** Executing [decode_all_bank_tables.py](../scripts/decode_all_bank_tables.py) (`--write-spec-coverage`) resolves `256` rooms (`165` unique `8x6` grids), `6` metatile/attribute tilesets, `18` door returns, `8` elevators, `17` special warps, `256` adjacency vectors (`235` unique), `51` CHR upload headers, `256` `$FD00/$FE00` room metadata records, `123` patrol pointers (`96` unique), `160` dialog pointer offsets (`144` unique, byte span metadata only with `0` retail strings), `217` room actor spawns (`85` unique), `7` weapon/projectile tables, `4` password layout tables, `7` codec frequencies, `255` room call tables (`75` unique, `116` entries, `72` unique message IDs), `5` volume envelopes, `12` chromatic note periods, `132` audio descriptors (`64` SFX / `68` BGM), and `dmc[0]` (`$FC80`) strictly into gitignored `Corpus/work/decoded_tables/` while validating `4/4` specification spokes in [spec_coverage.json](../schemas/spec_coverage.json).
+- **Non-Blocking Upstream `reCartOne` Schema Alignment Finding (`ValidateD5ByteMatchFile`):**
+  - **Observation:** Read-only `reCart.Decomp.D4BuildReportValidator.ValidateD4BuildReportFile`, `ValidateResearchManifestFile`, `reCart.Decomp.SixTellDetector.ScanDirectory` (`34` `Corpus/readable` + `34` `D4_CleanSource` files, `Findings=0`), and `reEngine.Core.Decomp.DecompD4StrictnessValidator` (`ValidateWorkspace` & `ValidateDecompArchiveCleanRoom`) all pass (`IsValid=True`), whereas `reCart.Decomp.D4BuildReportValidator.ValidateD5ByteMatchFile` reports `IsValid=False` (`9` schema-key violations: expecting legacy `'matchedBinaries'` and `'relpath'` on entries `#1..#8`).
+  - **Root Cause:** `reCartOne` (`D4ReportSchemaHelpers.ValidateD5Core`) still looks only for deprecated Standard 18 v1 field names (`matchedBinaries`, `relpath`/`name`/`path`, `bytes`, `sha256`), whereas `ValidateD4BuildReportFile` and `ValidateResearchManifestFile` in the same assembly already accept Standard 18 v2 aliases.
+  - **Disposition:** **`Non-Blocking` for `v0.4.0`.** [d5_byte_match.json](../schemas/d5_byte_match.json) conforms to Standard 18 v2 (`matchedBinaryCount`, `relativePath`, `fileSizeBytes`, `sha256Hex`) and is independently verified across `build_and_verify_d5.py`, `verify_track_d5.py`, `decomp_cli.py`, and `unittest` (`8/8` banks, `mismatchedBytes: 0`, `CRC32=25ba3d04`); follow-up in `reCartOne` will add Standard 18 v2 aliases alongside legacy v1 fallbacks in `ValidateD5Core`.
+
+---
+
+## 7. Related Manuals & Evidence Anchors
+
+- [ARCHITECTURE.md](ARCHITECTURE.md) — UNROM bank topology, `$C6B7` dispatcher, `26` cohesive `D4_CleanSource` modules (`36` files in `Corpus/readable/`), `NesBus` C11 lockstep runtime, and bank decoders.
+- [SPECIFICATIONS.md](SPECIFICATIONS.md) — `22` structs, `22` enums, `2,324` globals (`2,344` externs), all `4` [Dev/docs/specifications/](specifications/) format spokes, and Standard 18 v2 verification JSON contracts (`d4b_lockstep_report.json`, `spec_coverage.json`).
+- [OPERATIONS.md](OPERATIONS.md) — Clean-room BYO-ROM layout, CLI overrides, tier materialization (`D1_Raw`–`D4_CleanSource`), `D4b` lockstep & bank decoder commands, `.decomp` packaging, and snapshot hygiene.

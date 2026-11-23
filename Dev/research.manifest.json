@@ -4,7 +4,7 @@
   "manifestType": "research-repo",
   "appId": "ironframe-outerfortress-cart-01-decomp",
   "researchId": "ironframe-outerfortress-cart-01-decomp",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "gameId": "ironframe-outerfortress-cart-01",
   "title": "IronFrame OuterFortress (Cart) 01",
   "platform": "nes",
@@ -18,7 +18,7 @@
   "researchAxis": "hybrid",
   "currentDecompTier": "D4",
   "goalDecompTier": "D5",
-  "d4ParityTier": "D4a",
+  "d4ParityTier": "D4b",
   "preservedTiers": [
     "D1_Raw",
     "D2_Structured",
@@ -203,7 +203,7 @@
       "verifiedAtUtc": null
     }
   },
-  "updatedAtUtc": "2026-11-22T11:08:46.140Z",
+  "updatedAtUtc": "2026-11-23T06:45:20.000Z",
   "builds": {
     "d4Report": "schemas/d4_build_report.json"
   }

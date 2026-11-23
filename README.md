@@ -6,11 +6,11 @@
 
 Clean-room 6502 decompilation research, binary format specifications, and portable `.decomp` recipe work for `NES-ME-USA` (`iNES Mapper 2 / UNROM`).
 
-![Version](https://img.shields.io/badge/version-0.3.0--beta-blue?style=flat) [![CI](https://github.com/StreamResearch/IronFrame-OuterFortress-Cart-01-Decomp/actions/workflows/ci.yml/badge.svg)](https://github.com/StreamResearch/IronFrame-OuterFortress-Cart-01-Decomp/actions/workflows/ci.yml) [![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-0969DA?style=flat)](https://streamresearch.github.io/IronFrame-OuterFortress-Cart-01-Decomp/) ![License](https://img.shields.io/badge/license-MIT-green?style=flat) ![Python](https://img.shields.io/badge/python-3.12%2B-3776AB?style=flat) ![Architecture](https://img.shields.io/badge/arch-6502%20(RP2A03)-lightgrey?style=flat)
+![Version](https://img.shields.io/badge/version-0.4.0--beta-blue?style=flat) [![CI](https://github.com/StreamResearch/IronFrame-OuterFortress-Cart-01-Decomp/actions/workflows/ci.yml/badge.svg)](https://github.com/StreamResearch/IronFrame-OuterFortress-Cart-01-Decomp/actions/workflows/ci.yml) [![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-0969DA?style=flat)](https://streamresearch.github.io/IronFrame-OuterFortress-Cart-01-Decomp/) ![License](https://img.shields.io/badge/license-MIT-green?style=flat) ![Python](https://img.shields.io/badge/python-3.12%2B-3776AB?style=flat) ![Architecture](https://img.shields.io/badge/arch-6502%20(RP2A03)-lightgrey?style=flat)
 
-**Beta (Pre-1.0, `D4/S4/R0`):** Active clean-room research repository (`v0.3.0`) delivering `26` warning-free, zero-tell idiomatic C11 modules (`507` symbols across `34` C/header files, `0` decompiler tells, `36` files in `Corpus/readable/`, `10/10` `D4a` subsystem parity assertions under `-Wall -Wextra -Wno-unused-parameter`), preserved raw/sliced/mapped/clean-source tier snapshots, `5` zero-body rewrite shards, a verified `1:1` 6502 assembler, a self-contained BYO-ROM unpacker, a `47`-entry `.decomp` bundle (`IronFrame-OuterFortress-Cart-01.decomp`) targeting `reCart` (`0.1.x`), `20` offline unit tests, and technical manuals—advancing toward multi-frame execution lockstep in `v0.4.0`.
+**Beta (Pre-1.0, `D4/S4/R0`):** Active clean-room research repository (`v0.4.0`, `D4b Execution Parity`) verifying `650`-frame / `5`-scene C11 `NesBus` execution lockstep (`mismatchedFrames: 0` against Mesen 2.1.1 with `$0100-$01FF` hardware stack masked, `reCart` `InterpreterOracle` differential witness, and `8/8` linked `D4_CleanSource` C checkpoints), `4` clean-room Bank `1..4` and `BANK_06` table decoders (`unresolvedFieldCount: 0`), `4` `Dev/docs/specifications/*.md` chapters, `26` warning-free zero-tell C11 modules (`507` symbols across `34` C/header files, `36` files in `Corpus/readable/`, `10/10` `D4a` host parity assertions under `-Wall -Wextra -Wno-unused-parameter`), a verified `1:1` 6502 assembler, a BYO-ROM unpacker, a strict `55`-entry `.decomp` bundle (`IronFrame-OuterFortress-Cart-01.decomp`) targeting `reCart` (`0.1.x`), `25/25` offline unit tests (`-W error`), and `17/17` full (`11/11` synthetic) integrity checks—advancing toward `v1.0.0` `D5/S5` Gold Reference.
 
-**6502 Assembly 1:1 ROM Match:** `8 / 8` PRG banks (`131,088 / 131,088` bytes, `0` mismatched bytes, `CRC32=25BA3D04`) · **Clean Idiomatic C11 (`D4/S4/R0`, `D4a` Subsystem Parity):** `26 / 26` domain modules (`507` symbols across `34` C/header files, `0` decompiler tells, `0` warnings under `-Wall -Wextra -Wno-unused-parameter`, `10/10` host assertions) · **Execution Lockstep:** `0` verified frame traces (scheduled for `v0.4.0`)
+**6502 Assembly 1:1 ROM Match:** `8 / 8` PRG banks (`131,088 / 131,088` bytes, `0` mismatched bytes, `CRC32=25BA3D04`) · **Clean Idiomatic C11 (`D4/S4/R0`, `D4b Execution Parity`):** `26 / 26` domain modules (`507` symbols, `0` tells, `0` warnings under `-Wall -Wextra -Wno-unused-parameter`, `10/10` `D4a` assertions) · **Execution Lockstep:** `650 / 650` frames across `5` scenes (`mismatchedFrames: 0` vs. Mesen 2.1.1 + `reCart` `InterpreterOracle` witness + `8/8` `D4_CleanSource` C checkpoints) · **Bank Decoders:** `4` scripts + `4` spec spokes (`unresolvedFieldCount: 0`)
 
 </div>
 
@@ -18,25 +18,28 @@ Clean-room 6502 decompilation research, binary format specifications, and portab
 - [x] **Portable `.decomp` Bundle, Offline Tests & Clean-Room Tooling (`v0.1.0`)** — Self-contained BYO-ROM unpacker (`nes_unrom_unpack.py`), `reCart` (`0.1.x`) validated `IronFrame-OuterFortress-Cart-01.decomp`, modular `d4_harness/` C parity runner, offline `unittest` suite, and static documentation site.
 - [x] **Cohesive Domain C Modules, Resolved Symbols & Multi-Tier Snapshots (`v0.2.0`)** — Replaced all `68` line-split fragments with `26` cohesive domain C modules (`10` fixed-bank core + `16` switchable-bank overlay modules), resolved all `299` raw symbol aliases and `44` raw cross-bank declarations (`0` remaining raw tokens), synthesized `8` bank/signature adapters, preserved raw/sliced/mapped local tier snapshots, and verified `18/18` offline `unittest` cases, `14/14` integrity checks, `10/10` host parity checks, `8/8` ROM banks (`CRC32=25BA3D04`), and the strict clean-room `v0.2.0` `.decomp` bundle.
 - [x] **Clean Idiomatic C & Zero-Warning Parity (`v0.3.0`)** — AST-normalized all `26` C modules and `8` headers (`34` C/header files, `507` symbols, `0` decompiler tells), removed `.clangd` diagnostic suppressions, compiled `26/26` modules with `0` errors and `0` warnings under `-Wall -Wextra -Wno-unused-parameter`, verified `10/10` `D4a` host subsystem parity assertions, `20/20` offline `unittest` cases, `15/15` `verify_track_d5.py` checks (`9/9` synthetic), `8/8` ROM banks (`CRC32=25BA3D04`), `36` files in `Corpus/readable/`, `5` zero-body rewrite shards, and the strict `47`-entry `v0.3.0` `.decomp` bundle.
-- [ ] **Execution Lockstep, Bank Decoders & Archival Gold (`v0.4.0`–`v1.0.0`)** — Frame-by-frame RAM/PPU/APU lockstep verification (`D4b`), Bank `1..4` and audio table decoders, complete format specs, and certified archival reference status.
+- [x] **Execution Lockstep, Bank Decoders & Specification Spokes (`v0.4.0`)** — Verified `650`-frame / `5`-scene C11 `NesBus` execution lockstep (`mismatchedFrames: 0` against Mesen 2.1.1 with `$0100-$01FF` hardware stack masked, `reCart` `InterpreterOracle` differential witness, and `8/8` linked `D4_CleanSource` C checkpoints), delivered `4` clean-room Bank `1..4` and `BANK_06` decoders (`unresolvedFieldCount: 0`) alongside `4` `Dev/docs/specifications/*.md` chapters, and passed `25/25` offline `unittest` cases (`-W error`), `17/17` full (`11/11` synthetic) `verify_track_d5.py` checks, and the strict `55`-entry `v0.4.0` `.decomp` bundle.
+- [ ] **Byte-Exact & Archival Gold Reference (`v1.0.0`)** — Certify fresh-clone clean-room BYO-ROM `D5/S5` Gold verification (`CRC32=25BA3D04`), finalize technical manuals, and publish the non-prerelease Gold release.
 
 ---
 
 ## About
 
-This repository documents the binary layout, hardware interfaces, and bank-switched program structure of North American `NES-ME-USA` using strictly clean-room reverse engineering. It pairs typed C headers, JSON module maps, symbol overrides, zero-body rewrite shards, and call-graph catalogs, a clean-room two-pass MOS 6502 assembler, a BYO-ROM UNROM unpacker, deterministic cohesive C coalescing and zero-tell C11 normalization pipelines, and technical reference manuals without distributing copyrighted ROM images, game assets, or compiled binaries.
+This repository documents the binary layout, hardware interfaces, and bank-switched program structure of North American `NES-ME-USA` using strictly clean-room reverse engineering. It pairs typed C headers, JSON module maps, symbol overrides, zero-body rewrite shards, and call-graph catalogs, a clean-room two-pass MOS 6502 assembler, a BYO-ROM UNROM unpacker, deterministic cohesive C coalescing and zero-tell C11 normalization pipelines, a C11 `NesBus` execution-lockstep harness, clean-room ROM table decoders, and technical reference manuals without distributing copyrighted ROM images, game assets, or compiled binaries.
 
-In `v0.3.0` (`D4/S4/R0`), the repository normalizes all `507` symbols (`499` mapped functions plus `8` adapters) across `26` domain C modules and `8` headers (`34` C/header files) into zero-tell, warning-free C11 (`-Wall -Wextra -Wno-unused-parameter`), verifies `10/10` `D4a` subsystem parity assertions, preserves raw, sliced, mapped, and clean-source local tier snapshots (`36` files in `Corpus/readable/`), and exports a strict clean-room `47`-entry `v0.3.0` `.decomp` recipe (`IronFrame-OuterFortress-Cart-01.decomp`) targeting `reCart` (`0.1.x`), alongside the [Documentation Site](https://streamresearch.github.io/IronFrame-OuterFortress-Cart-01-Decomp/) published from `Dev/docs/` and root documentation.
+In `v0.4.0` (`D4/S4/R0`, `D4b Execution Parity`), the repository verifies `650` frames across `5` deterministic gameplay scenes in clean-room C11 `NesBus` against Mesen 2.1.1 (`mismatchedFrames: 0` with `$0100-$01FF` hardware stack masked), cross-checks a read-only `reCart` `InterpreterOracle` differential witness (`650` frames, `649` transitions, boot WRAM CRC32 `f1e8ba9e`) and `8/8` live linked `D4_CleanSource` C subsystem checkpoints, delivers `4` clean-room Bank `1..4` and `BANK_06` table decoders (`unresolvedFieldCount: 0`) alongside `4` `Dev/docs/specifications/*.md` chapters, passes `25/25` offline `unittest` cases (`-W error`) and `17/17` full (`11/11` synthetic) integrity checks, and exports a strict clean-room `55`-entry `v0.4.0` `.decomp` recipe (`IronFrame-OuterFortress-Cart-01.decomp`) targeting `reCart` (`0.1.x`), alongside the [Documentation Site](https://streamresearch.github.io/IronFrame-OuterFortress-Cart-01-Decomp/) published from `Dev/docs/` and root documentation.
 
 ## Key Features
 
+- **C11 `NesBus` Runtime & `D4b` RAM-Oracle Lockstep:** `Dev/scripts/d4_harness/` (`nes_bus.h/c`, `nes_ppu_apu.c`, `nes_cpu_ops.c`, `nes_cpu_exec.c`, `d4b_lockstep_scenes.c`) pairs with `d4b_oracle_bridges.py` and `run_d4b_lockstep.py` to execute `650` frames across `5` gameplay scenes (`$0100-$01FF` hardware stack masked, `mismatchedFrames: 0` against Mesen 2.1.1), cross-check read-only `reCart.Core.dll` `InterpreterOracle` and `8/8` `D4_CleanSource` linked C checkpoints, and emit digest-only `Dev/schemas/d4b_lockstep_report.json` (`0` raw RAM dumps).
+- **Clean-Room Bank `1..4` & `BANK_06` Table Decoders:** `decode_rooms_and_metatiles.py`, `decode_guards_and_weapons.py`, `decode_codec_and_audio.py`, and orchestrator `decode_all_bank_tables.py` decode rooms (`256` / `165` unique), metatiles/adjacency (`6` tilesets, `256` vectors), CHR headers (`51`), patrols (`123`), dialog offsets (`160` metadata-only, `0` retail strings), room spawns (`217`), weapon tables (`7`), password layouts (`4`), codec calls (`255` tables / `116` entries), and `BANK_06` audio tables (`5` envelopes, `12` note periods, `132` descriptors, `dmc[0]`) strictly into gitignored `--out-dir` (`Corpus/work/decoded_tables/`) with `unresolvedFieldCount: 0` (`Dev/schemas/spec_coverage.json`).
 - **Clean Idiomatic C11 Normalizer & Rewrite Shards:** `craftsmanship_d4_helpers.py`, `craftsmanship_d4_ast_cleaner.py`, and `craftsmanship_d4_normalizer.py` eliminate all decompiler idioms across `34` C/header files and `507` symbols (`0` tells), unroll `69` comma-operator `if` conditions, emit fixed-width `s8..u64` headers and zero-suppression `.clangd`/`compile_commands.json` (`-Wall -Wextra -Wno-unused-parameter`), and export `5` zero-body JSON shards under `Dev/schemas/d4_rewrites/`.
 - **Cohesive Domain C Coalescer & Multi-Tier Snapshots:** `coalesce_d4_modules.py` and `materialize_decomp_tiers.py` merge `68` legacy line-split C slices into `26` bank-aware domain C modules (`10` core + `16` overlay modules), resolve all `299` raw global aliases and `44` raw cross-bank calls with `8` synthesized bank/signature adapters, preserve `D1_Raw`, `D2_Structured`, `D3_Mapped`, and `D4_CleanSource` snapshot tiers, and sync `36` files into `Corpus/readable/`.
 - **Clean-Room 6502 Assembler & BYO-ROM Unpacker:** `asm6502_d5.py` supports all `56` official MOS 6502 mnemonics and `151` opcodes (`13` addressing modes plus `a:` absolute override), paired with `nes_unrom_unpack.py` and `nes_6502_cfg.py` for SHA-256-verified `.nes` bank extraction (`8/8` banks, `CRC32=25BA3D04`) and synthetic offline verification.
-- **Portable `.decomp` Bundle & Release Packager:** `export_decomp_bundle.py` and `package_release.py` produce deterministic, clean-room `v0.3.0` `IronFrame-OuterFortress-Cart-01.decomp` packages (`47` entries including `d4_build_report.json` and `5` `d4_rewrites/*.json` shards) and staged release archives validated against `reCart` (`0.1.x`) clean-room rules.
-- **Modular Host C Parity & Offline Tests:** `Dev/scripts/d4_harness/` compiles cleanly without pointer-cast suppressions and runs `10/10` `D4a` subsystem parity assertions across four modular files (`parity_harness.h`, `parity_runner_main.c`, `parity_rom_and_mapper_tests.c`, `parity_gameplay_and_audio_tests.c`), backed by `20` offline `unittest` tests under `Dev/scripts/tests/` and `15/15` unified integrity checks (`verify_track_d5.py`, `9/9` offline synthetic).
+- **Portable `.decomp` Bundle & Release Packager:** `export_decomp_bundle.py` and `package_release.py` produce deterministic, clean-room `v0.4.0` `IronFrame-OuterFortress-Cart-01.decomp` packages (`55` entries including `d4_build_report.json`, `d4b_lockstep_report.json`, decoder scripts, and `5` `d4_rewrites/*.json` shards) and staged release archives validated against `reCart` (`0.1.x`) clean-room rules.
+- **Modular Host Parity, Schema Validators & Offline Tests:** `Dev/scripts/d4_harness/` compiles `10` `.c`/`.h` files cleanly without pointer-cast suppressions (`10/10` `D4a` subsystem assertions plus `D4b` `--lockstep`), paired with `d4b_validation_helpers.py`, `25` offline `unittest` tests (`-W error`) under `Dev/scripts/tests/`, and `17/17` unified integrity checks (`verify_track_d5.py`, `11/11` offline synthetic).
 - **Complete Memory, Module & Symbol Catalog:** Indexes all `499` functions across `26` modules (`8` bank domains), `2,324` mapped hardware/RAM/ROM globals (`2,344` header externs including `20` deduplicated synthetic overrides), `39` entry anchors, `22` C structs, and `22` enums (`0` unresolved fields).
-- **Technical Manual Shelf:** Four linked manuals covering bank architecture, binary specifications, reverse-engineering findings, and clean-room operations.
+- **Technical Manual Shelf & Specification Spokes:** Four linked manuals plus four `Dev/docs/specifications/*.md` chapters covering bank architecture, room/metatile/guard/weapon/password/codec/audio binary specifications, reverse-engineering and lockstep findings, and clean-room operations.
 
 ## Getting Started
 
@@ -44,6 +47,7 @@ In `v0.3.0` (`D4/S4/R0`), the repository normalizes all `507` symbols (`499` map
 
 - **Python 3.12+** on your `PATH`
 - *Optional:* `zig` (`0.17+`) and `clangd` if you want to compile freestanding / host C parity modules locally
+- *Optional:* Mesen `2.1.1` (`--testRunner`) and `.NET 8` SDK (for read-only `reCart.Core.dll` differential witness) if running live `D4b` lockstep locally
 - *Optional:* `7z` (`7-Zip`) when creating `.7z` release bundles with `package_release.py`
 
 ### Quick Try (No ROM Required)
@@ -54,8 +58,8 @@ Clone the repository and run the offline unit test suite or smoke-test the 6502 
 git clone https://github.com/StreamResearch/IronFrame-OuterFortress-Cart-01-Decomp.git
 cd IronFrame-OuterFortress-Cart-01-Decomp
 
-# Run all 20 offline unit tests (validates unpacker, assembler, coalescer, AST normalizer, tier builder, CLI gates, and .decomp bundle)
-python -B -m unittest discover -s Dev/scripts/tests -v
+# Run all 25 offline unit tests (validates unpacker, assembler, coalescer, AST normalizer, tier builder, D4b/decoder gates, and .decomp bundle)
+python -B -W error -m unittest discover -s Dev/scripts/tests -v
 
 # Smoke-test the clean-room two-pass 6502 assembler directly
 python -B -c "import sys; sys.path.insert(0, 'Dev/scripts'); import asm6502_d5; raw, org, _ = asm6502_d5.assemble_text('.org 0xC000\nLDA #0x01\nSTA 0x00\nRTS\n'); print(f'Opcodes={sum(len(v) for v in asm6502_d5.OPCODES.values())} Bytes={raw.hex()} Origin=${org:04X}')"
@@ -72,6 +76,8 @@ python -B Dev/scripts/craftsmanship_d4_normalizer.py --offline-synthetic
 python -B Dev/scripts/materialize_decomp_tiers.py --offline-synthetic
 python -B Dev/scripts/build_and_verify_d5.py --offline-synthetic
 python -B Dev/scripts/build_and_verify_d4.py --offline-synthetic
+python -B Dev/scripts/run_d4b_lockstep.py --offline-synthetic
+python -B Dev/scripts/decode_all_bank_tables.py --offline-synthetic
 python -B Dev/scripts/gen_d4_globals_and_lifts.py --verify-only
 python -B Dev/scripts/verify_track_d5.py --offline-synthetic
 
@@ -84,18 +90,20 @@ python -B Dev/scripts/nes_unrom_unpack.py --rom path/to/NES-ME-USA.nes --out-dir
 python -B Dev/scripts/materialize_decomp_tiers.py
 python -B Dev/scripts/build_and_verify_d5.py
 python -B Dev/scripts/build_and_verify_d4.py
+python -B Dev/scripts/run_d4b_lockstep.py --oracle both
+python -B Dev/scripts/decode_all_bank_tables.py --write-spec-coverage
 python -B Dev/scripts/verify_track_d5.py
 ```
 
-All verification CLIs support `--data-dir`, `--out-dir`, `--log-dir`, and `--offline-synthetic`, returning exit code `2` with structured `MISSING_CORPUS_MEDIA` JSON when local ROM extracts are absent. See `Dev/schemas/decomp_local.example.json` and [Operations](Dev/docs/OPERATIONS.md) for all overrides (`--zig-exe`, `--tools-dir`, `--host-target`, `--tier`, `--rewrites-dir`).
+All verification CLIs support `--data-dir`, `--out-dir`, `--log-dir`, and `--offline-synthetic`, returning exit code `2` with structured `MISSING_CORPUS_MEDIA` JSON when local ROM extracts are absent. See `Dev/schemas/decomp_local.example.json` and [Operations](Dev/docs/OPERATIONS.md) for all overrides (`--zig-exe`, `--mesen-exe`, `--recart-dir`, `--tools-dir`, `--host-target`, `--tier`, `--rewrites-dir`).
 
 </details>
 
 ## Project Structure
 
-- `Dev/` — Python assemblers, UNROM unpacker, cohesive module coalescer, AST C11 normalizer, multi-tier snapshot builder, `.decomp` exporter, offline `unittest` suite, modular `d4_harness/` C parity runner, typed C headers, JSON schemas (including `d4_rewrites/*.json`), clean-room SVG/PNG/ICO emblems, and technical manuals
-- `IronFrame-OuterFortress-Cart-01.decomp` — Deterministic clean-room `v0.3.0` `.decomp` recipe bundle (`47` entries) targeting `reCart` (`0.1.x`)
-- `Corpus/` — Local working directory for your own verified ROM extracts, preserved `D1_Raw`–`D4_CleanSource` snapshot tiers, and `36`-file `readable/` C11 tree (gitignored; never committed)
+- `Dev/` — Python assemblers, UNROM unpacker, cohesive module coalescer, AST C11 normalizer, multi-tier snapshot builder, Bank `1..4` and `BANK_06` table decoders, `D4b` oracle lockstep runner, `.decomp` exporter, offline `unittest` suite, modular `d4_harness/` C `NesBus` and parity runner, typed C headers, JSON schemas (including `d4_rewrites/*.json` and `d4b_lockstep_report.json`), clean-room SVG/PNG/ICO emblems, and technical manuals + specification spokes
+- `IronFrame-OuterFortress-Cart-01.decomp` — Deterministic clean-room `v0.4.0` `.decomp` recipe bundle (`55` entries) targeting `reCart` (`0.1.x`)
+- `Corpus/` — Local working directory for your own verified ROM extracts, preserved `D1_Raw`–`D4_CleanSource` snapshot tiers, `36`-file `readable/` C11 tree, and gitignored `work/decoded_tables/` output (gitignored; never committed)
 - `Archive/` — Compressed local clean-room source snapshots
 
 ## Documentation
@@ -106,10 +114,10 @@ All verification CLIs support `--data-dir`, `--out-dir`, `--log-dir`, and `--off
 - [Changelog](CHANGELOG.md) — Version history
 - [Contributing](CONTRIBUTING.md) — Clean-room contribution guidelines and PR checklist
 - [Security Policy](SECURITY.md) — Vulnerability reporting and asset isolation rules
-- [Architecture](Dev/docs/ARCHITECTURE.md) — `iNES Mapper 2 / UNROM` bank topology, `26` cohesive modules, dispatchers, and symbol layout
-- [Specifications](Dev/docs/SPECIFICATIONS.md) — C11 types, 6502 memory map, cartridge header, and verification schemas
-- [Findings](Dev/docs/FINDINGS.md) — Bus-conflict LUT analysis, audio sequencer recovery, symbol resolution, and 6502 assembly match
-- [Operations](Dev/docs/OPERATIONS.md) — Local workspace layout, CLI overrides, tier materialization, `.decomp` packaging, and snapshot hygiene
+- [Architecture](Dev/docs/ARCHITECTURE.md) — `iNES Mapper 2 / UNROM` bank topology, `26` cohesive modules, `NesBus` runtime, and decoder layout
+- [Specifications](Dev/docs/SPECIFICATIONS.md) — C11 types, 6502 memory map, Bank `1..4` & `BANK_06` format spokes, and verification schemas
+- [Findings](Dev/docs/FINDINGS.md) — Bus-conflict LUT analysis, audio sequencer recovery, `D4b` timing lockstep, and 6502 assembly match
+- [Operations](Dev/docs/OPERATIONS.md) — Local workspace layout, CLI overrides, tier materialization, lockstep execution, table decoding, and `.decomp` packaging
 
 ## License & Legal
 

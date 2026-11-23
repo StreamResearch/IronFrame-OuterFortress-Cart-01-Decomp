@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-23
+
+### Added
+- **Clean-Room C11 `NesBus` Runtime & `D4b` Scene Driver (`Dev/scripts/d4_harness/`):** Added modular `<= 250`-line C11 files (`nes_bus.h`, `nes_bus.c`, `nes_ppu_apu.c`, `nes_cpu_ops.c`, `nes_cpu_exec.c`, `d4b_lockstep_scenes.c`) implementing the RP2A03 6502 (`56` mnemonics / `151` opcodes), RP2C02 PPU registers/VRAM/OAM DMA, RP2A03 APU/DMC latches and stalls, iNES Mapper 2 UNROM bus-conflict bank latching, `--lockstep` CLI dispatch in `parity_runner_main.c`, `5`-scene / `650`-frame execution, and `8` live linked `D4_CleanSource` C subsystem checkpoints.
+- **Mesen 2.1.1 & `reCart` Oracle Bridges (`Dev/scripts/d4b_oracle_bridges.py`, `Dev/scripts/run_d4b_lockstep.py`, `Dev/schemas/d4b_lockstep_report.json`):** Added headless Mesen 2.1.1 `--testRunner` Lua tracing and an ephemeral `.NET 8` read-only `reCart.Core.dll` `InterpreterOracle` differential witness, achieving `mismatchedFrames: 0` across `650` frames (`$0100-$01FF` hardware stack masked), `8/8` linked C checkpoints, and `650`-frame witness verification (`649` transitions, boot WRAM CRC32 `f1e8ba9e`) in digest-only v2 `Dev/schemas/d4b_lockstep_report.json` alongside `--offline-synthetic` and `rc=2` `MISSING_CORPUS_MEDIA` gates.
+- **Bank `1..4` & `BANK_06` Clean-Room Table Decoders (`Dev/scripts/decode_*.py`):** Added four `<= 250`-SLOC scripts (`decode_rooms_and_metatiles.py`, `decode_guards_and_weapons.py`, `decode_codec_and_audio.py`, and orchestrator `decode_all_bank_tables.py`) extracting `256` rooms (`165` unique), `6` metatile tilesets, `256` room neighbor vectors (`235` unique), `51` CHR headers, `123` patrol pointers (`96` unique), `160` dialog pointer offsets (`144` unique, metadata only with zero retail text), `217` room actor spawns (`85` unique), `7` weapon tables, `4` password layout tables, `7` codec frequencies, `255` room call tables (`116` entries, `72` unique message IDs), `5` volume envelopes, `12` note periods, `132` sound/BGM descriptors (`64` SFX / `68` BGM), and `dmc[0]` strictly into gitignored `--out-dir` (`Corpus/work/decoded_tables/`) with `unresolvedFieldCount: 0`.
+- **Clean-Room Specification Spokes (`Dev/docs/specifications/`):** Added three tracked structural format chapters (`rooms-metatiles-and-chr-format.md`, `guards-weapons-and-password-format.md`, `codec-and-bank06-audio-format.md`) linked from `Dev/docs/SPECIFICATIONS.md`.
+- **D4b / Decoder Validators & Offline Unit Tests (`Dev/scripts/d4b_validation_helpers.py`, `Dev/scripts/tests/test_d4b_and_decoders.py`):** Added clean-room v2 lockstep/digest/spoke validators and expanded the offline `unittest` suite from `20` to `25` passing tests (`-W error`) validating `--offline-synthetic`, `rc=2` missing-media gates, digest-only anti-dump checks, and `v0.4.0` strict `.decomp` packaging (`test_decomp_cleanroom_and_release.py`, `test_scripts_cli_and_schemas.py`).
+
+### Changed
+- **Unified Verifier & `spec_coverage.json` v2 Schema (`Dev/scripts/verify_track_d5.py`, `Dev/schemas/spec_coverage.json`):** Updated `verify_track_d5.py` to enforce `D4b` lockstep and `4/4` specification spokes (`17/17` full checks, `11/11` offline synthetic) while staying within the `250`-SLOC budget, and refreshed `Dev/schemas/spec_coverage.json` via `decode_all_bank_tables.py --write-spec-coverage` (`unresolvedFieldCount: 0`, `5/5` checks).
+- **`v0.4.0` `.decomp` Bundle, Manifests & Documentation (`Dev/schemas/decomp_recipe.json`, `Dev/research.manifest.json`, `IronFrame-OuterFortress-Cart-01.decomp`, `Dev/docs/`):** Advanced `Dev/research.manifest.json` (`version: "0.4.0"`, `d4ParityTier: "D4b"`), `Dev/schemas/decomp_recipe.json` (`packageVersion: "0.4.0"`), and the deterministic clean-room `IronFrame-OuterFortress-Cart-01.decomp` bundle (`55` entries, `347,247` bytes, `0` strict clean-room violations), and synchronized root documentation, `AGENTS.md`, `active.state`, and technical manuals while archiving `0.1.0` notes to keep the three-minor window (`0.4.0`, `0.3.0`, `0.2.0`).
+
 ## [0.3.0] - 2026-11-22
 
 ### Added
@@ -36,25 +49,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - **Bank-Scoped Table Collisions, Indexed Array Rewrites & Bitwise `&` Safety (`Dev/scripts/coalesce_d4_modules.py`, `Dev/schemas/d3_symbol_overrides.json`):** Pinned `BYTE_ARRAY_bf00` explicitly to `BANK_03.prg` (`g_b03_rom_tbl_bf00`) and `FUN_b622` to `BANK_01.prg` (`g_b01_rom_tbl_b622`), distinguished indexed `(&DAT_0740)[i]` accesses (`g_vram_transfer_queue[i]`) from scalar `DAT_0740` reads (`g_vram_transfer_queue[0]`), and preserved bitwise `&` expressions without misclassifying them as address-of array operations.
 
-## [0.1.0] - 2026-11-20
-
-### Added
-- **BYO-ROM UNROM Unpacker & 6502 CFG Tracer (`nes_unrom_unpack.py`, `nes_6502_cfg.py`):** Added a self-contained iNES Mapper 2 validator, recursive-descent 6502 control-flow tracer, bank-call propagator, and `--offline-synthetic` generator requiring zero external archive binaries.
-- **Portable `.decomp` Exporter & Release Packager (`export_decomp_bundle.py`, `package_release.py`, `decomp_recipe.json`):** Built deterministic clean-room `.decomp` archive packaging (`IronFrame-OuterFortress-Cart-01.decomp`) validated against `reCart` (`0.1.x`), alongside a 10-invariant clean-room release stage auditor.
-- **Shared CLI Infrastructure & Offline Unit Tests (`nes_cli_common.py`, `Dev/scripts/tests/`):** Centralized `--data-dir`, `--out-dir`, `--log-dir`, `--zig-exe`, `--tools-dir`, and `--offline-synthetic` overrides with exit-code `2` `MISSING_CORPUS_MEDIA` reporting, backed by `14/14` passing offline `unittest` cases (`test_nes_unpack_and_asm.py`, `test_decomp_cleanroom_and_release.py`, `test_scripts_cli_and_schemas.py`).
-- **Modular C Host Parity Harness (`Dev/scripts/d4_harness/`):** Split the host parity suite into `parity_harness.h`, `parity_runner_main.c`, `parity_rom_and_mapper_tests.c`, and `parity_gameplay_and_audio_tests.c` (`<= 200` lines each, `10/10` passing assertions).
-- **Clean-Room Emblems, CI & Human-First Pages Workflow (`Dev/assets/`, `.github/workflows/`):** Added SVG/PNG/ICO emblems, strict offline Python and clean-room `.decomp` CI checks (`ci.yml`), community health templates (`SECURITY.md`, `CONTRIBUTING.md`), and a visibility-gated GitHub Pages static site generator (`pages.yml`) with `.nojekyll`, `404.html`, `robots.txt`, `sitemap.xml`, responsive light/dark layout, sidebar navigation, TOC, and Mermaid diagrams.
-- **Baseline Research Catalog, IDE Workspace & 6502 Assembler (`asm6502_d5.py`, `Dev/schemas/`, `Dev/docs/`):** Consolidated the clean-room `NES-ME-USA` workspace (`499` indexed functions, `2,324` mapped globals, `22` structs, `22` enums, `0` unresolved fields, four technical manuals, portable `.code-workspace`, and a two-pass 6502 assembler matching all `8` PRG banks `1:1` across `131,088` bytes).
-
-### Changed
-- **Coded Identity & Honest Milestone Baseline:** Adopted the `IronFrame-OuterFortress-Cart-01-Decomp` identity targeting `reCart` (`0.1.x`), verified `12/12` full `verify_track_d5.py` checks (`7/7` offline synthetic), and parameterized host Zig target triples (`x86-windows-gnu` / `x86-linux-gnu`) across `build_and_verify_d4.py`.
-- **Schema v2 Migration & Documentation Sync:** Upgraded `standalone_integrity.json` (`1` BYO-ROM checksum + `17` deterministic `extracted/` entries), `d4_build_report.json`, `s4_verify_report.json`, `d5_byte_match.json`, and `spec_coverage.json` to normalized v2 schemas and updated root docs, manuals, and stage notes.
-
-### Fixed
-- **UNROM Bank-Switch & Audio Mute Parity Tests (`parity_rom_and_mapper_tests.c`, `parity_gameplay_and_audio_tests.c`):** Replaced folded `$8000` constant assumptions in `test_03` with live `$C94C`/`$C958` bank-ID save/restore checks and updated `test_09` to exercise `mg_b56_audio_sync_pause_mute` and `mg_b56_audio_ramp_dmc_dac`.
-
-### Removed
-- **Monolithic Harness & Ghidra Internals (`parity_tests.c`, `standalone_integrity.json`):** Deleted monolithic `Dev/scripts/d4_harness/parity_tests.c` and removed internal `ghidra_project/` (`.gpr`/`.rep`) and `ghidra_export/` entries from `standalone_integrity.json`.
-
-### Security
-- **Purged Embedded C Bodies, Workstation PII & Trademark Tokens (`gen_d4_globals_and_lifts.py`, `Dev/schemas/`, `README.md`):** Stripped all four embedded `BANK_06` retail C function bodies and `READABLE_FIXES` from `gen_d4_globals_and_lifts.py`, eliminated hardcoded workstation paths across all Python scripts, and scrubbed commercial trademark tokens across tracked headers, catalogs, and public Markdown documentation.
+*(Earlier `0.1.0` release notes are preserved under git tag `v0.1.0` and local `Dev/docs/archive/`.)*
