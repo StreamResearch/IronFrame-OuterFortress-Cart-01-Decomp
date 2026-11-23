@@ -1,6 +1,6 @@
 # @module: IronFrame.Dev.scripts.verify_track_d5
 # @purpose: Unified Tier R Stage D0-D5 / S0-S4 integrity, schemas, SLOC, and hygiene verifier
-# @depends-on: argparse, hashlib, json, pathlib, re, subprocess, sys, zlib, asm6502_d5, coalesce_d4_modules, craftsmanship_d4_helpers, nes_cli_common
+# @depends-on: argparse, hashlib, json, pathlib, re, subprocess, sys, zlib, asm6502_d5, coalesce_d4_modules, craftsmanship_d4_helpers, d4b_validation_helpers, nes_cli_common
 # @exports: main
 
 from __future__ import annotations
@@ -22,6 +22,7 @@ if str(SCRIPT_DIR) not in sys.path:
 from asm6502_d5 import OPCODES, assemble_text  # noqa: E402
 from coalesce_d4_modules import scan_raw_symbols  # noqa: E402
 from craftsmanship_d4_helpers import count_d4_craftsmanship_tells, is_clangd_clean, validate_d4_rewrites_dir  # noqa: E402
+from d4b_validation_helpers import has_legacy_v1, validate_d4b_lockstep_report, validate_spec_spokes_and_coverage  # noqa: E402
 from nes_cli_common import (  # noqa: E402
     GAME_ID,
     crc32_hex,
@@ -43,11 +44,6 @@ _FRAG_RE = re.compile(r"_\d{2}\.c$")
 _BANKS_8 = [f"BANK_{b:02d}.prg" for b in range(7)] + ["PRG_FIXED_07.prg"]
 _BANNED_NAME_RE = re.compile(r"^(FUN_|fn_[0-9a-fA-F]+|func_[0-9a-fA-F]+|sub_[0-9a-fA-F]+|unk_|todo_|helper_[0-9]+$)")
 _PARAM_PH_RE = re.compile(r"^param_[0-9]+$")
-_LEGACY_V1_KEYS = frozenset({
-    "generatedAt", "passed", "errors", "warnings", "compilerErrors", "compilerWarnings",
-    "compiledFiles", "parityPassed", "parityTestsPassed", "parityTestsTotal", "assertionsPassed", "assertionsTotal",
-    "matchedBinaries", "romBytes", "romMatched", "romCrc32", "romMd5", "romSha1", "relpath", "bytes", "sha256",
-})
 _SELFTEST_ASM = (
     'ZP_VAL = $10\nABS_VAL = $1234\n    .org $8000\nstart:\n    BRK\n    CLC\n    ASL\n    ASL A\n'
     '    LDA #$42\n    LDA ZP_VAL\n    LDA ZP_VAL,X\n    LDX ZP_VAL,Y\n    STX $20,Y\n'
@@ -92,15 +88,7 @@ def _check_manifest(paths: Any, checks: list[dict[str, Any]]) -> dict[str, Any]:
     return m
 
 
-def _has_legacy_v1(obj: Any) -> bool:
-    if isinstance(obj, dict):
-        return bool(_LEGACY_V1_KEYS & set(obj)) or any(_has_legacy_v1(v) for v in obj.values())
-    if isinstance(obj, list):
-        return any(_has_legacy_v1(v) for v in obj)
-    return False
-
-
-def _check_schemas(paths: Any, checks: list[dict[str, Any]]) -> list[tuple[str, int | None, str, str]]:
+def _check_schemas(paths: Any, checks: list[dict[str, Any]], d4_parity: str = "none") -> list[tuple[str, int | None, str, str]]:
     sc = paths.schemas_dir
     integ = _load_json(sc / "standalone_integrity.json")
     entries = iter_integrity_entries(integ) if isinstance(integ, dict) else []
@@ -144,7 +132,7 @@ def _check_schemas(paths: Any, checks: list[dict[str, Any]]) -> list[tuple[str, 
     _rec(checks, "d3_mapping_schemas_v2", d3_ok, f"mods={len(mods)}/26, fns={len(set(m_fns))}/499, d3o={d3o.get('schemaVersion') if isinstance(d3o, dict) else None}")
 
     d4, s4, d5 = _load_json(sc / "d4_build_report.json"), _load_json(sc / "s4_verify_report.json"), _load_json(sc / "d5_byte_match.json")
-    v2_clean = all(isinstance(r, dict) and r.get("schemaVersion") == 2 and r.get("gameId") == GAME_ID and not _has_legacy_v1(r) for r in (d4, s4, d5))
+    v2_clean = all(isinstance(r, dict) and r.get("schemaVersion") == 2 and r.get("gameId") == GAME_ID and not has_legacy_v1(r) for r in (d4, s4, d5))
     d4_strict = d4.get("isZeroWarningsVerified") is True and d4.get("isZeroDecompilerTellsVerified") is True and d4.get("craftsmanshipTellCount") == 0
     rep_ok = (
         v2_clean and d4_strict and d4.get("isPassed") is True and d4.get("compilerErrorCount") == 0 and d4.get("compilerWarningCount") == 0
@@ -157,6 +145,11 @@ def _check_schemas(paths: Any, checks: list[dict[str, Any]]) -> list[tuple[str, 
     _rec(checks, "d4_s4_d5_reports_v2", rep_ok, f"v2Clean={v2_clean}, d4Pass={d4.get('isPassed') if isinstance(d4, dict) else None}, d5Crc={d5.get('crc32Hex') if isinstance(d5, dict) else None}")
     rew_ok, rew_det = validate_d4_rewrites_dir(sc / "d4_rewrites")
     _rec(checks, "d4_craftsmanship_rewrites", rew_ok, str(rew_det))
+    is_d4b = d4_parity == "D4b"
+    lock_ok, lock_det = validate_d4b_lockstep_report(sc, require_exists=is_d4b)
+    _rec(checks, "d4b_lockstep_report_v2", lock_ok, lock_det)
+    sp_ok, sp_det = validate_spec_spokes_and_coverage(paths.dev_dir, require_all_spokes=is_d4b)
+    _rec(checks, "spec_spokes_and_coverage", sp_ok, sp_det)
     return entries
 
 
@@ -187,7 +180,7 @@ def _check_sloc_and_git(paths: Any, checks: list[dict[str, Any]]) -> None:
     _rec(checks, "git_cleanroom_hygiene", not leaks, f"leaks={sorted(set(leaks))[:5]}")
 
 
-def _check_corpus_artifacts(paths: Any, entries: list[tuple[str, int | None, str, str]], tools_dir: Path | None, checks: list[dict[str, Any]], tier_cur: str | None = None) -> None:
+def _check_corpus_artifacts(paths: Any, entries: list[tuple[str, int | None, str, str]], tools_dir: Path | None, checks: list[dict[str, Any]], man: dict[str, Any] | None = None) -> None:
     bad_ent = [
         rel for rel, sz, sha, crc in entries
         if not (fp := paths.standalone_dir / rel).is_file() or (sz is not None and fp.stat().st_size != sz)
@@ -235,7 +228,9 @@ def _check_corpus_artifacts(paths: Any, entries: list[tuple[str, int | None, str
         if str(rd_tools) not in sys.path:
             sys.path.insert(0, str(rd_tools))
         from decomp.tier_verifier import verify_track
-        cli_res = verify_track(paths.project_root, target_tier=("D4a" if tier_cur == "D4" else None), run_clangd_check=False)
+        tier_cur = man.get("currentDecompTier") if isinstance(man, dict) else man
+        d4_parity = str(man.get("d4ParityTier") or "none") if isinstance(man, dict) else "none"
+        cli_res = verify_track(paths.project_root, target_tier=("D4b" if d4_parity == "D4b" else ("D4a" if tier_cur == "D4" else None)), run_clangd_check=False)
         _rec(checks, "rd_optional_tier_verifier", bool(cli_res.get("passed")), f"errors={cli_res.get('errors')}")
     else:
         _rec(checks, "rd_optional_tier_verifier", True, "optional R&D tools or repo Corpus absent; skipped")
@@ -261,10 +256,10 @@ def main() -> int:
     st_ok = len(OPCODES) == 56 and sum(len(m) for m in OPCODES.values()) == 151 and orig_st == 0x8000 and raw_st.hex().upper() == _SELFTEST_HEX and syms_st.get("end_lbl") == 0x802B
     _rec(checks, "d5_asm6502_selftest", st_ok, f"mnem={len(OPCODES)}/56, bytes={len(raw_st)}, end=${syms_st.get('end_lbl', 0):04X}")
     man = _check_manifest(paths, checks)
-    entries = _check_schemas(paths, checks)
+    entries = _check_schemas(paths, checks, str(man.get("d4ParityTier") or "none"))
     _check_sloc_and_git(paths, checks)
     if not args.offline_synthetic:
-        _check_corpus_artifacts(paths, entries, args.tools_dir, checks, man.get("currentDecompTier"))
+        _check_corpus_artifacts(paths, entries, args.tools_dir, checks, man)
 
     passed_n = sum(1 for c in checks if c["isPassed"])
     summary = {
