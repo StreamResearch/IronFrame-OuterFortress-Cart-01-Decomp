@@ -51,7 +51,7 @@ class TestDecompBundleCleanroom(unittest.TestCase):
         self.assertEqual(manifest["moduleId"], "ironframe-outerfortress-cart-01")
         self.assertEqual(manifest["engineId"], "reCart")
         self.assertEqual(manifest["upstreamResearchPath"], "IronFrame-OuterFortress-Cart-01-Decomp")
-        self.assertEqual(manifest["packageVersion"], "0.3.0")
+        self.assertEqual(manifest["packageVersion"], "0.4.0")
         self.assertEqual(manifest["targetDecompTier"], "D4")
         self.assertEqual(manifest["decompSchemaVersion"], "1.0.0")
 
@@ -70,8 +70,12 @@ class TestDecompBundleCleanroom(unittest.TestCase):
             self.assertIn("Dev/schemas/d3_module_map.json", names)
             self.assertIn("Dev/schemas/d3_symbol_overrides.json", names)
             self.assertIn("Dev/schemas/d4_build_report.json", names)
+            self.assertIn("Dev/schemas/d4b_lockstep_report.json", names)
             self.assertIn("Dev/schemas/d4_rewrites/core_runtime.json", names)
             self.assertIn("Dev/schemas/d4_rewrites/overlays_b05_b06.json", names)
+            self.assertIn("Dev/scripts/d4b_oracle_bridges.py", names)
+            self.assertIn("Dev/scripts/d4b_validation_helpers.py", names)
+            self.assertIn("Dev/scripts/decode_all_bank_tables.py", names)
             self.assertFalse(any(n.startswith(("Dev/scripts/d4_harness/", "Dev/scripts/tests/")) for n in names))
 
     def test_cleanroom_rejects_forbidden_inputs(self) -> None:
@@ -79,7 +83,7 @@ class TestDecompBundleCleanroom(unittest.TestCase):
         self.assertTrue(edb.validate_cleanroom_bytes("Dev/x.h", b"void retail_fn(void) { return; }"))
         self.assertTrue(edb.validate_cleanroom_bytes("Dev/x.json", ('{"c' + 'Body": "int x() {}"}').encode("utf-8")))
         self.assertTrue(edb.validate_cleanroom_bytes("Dev/schemas/call_graph.json", b'{"functions": {}, "strings": ["s"]}'))
-        self.assertTrue(edb.validate_cleanroom_bytes("Dev/x.md", ("C:\\Users\\ja" + "nov\\x").encode("utf-8"), strict=True))
+        self.assertTrue(edb.validate_cleanroom_bytes("Dev/x.md", ("C:\\Use" + "rs\\ja" + "nov\\x").encode("utf-8"), strict=True))
         self.assertTrue(edb.validate_cleanroom_bytes("Dev/x.md", ("brand " + "kon" + "ami").encode("utf-8"), strict=True))
         self.assertTrue(edb.validate_cleanroom_bytes("Dev/x.g.cs", b"// generated"))
 

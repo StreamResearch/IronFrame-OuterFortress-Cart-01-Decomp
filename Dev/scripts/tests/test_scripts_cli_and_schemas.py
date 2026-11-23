@@ -21,10 +21,15 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 import nes_cli_common as ncc  # noqa: E402
 import build_and_verify_d4 as d4  # noqa: E402
+import export_decomp_bundle as edb  # noqa: E402
 
 _HEX64_RE = re.compile(r"^[0-9a-f]{64}$")
 _HEX8_RE = re.compile(r"^[0-9a-f]{8}$")
 _TRADEMARK_WORDS = ("kon" + "ami", "metal " + "gear")
+_CI_CBODY_RE = re.compile(
+    r"\b(?:void|int|uint|short|ushort|char|long|byte|uint8_t|uint16_t|uint32_t|int32_t)"
+    r"\s+(?!mg_d4_probe\b|halt_baddata\b)[A-Za-z_][A-Za-z0-9_]*\s*\([^;{]*\)\s*\{"
+)
 
 
 def _run_py(script_name: str, *args: str) -> subprocess.CompletedProcess[str]:
@@ -133,6 +138,19 @@ class TestSchemasAndSlocLimits(unittest.TestCase):
         d3o = json.loads((SCHEMAS_DIR / "d3_symbol_overrides.json").read_text(encoding="utf-8"))
         self.assertEqual(d3o["schemaVersion"], 2)
         self.assertFalse(any(t in json.dumps(d3o).lower() for t in _TRADEMARK_WORDS))
+
+        sp = json.loads((SCHEMAS_DIR / "spec_coverage.json").read_text(encoding="utf-8"))
+        self.assertEqual((sp["schemaVersion"], sp["gameId"], sp["isPassed"], sp["unresolvedFieldCount"], sp["mappedGlobalCount"]), (2, ncc.GAME_ID, True, 0, 2324))
+        self.assertEqual((sp["totalFunctionCount"], sp["namedFunctionCount"]), (499, 499))
+
+    def test_scripts_and_schemas_cleanroom_regex(self) -> None:
+        for fp in sorted(SCRIPTS_DIR.glob("*.py")):
+            rel = fp.relative_to(REPO_ROOT).as_posix()
+            self.assertEqual(edb.validate_cleanroom_bytes(rel, fp.read_bytes(), strict=True), [], rel)
+            self.assertIsNone(_CI_CBODY_RE.search(fp.read_text(encoding="utf-8")), f"CI C-body match in {rel}")
+        for fp in sorted(SCHEMAS_DIR.rglob("*.json")):
+            rel = fp.relative_to(REPO_ROOT).as_posix()
+            self.assertEqual(edb.validate_cleanroom_bytes(rel, fp.read_bytes(), strict=True), [], rel)
 
     def test_script_and_harness_sloc_caps(self) -> None:
         for fp in sorted(SCRIPTS_DIR.rglob("*.py")):
