@@ -1,3 +1,5 @@
+/* @module: IronFrame.D4Harness.ParityRunnerMain */
+/* @purpose: Native host parity CLI runner for D4a subsystem checks and D4b --lockstep verification. */
 #include <stdio.h>
 #include <string.h>
 
@@ -34,8 +36,11 @@ static void print_json_str(const char *s) {
 }
 
 int main(int argc, char **argv) {
+    if (argc >= 4 && strcmp(argv[1], "--lockstep") == 0) {
+        return d4b_run_lockstep_cli(argv[2], argv[3]);
+    }
     if (argc < 2) {
-        fprintf(stderr, "usage: %s <extracted_prg_dir>\n", argv[0]);
+        fprintf(stderr, "usage: %s <extracted_prg_dir> | --lockstep <rom.nes> <out.json>\n", argv[0]);
         return 2;
     }
     const char *dir = argv[1];
