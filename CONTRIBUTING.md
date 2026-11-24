@@ -16,7 +16,7 @@ cd IronFrame-OuterFortress-Cart-01-Decomp
 python -B -c "import sys; sys.path.insert(0, 'Dev/scripts'); import asm6502_d5; raw, org, _ = asm6502_d5.assemble_text('.org 0xC000\nLDA #0x01\nSTA 0x00\nRTS\n'); print(len(asm6502_d5.OPCODES), len(raw), hex(org))"
 ```
 
-Once the unit-test suite is populated under `Dev/scripts/tests/`, run all offline tests with:
+Run all 25 offline unit tests under `Dev/scripts/tests/` with:
 
 ```powershell
 python -B -m unittest discover -s Dev/scripts/tests -v

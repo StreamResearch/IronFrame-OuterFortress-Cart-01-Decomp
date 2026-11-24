@@ -8,7 +8,7 @@
 
 ## 2. Manuals (`Dev/docs/`)
 - [ARCHITECTURE.md](Dev/docs/ARCHITECTURE.md) | [SPECIFICATIONS.md](Dev/docs/SPECIFICATIONS.md) | [FINDINGS.md](Dev/docs/FINDINGS.md) | [OPERATIONS.md](Dev/docs/OPERATIONS.md)
-- **Spokes, Plans & Reports:** [specifications/](Dev/docs/specifications/) | [findings/](Dev/docs/findings/) | [stages/](Dev/docs/stages/) | Local-only gitignored: `Dev/docs/plans/`, `Dev/docs/reports/`
+- **Spokes, Plans & Reports:** [specifications/](Dev/docs/specifications/) | [stages/](Dev/docs/stages/) | Local-only gitignored: `Dev/docs/plans/`, `Dev/docs/reports/`
 
 ## 3. Governance & Notion
 - **Notion:** `<NOTION_PROJECT_PAGE_ID>` (`<NOTION_TASK_LIST_COLLECTION>` — local IDs in gitignored `Dev/data/notion_hub.local.json`)

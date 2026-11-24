@@ -4,7 +4,7 @@
 
 | Version | Supported | Notes |
 | :--- | :--- | :--- |
-| `0.1.x` | Yes | Active clean-room research mainline (`Dev/schemas/`, `Dev/scripts/`, upcoming `.decomp` export) |
+| `0.4.x` | Yes | Active clean-room research mainline (`Dev/schemas/`, `Dev/scripts/`, clean-room `.decomp` export) |
 
 ## Security & Clean-Room Boundaries
 
@@ -18,5 +18,5 @@
 Please **do not** open a public GitHub issue for suspected security vulnerabilities or accidental asset/path leakage.
 
 1. Report privately via GitHub **Security Advisories** (`Report a vulnerability` on the repository Security tab).
-2. Include the affected script, schema, or documentation path, version (`0.1.x`), reproduction steps, and expected vs. actual behavior.
+2. Include the affected script, schema, or documentation path, version (`0.4.x`), reproduction steps, and expected vs. actual behavior.
 3. Maintainers acknowledge reports within **72 hours** and coordinate a fix before public disclosure.
